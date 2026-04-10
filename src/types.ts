@@ -27,5 +27,6 @@ export interface Course {
   title: string;
   image?: string;
   progress: number;
+  performance: number;
   modules: Module[];
 }

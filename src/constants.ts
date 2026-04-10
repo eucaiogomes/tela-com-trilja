@@ -5,6 +5,7 @@ export const MOCK_COURSE: Course = {
   title: 'Configurando o seu Movidesk',
   image: 'https://picsum.photos/seed/movidesk/800/450',
   progress: 21.43,
+  performance: 100,
   modules: [
     {
       id: 'm1',

@@ -262,16 +262,33 @@ export default function App() {
                             </button>
                             <h2 className="font-bold text-lg leading-tight text-left font-heading tracking-tight">{course.title}</h2>
                           </div>
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-[10px] font-bold uppercase tracking-[0.1em] font-heading">
-                        <span className="text-white/60">Progresso</span>
-                        <span className="text-app-tertiary bg-app-tertiary/10 px-1.5 py-0.5 rounded font-heading">{course.progress}%</span>
+                    <div className="space-y-4">
+                      {/* Progresso Bar */}
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-[10px] font-bold uppercase tracking-[0.1em] font-heading">
+                          <span className="text-white/60">Progresso</span>
+                          <span className="text-app-tertiary bg-app-tertiary/10 px-1.5 py-0.5 rounded font-heading">{course.progress}%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-app-tertiary transition-all duration-1000" 
+                            style={{ width: `${course.progress}%` }} 
+                          />
+                        </div>
                       </div>
-                      <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-app-tertiary transition-all duration-1000" 
-                          style={{ width: `${course.progress}%` }} 
-                        />
+
+                      {/* Aproveitamento Bar */}
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-[10px] font-bold uppercase tracking-[0.1em] font-heading">
+                          <span className="text-white/60">Aproveitamento</span>
+                          <span className="text-app-tertiary bg-app-tertiary/10 px-1.5 py-0.5 rounded font-heading">{course.performance}%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-app-tertiary transition-all duration-1000" 
+                            style={{ width: `${course.performance}%` }} 
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
