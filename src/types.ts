@@ -1,5 +1,5 @@
 
-export type LessonType = 'video' | 'document' | 'evaluation' | 'scorm' | 'webconference' | 'in-person' | 'recording';
+export type LessonType = 'video' | 'document' | 'evaluation' | 'scorm' | 'webconference' | 'in-person' | 'recording' | 'training';
 export type LessonStatus = 'in-progress' | 'not-viewed' | 'completed';
 
 export interface Lesson {
@@ -14,6 +14,7 @@ export interface Lesson {
   videoUrl?: string;
   fileUrl?: string;
   content?: string;
+  lessons?: Lesson[];
 }
 
 export interface Module {

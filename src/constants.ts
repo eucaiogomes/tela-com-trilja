@@ -47,11 +47,16 @@ export const MOCK_COURSE: Course = {
       lessons: [
         { 
           id: 'l4', 
-          title: 'Fluxo de Aprovação', 
-          type: 'scorm', 
+          title: 'Treinamento de Fluxos', 
+          type: 'training', 
           status: 'not-viewed',
           completed: false,
-          description: 'Como configurar e gerenciar fluxos de aprovação de tickets.'
+          description: 'Um treinamento completo sobre fluxos de aprovação.',
+          lessons: [
+            { id: 'l4-1', title: 'Documento de Referência', type: 'document', completed: false, status: 'not-viewed' },
+            { id: 'l4-2', title: 'Vídeo da Aula', type: 'video', completed: false, status: 'not-viewed' },
+            { id: 'l4-3', title: 'Live de Dúvidas', type: 'webconference', completed: false, status: 'not-viewed' },
+          ]
         },
       ],
     },

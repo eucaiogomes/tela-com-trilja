@@ -337,100 +337,189 @@ export default function App() {
 
                   <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-app-outline-variant bg-white">
                     {trainingSidebarTab === 'conteudo' ? (
-                      course.modules.flatMap(m => m.lessons).map((lesson, idx) => {
-                        const isActive = lesson.id === selectedLesson.id;
-                        
-                        const getTypeLabel = (type: string) => {
-                          switch(type) {
-                            case 'video': return 'Vídeo';
-                            case 'document': return 'Documento';
-                            case 'evaluation': return 'Avaliação';
-                            case 'scorm': return 'Scorm';
-                            case 'webconference': return 'Webconferência';
-                            case 'in-person': return 'Aula Presencial';
-                            case 'recording': return 'Gravação';
-                            default: return 'Conteúdo';
-                          }
-                        };
+                      mainNav === 'trilha2' ? (
+                        <Accordion type="multiple" defaultValue={course.modules.map(m => m.id)} className="w-full border-none">
+                          {course.modules.map((module) => (
+                            <AccordionItem key={module.id} value={module.id} className="border-none">
+                              <AccordionTrigger className="px-6 py-4 bg-gray-50/50 hover:bg-gray-100/50 hover:no-underline border-b border-app-outline-variant/10 group">
+                                <div className="flex items-center gap-3 text-left">
+                                  <div className="w-8 h-8 rounded-lg bg-app-primary/5 flex items-center justify-center text-app-primary group-data-[state=open]:bg-app-tertiary/10 group-data-[state=open]:text-app-tertiary transition-colors">
+                                    <Folder className="w-4 h-4" />
+                                  </div>
+                                  <span className="text-xs font-bold uppercase tracking-widest text-app-on-surface font-heading">{module.title}</span>
+                                </div>
+                              </AccordionTrigger>
+                              <AccordionContent className="p-0 border-b border-app-outline-variant/10">
+                                {module.lessons.map((lesson) => (
+                                  <div key={lesson.id}>
+                                    {lesson.type === 'training' ? (
+                                      <Accordion type="single" collapsible className="w-full">
+                                        <AccordionItem value="training-sub" className="border-none">
+                                          <AccordionTrigger className="w-full px-8 py-4 hover:bg-app-background/50 hover:no-underline group/train">
+                                            <div className="flex items-center gap-3">
+                                              <div className="mt-1 shrink-0 text-[#eb6200]">
+                                                 <PlayCircle className="w-5 h-5" />
+                                              </div>
+                                              <div className="text-left">
+                                                <p className="text-sm font-bold text-app-on-surface group-hover/train:text-[#eb6200] transition-colors">{lesson.title}</p>
+                                                <p className="text-[10px] font-bold text-app-on-surface-variant/40 uppercase tracking-widest">Treinamento</p>
+                                              </div>
+                                            </div>
+                                          </AccordionTrigger>
+                                          <AccordionContent className="p-0 bg-gray-50/30">
+                                            {lesson.lessons?.map((subLesson) => (
+                                              <button 
+                                                key={subLesson.id}
+                                                onClick={() => setSelectedLesson(subLesson)}
+                                                className={cn(
+                                                  "w-full py-3.5 pl-16 pr-6 text-left hover:bg-white transition-colors flex items-center gap-3 border-l-4 border-l-transparent",
+                                                  selectedLesson.id === subLesson.id ? "bg-white border-l-[#eb6200]" : ""
+                                                )}
+                                              >
+                                                <div className={cn(
+                                                  "shrink-0",
+                                                  selectedLesson.id === subLesson.id ? "text-[#eb6200]" : "text-app-on-surface-variant/30"
+                                                )}>
+                                                  {subLesson.type === 'video' ? <PlayCircle className="w-4 h-4" /> : <FileText className="w-4 h-4" />}
+                                                </div>
+                                                <span className={cn(
+                                                  "text-xs font-medium truncate",
+                                                  selectedLesson.id === subLesson.id ? "text-app-on-surface font-bold" : "text-app-on-surface-variant"
+                                                )}>{subLesson.title}</span>
+                                              </button>
+                                            ))}
+                                          </AccordionContent>
+                                        </AccordionItem>
+                                      </Accordion>
+                                    ) : (
+                                      <button 
+                                        onClick={() => setSelectedLesson(lesson)}
+                                        className={cn(
+                                          "w-full px-8 py-5 text-left transition-all relative group flex items-start gap-4 border-l-4",
+                                          lesson.id === selectedLesson.id ? "bg-[#fff5eb] border-l-[#eb6200]" : "hover:bg-gray-50 border-l-transparent"
+                                        )}
+                                      >
+                                        <div className={cn(
+                                          "mt-1 shrink-0",
+                                          lesson.id === selectedLesson.id ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
+                                        )}>
+                                          {lesson.completed ? <CheckCircle2 className="w-5 h-5" /> : <div className="w-5 h-5 rounded-full border-2 border-current opacity-30" />}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                          <p className={cn(
+                                            "text-sm font-bold tracking-tight font-heading",
+                                            lesson.id === selectedLesson.id ? "text-[#eb6200]" : "text-[#1a1a1a]"
+                                          )}>{lesson.title}</p>
+                                          <div className="flex gap-2 mt-1">
+                                            <span className="text-[9px] font-bold uppercase tracking-widest text-app-on-surface-variant/40">{lesson.type}</span>
+                                          </div>
+                                        </div>
+                                      </button>
+                                    )}
+                                  </div>
+                                ))}
+                              </AccordionContent>
+                            </AccordionItem>
+                          ))}
+                        </Accordion>
+                      ) : (
+                        course.modules.flatMap(m => m.lessons).map((lesson, idx) => {
+                          const isActive = lesson.id === selectedLesson.id;
+                          
+                          const getTypeLabel = (type: string) => {
+                            switch(type) {
+                              case 'video': return 'Vídeo';
+                              case 'document': return 'Documento';
+                              case 'evaluation': return 'Avaliação';
+                              case 'scorm': return 'Scorm';
+                              case 'webconference': return 'Webconferência';
+                              case 'in-person': return 'Aula Presencial';
+                              case 'recording': return 'Gravação';
+                              case 'training': return 'Treinamento';
+                              default: return 'Conteúdo';
+                            }
+                          };
 
-                        const getStatusLabel = (status?: string) => {
-                          switch(status) {
-                            case 'completed': return 'Concluído';
-                            case 'in-progress': return 'Em andamento';
-                            case 'not-viewed': return 'Não visualizado';
-                            default: return 'Não visualizado';
-                          }
-                        };
+                          const getStatusLabel = (status?: string) => {
+                            switch(status) {
+                              case 'completed': return 'Concluído';
+                              case 'in-progress': return 'Em andamento';
+                              case 'not-viewed': return 'Não visualizado';
+                              default: return 'Não visualizado';
+                            }
+                          };
 
-                        const getStatusColor = (status?: string) => {
-                          switch(status) {
-                            case 'completed': return 'bg-green-100 text-green-700';
-                            case 'in-progress': return 'bg-blue-100 text-blue-700';
-                            case 'not-viewed': return 'bg-gray-100 text-gray-600';
-                            default: return 'bg-gray-100 text-gray-600';
-                          }
-                        };
+                          const getStatusColor = (status?: string) => {
+                            switch(status) {
+                              case 'completed': return 'bg-green-100 text-green-700';
+                              case 'in-progress': return 'bg-blue-100 text-blue-700';
+                              case 'not-viewed': return 'bg-gray-100 text-gray-600';
+                              default: return 'bg-gray-100 text-gray-600';
+                            }
+                          };
 
-                        const getTypeIcon = (type: string) => {
-                          switch(type) {
-                            case 'video': return <PlayCircle className="w-4 h-4" />;
-                            case 'document': return <FileDown className="w-4 h-4" />;
-                            case 'evaluation': return <ClipboardCheck className="w-4 h-4" />;
-                            case 'scorm': return <Package className="w-4 h-4" />;
-                            case 'webconference': return <Video className="w-4 h-4" />;
-                            case 'in-person': return <Users className="w-4 h-4" />;
-                            case 'recording': return <Mic className="w-4 h-4" />;
-                            default: return <FileText className="w-4 h-4" />;
-                          }
-                        };
+                          const getTypeIcon = (type: string) => {
+                            switch(type) {
+                              case 'video': return <PlayCircle className="w-4 h-4" />;
+                              case 'document': return <FileDown className="w-4 h-4" />;
+                              case 'evaluation': return <ClipboardCheck className="w-4 h-4" />;
+                              case 'scorm': return <Package className="w-4 h-4" />;
+                              case 'webconference': return <Video className="w-4 h-4" />;
+                              case 'in-person': return <Users className="w-4 h-4" />;
+                              case 'recording': return <Mic className="w-4 h-4" />;
+                              case 'training': return <Award className="w-4 h-4" />;
+                              default: return <FileText className="w-4 h-4" />;
+                            }
+                          };
 
-                        return (
-                          <button 
-                            key={lesson.id}
-                            onClick={() => setSelectedLesson(lesson)}
-                            className={cn(
-                              "w-full p-5 text-left border-b border-app-outline-variant/20 transition-all relative group",
-                              isActive ? "bg-[#fff5eb] border-l-4 border-l-[#eb6200]" : "hover:bg-gray-50 border-l-4 border-l-transparent"
-                            )}
-                          >
-                            <div className="flex items-start gap-4">
-                              <div className={cn(
-                                "mt-1 shrink-0",
-                                isActive ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
-                              )}>
-                                {lesson.completed ? (
-                                  <CheckCircle2 className="w-5 h-5" />
-                                ) : (
-                                  <div className="w-5 h-5 rounded-full border-2 border-current opacity-30" />
-                                )}
-                              </div>
-                              <div className="flex-1 min-w-0 space-y-2">
-                                <p className={cn(
-                                  "text-[15px] font-semibold leading-tight tracking-tight font-heading",
-                                  isActive ? "text-[#eb6200]" : "text-[#1a1a1a]"
+                          return (
+                            <button 
+                              key={lesson.id}
+                              onClick={() => setSelectedLesson(lesson)}
+                              className={cn(
+                                "w-full p-5 text-left border-b border-app-outline-variant/20 transition-all relative group",
+                                isActive ? "bg-[#fff5eb] border-l-4 border-l-[#eb6200]" : "hover:bg-gray-50 border-l-4 border-l-transparent"
+                              )}
+                            >
+                              <div className="flex items-start gap-4">
+                                <div className={cn(
+                                  "mt-1 shrink-0",
+                                  isActive ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
                                 )}>
-                                  {lesson.title}
-                                </p>
-                                <div className="flex flex-wrap gap-2 font-heading">
-                                  <span className={cn(
-                                    "inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-[0.05em] font-heading",
-                                    isActive ? "bg-[#eb6200]/10 text-[#eb6200]" : "bg-gray-100 text-gray-500"
+                                  {lesson.completed ? (
+                                    <CheckCircle2 className="w-5 h-5" />
+                                  ) : (
+                                    <div className="w-5 h-5 rounded-full border-2 border-current opacity-30" />
+                                  )}
+                                </div>
+                                <div className="flex-1 min-w-0 space-y-2">
+                                  <p className={cn(
+                                    "text-[15px] font-semibold leading-tight tracking-tight font-heading",
+                                    isActive ? "text-[#eb6200]" : "text-[#1a1a1a]"
                                   )}>
-                                    {getTypeIcon(lesson.type)}
-                                    {getTypeLabel(lesson.type)}
-                                  </span>
-                                  <span className={cn(
-                                    "inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-[0.05em] font-heading",
-                                    getStatusColor(lesson.status)
-                                  )}>
-                                    {getStatusLabel(lesson.status)}
-                                  </span>
+                                    {lesson.title}
+                                  </p>
+                                  <div className="flex flex-wrap gap-2 font-heading">
+                                    <span className={cn(
+                                      "inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-[0.05em] font-heading",
+                                      isActive ? "bg-[#eb6200]/10 text-[#eb6200]" : "bg-gray-100 text-gray-500"
+                                    )}>
+                                      {getTypeIcon(lesson.type)}
+                                      {getTypeLabel(lesson.type)}
+                                    </span>
+                                    <span className={cn(
+                                      "inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-[0.05em] font-heading",
+                                      getStatusColor(lesson.status)
+                                    )}>
+                                      {getStatusLabel(lesson.status)}
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </button>
-                        );
-                      })
+                            </button>
+                          );
+                        })
+                      )
                     ) : trainingSidebarTab === 'desempenho' ? (
                       <div className="p-6 space-y-8">
                         {/* Highlights */}
