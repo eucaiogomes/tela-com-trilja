@@ -681,16 +681,7 @@ export default function App() {
             {/* Main Content Area */}
             <main className="flex-1 overflow-y-auto bg-[#f8f9fa] scrollbar-thin scrollbar-thumb-app-outline-variant relative min-w-0">
                   {/* Toggle Button when Sidebar is closed */}
-                  {!isTrainingSidebarOpen && (
-                    <motion.button
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      onClick={() => setIsTrainingSidebarOpen(true)}
-                      className="absolute top-6 left-6 z-30 p-2 bg-[#00254e] text-white rounded-lg shadow-lg hover:bg-[#003a75] transition-colors"
-                    >
-                      <Menu className="w-6 h-6" />
-                    </motion.button>
-                  )}
+
                   
                   <div className={cn(
                     "mx-auto px-6 pt-1 md:px-10 md:pt-2 pb-12 space-y-4 transition-all duration-500 ease-in-out",
@@ -698,18 +689,30 @@ export default function App() {
                   )}>
                     {/* Breadcrumb & Navigation */}
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                      <nav className="flex items-center flex-wrap gap-2 text-[10px] font-bold uppercase tracking-[0.2em] font-heading">
-                        <button 
-                          onClick={closeLesson}
-                          className="text-app-on-surface-variant/60 hover:text-app-tertiary transition-colors"
-                        >
-                          {mainNav === 'treinamentos' ? 'Treinamentos' : 'Trilha 2'}
-                        </button>
-                        <ChevronRight className="w-3 h-3 text-app-on-surface-variant/30" />
-                        <span className="text-app-on-surface-variant/40 truncate max-w-[150px] md:max-w-[250px]">{course.title}</span>
-                        <ChevronRight className="w-3 h-3 text-app-on-surface-variant/30" />
-                        <span className="text-app-tertiary">{selectedLesson?.title}</span>
-                      </nav>
+                      <div className="flex items-center gap-4">
+                        {!isTrainingSidebarOpen && (
+                          <motion.button
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            onClick={() => setIsTrainingSidebarOpen(true)}
+                            className="p-2 bg-white border border-app-outline-variant/30 rounded-xl shadow-sm text-app-on-surface-variant hover:text-app-tertiary hover:border-app-tertiary/30 transition-all group"
+                          >
+                            <Menu className="w-5 h-5 flex-shrink-0" />
+                          </motion.button>
+                        )}
+                        <nav className="flex items-center flex-wrap gap-2 text-[10px] font-bold uppercase tracking-[0.2em] font-heading">
+                          <button 
+                            onClick={closeLesson}
+                            className="text-app-on-surface-variant/60 hover:text-app-tertiary transition-colors"
+                          >
+                            {mainNav === 'treinamentos' ? 'Treinamentos' : 'Trilha 2'}
+                          </button>
+                          <ChevronRight className="w-3 h-3 text-app-on-surface-variant/30" />
+                          <span className="text-app-on-surface-variant/40 truncate max-w-[150px] md:max-w-[250px]">{course.title}</span>
+                          <ChevronRight className="w-3 h-3 text-app-on-surface-variant/30" />
+                          <span className="text-app-tertiary">{selectedLesson?.title}</span>
+                        </nav>
+                      </div>
                       
                       <button 
                         onClick={closeLesson}
