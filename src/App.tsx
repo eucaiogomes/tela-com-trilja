@@ -681,22 +681,20 @@ export default function App() {
 
             {/* Main Content Area */}
             <main className="flex-1 overflow-y-auto bg-[#f8f9fa] scrollbar-thin scrollbar-thumb-app-outline-variant relative min-w-0">
-                  {/* Toggle Button when Sidebar is closed */}
-
-                  
                   <div className={cn(
-                    "mx-auto px-6 pt-1 md:px-10 md:pt-2 pb-12 space-y-4 transition-all duration-500 ease-in-out",
-                    isTrainingSidebarOpen ? "max-w-7xl" : "max-w-7xl"
+                    "mx-auto transition-all duration-500 ease-in-out",
+                    isTrainingSidebarOpen ? "max-w-7xl" : "max-w-7xl",
+                    "pt-0 md:pt-4 px-0 md:px-10 pb-12 space-y-0 md:space-y-6"
                   )}>
-                    {/* Breadcrumb & Navigation */}
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    {/* Breadcrumb & Navigation (Desktop Only) */}
+                    <div className="hidden md:flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                       <div className="flex items-center gap-4">
                         {!isTrainingSidebarOpen && (
                           <motion.button
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
                             onClick={() => setIsTrainingSidebarOpen(true)}
-                            className="hidden md:flex p-2 bg-white border border-app-outline-variant/30 rounded-xl shadow-sm text-app-on-surface-variant hover:text-app-tertiary hover:border-app-tertiary/30 transition-all group"
+                            className="p-2 bg-white border border-app-outline-variant/30 rounded-xl shadow-sm text-app-on-surface-variant hover:text-app-tertiary hover:border-app-tertiary/30 transition-all group"
                           >
                             <Menu className="w-5 h-5 flex-shrink-0" />
                           </motion.button>
@@ -709,7 +707,7 @@ export default function App() {
                             {mainNav === 'treinamentos' ? 'Treinamentos' : 'Trilha 2'}
                           </button>
                           <ChevronRight className="w-3 h-3 text-app-on-surface-variant/30" />
-                          <span className="text-app-on-surface-variant/40 truncate max-w-[150px] md:max-w-[250px]">{course.title}</span>
+                          <span className="text-app-on-surface-variant/40 truncate max-w-[250px]">{course.title}</span>
                           <ChevronRight className="w-3 h-3 text-app-on-surface-variant/30" />
                           <span className="text-app-tertiary">{selectedLesson?.title}</span>
                         </nav>
@@ -717,7 +715,7 @@ export default function App() {
                       
                       <button 
                         onClick={closeLesson}
-                        className="flex items-center self-start md:self-auto gap-2 px-5 py-2.5 rounded-2xl bg-white border border-app-outline-variant/30 text-[10px] font-bold uppercase tracking-[0.15em] font-heading text-app-on-surface-variant hover:text-app-tertiary hover:border-app-tertiary/30 transition-all shadow-sm group"
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white border border-app-outline-variant/30 text-[10px] font-bold uppercase tracking-[0.15em] font-heading text-app-on-surface-variant hover:text-app-tertiary hover:border-app-tertiary/30 transition-all shadow-sm group"
                       >
                         <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
                         Voltar para o curso
@@ -725,7 +723,7 @@ export default function App() {
                     </div>
 
                     {/* Video Player Section */}
-                    <div className="relative aspect-video rounded-3xl overflow-hidden bg-black shadow-[0_32px_64px_-12px_rgba(0,0,0,0.3)] group">
+                    <div className="relative aspect-video md:rounded-3xl overflow-hidden bg-black md:shadow-[0_32px_64px_-12px_rgba(0,0,0,0.3)] group z-20">
                       {selectedLesson?.fileUrl ? (
                         <div className="w-full h-full bg-white relative">
                           <iframe
@@ -765,15 +763,15 @@ export default function App() {
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-zinc-900">
                           {selectedLesson?.type === 'document' ? (
-                            <FileText className="w-24 h-24 text-white/30 group-hover:text-white/60 transition-all duration-500 scale-90 group-hover:scale-100" />
+                            <FileText className="w-20 md:w-24 h-20 md:h-24 text-white/30 group-hover:text-white/60 transition-all duration-500 scale-90 group-hover:scale-100" />
                           ) : (
-                            <PlayCircle className="w-24 h-24 text-white/30 group-hover:text-white/60 transition-all duration-500 scale-90 group-hover:scale-100" />
+                            <PlayCircle className="w-20 md:w-24 h-20 md:h-24 text-white/30 group-hover:text-white/60 transition-all duration-500 scale-90 group-hover:scale-100" />
                           )}
                         </div>
                       )}
                       
-                      {/* Navigation Overlays */}
-                      <div className="absolute inset-0 flex pointer-events-none">
+                      {/* Navigation Overlays (Desktop Only) */}
+                      <div className="hidden md:flex absolute inset-0 pointer-events-none">
                         {/* Area de Hover Esquerda */}
                         <div className="flex-1 h-full flex items-center justify-start pl-2 group/nav-left pointer-events-auto">
                           <button 
@@ -812,23 +810,35 @@ export default function App() {
                     </div>
 
                     {/* Lesson Info Section */}
-                    <div className="space-y-10">
-                      <div className="flex flex-col gap-4">
-                        <h1 className="text-4xl md:text-5xl font-black text-app-on-surface tracking-tight leading-[0.9] font-heading max-w-4xl">
+                    <div className="space-y-6 md:space-y-10 px-4 md:px-0 pt-4 md:pt-0">
+                      <div className="flex flex-col gap-1 md:gap-4">
+                        <div className="md:hidden flex items-center justify-between mb-1">
+                          <span className="text-[10px] font-bold text-app-tertiary uppercase tracking-widest">
+                            {course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id))?.title}
+                          </span>
+                          <button onClick={closeLesson} className="p-1 text-app-on-surface-variant/40 hover:text-app-tertiary">
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <h1 className="text-xl md:text-5xl font-bold md:font-black text-app-on-surface tracking-tight leading-tight md:leading-[0.9] font-heading max-w-4xl">
                           {selectedLesson?.title}
                         </h1>
                       </div>
                       
-                      <div className="space-y-8">
+                      <div className="space-y-6 md:space-y-8">
                         {/* Sticky Tabs Bar */}
-                        <div className="sticky top-0 z-30 -mx-4 px-4 py-2 bg-[#f8f9fa]/80 backdrop-blur-md">
-                          <div className="bg-white rounded-2xl border border-app-outline-variant/30 shadow-lg shadow-black/[0.03] overflow-hidden">
-                            <div className="flex overflow-x-auto scrollbar-none bg-gray-50/30">
+                        <div className="sticky top-0 z-30 -mx-4 px-4 py-2 bg-[#f8f9fa] md:bg-[#f8f9fa]/80 md:backdrop-blur-md">
+                          <div className="md:bg-white md:rounded-2xl md:border md:border-app-outline-variant/30 md:shadow-lg md:shadow-black/[0.03] overflow-hidden">
+                            <div className="flex overflow-x-auto scrollbar-none gap-2 md:gap-0 md:bg-gray-50/30 py-2 md:py-0">
                               <button 
                                 onClick={() => setLessonInfoTab('descricao')}
                                 className={cn(
-                                  "px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] border-b-2 transition-all font-heading flex items-center gap-2 shrink-0",
-                                  lessonInfoTab === 'descricao' ? "border-app-tertiary text-app-tertiary bg-white" : "border-transparent text-app-on-surface-variant/40 hover:text-app-on-surface"
+                                  "shrink-0 flex items-center gap-2 transition-all font-heading font-bold uppercase tracking-[0.15em] text-[10px]",
+                                  "md:px-8 md:py-5 md:border-b-2",
+                                  "px-5 py-2.5 rounded-full border md:rounded-none",
+                                  lessonInfoTab === 'descricao' 
+                                    ? "bg-app-tertiary text-white border-app-tertiary md:bg-white md:text-app-tertiary md:border-app-tertiary" 
+                                    : "bg-white text-app-on-surface-variant/60 border-app-outline-variant md:bg-transparent md:border-transparent md:hover:text-app-on-surface"
                                 )}
                               >
                                 <Info className="w-3.5 h-3.5" />
@@ -837,8 +847,11 @@ export default function App() {
                               <button 
                                 onClick={() => setLessonInfoTab('conteudo')}
                                 className={cn(
-                                  "md:hidden px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] border-b-2 transition-all font-heading flex items-center gap-2 shrink-0",
-                                  lessonInfoTab === 'conteudo' ? "border-app-tertiary text-app-tertiary bg-white" : "border-transparent text-app-on-surface-variant/40 hover:text-app-on-surface"
+                                  "md:hidden shrink-0 flex items-center gap-2 transition-all font-heading font-bold uppercase tracking-[0.15em] text-[10px]",
+                                  "px-5 py-2.5 rounded-full border",
+                                  lessonInfoTab === 'conteudo' 
+                                    ? "bg-app-tertiary text-white border-app-tertiary" 
+                                    : "bg-white text-app-on-surface-variant/60 border-app-outline-variant"
                                 )}
                               >
                                 <List className="w-3.5 h-3.5" />
@@ -847,8 +860,12 @@ export default function App() {
                               <button 
                                 onClick={() => setLessonInfoTab('resumo')}
                                 className={cn(
-                                  "px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] border-b-2 transition-all font-heading flex items-center gap-2 shrink-0",
-                                  lessonInfoTab === 'resumo' ? "border-app-tertiary text-app-tertiary bg-white" : "border-transparent text-app-on-surface-variant/40 hover:text-app-on-surface"
+                                  "shrink-0 flex items-center gap-2 transition-all font-heading font-bold uppercase tracking-[0.15em] text-[10px]",
+                                  "md:px-8 md:py-5 md:border-b-2",
+                                  "px-5 py-2.5 rounded-full border md:rounded-none",
+                                  lessonInfoTab === 'resumo' 
+                                    ? "bg-app-tertiary text-white border-app-tertiary md:bg-white md:text-app-tertiary md:border-app-tertiary" 
+                                    : "bg-white text-app-on-surface-variant/60 border-app-outline-variant md:bg-transparent md:border-transparent md:hover:text-app-on-surface"
                                 )}
                               >
                                 <MessageSquare className="w-3.5 h-3.5" />
@@ -857,8 +874,12 @@ export default function App() {
                               <button 
                                 onClick={() => setLessonInfoTab('material')}
                                 className={cn(
-                                  "px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] border-b-2 transition-all font-heading flex items-center gap-2 shrink-0",
-                                  lessonInfoTab === 'material' ? "border-app-tertiary text-app-tertiary bg-white" : "border-transparent text-app-on-surface-variant/40 hover:text-app-on-surface"
+                                  "shrink-0 flex items-center gap-2 transition-all font-heading font-bold uppercase tracking-[0.15em] text-[10px]",
+                                  "md:px-8 md:py-5 md:border-b-2",
+                                  "px-5 py-2.5 rounded-full border md:rounded-none",
+                                  lessonInfoTab === 'material' 
+                                    ? "bg-app-tertiary text-white border-app-tertiary md:bg-white md:text-app-tertiary md:border-app-tertiary" 
+                                    : "bg-white text-app-on-surface-variant/60 border-app-outline-variant md:bg-transparent md:border-transparent md:hover:text-app-on-surface"
                                 )}
                               >
                                 <FileDown className="w-3.5 h-3.5" />
@@ -867,8 +888,12 @@ export default function App() {
                               <button 
                                 onClick={() => setLessonInfoTab('autor')}
                                 className={cn(
-                                  "px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] border-b-2 transition-all font-heading flex items-center gap-2 shrink-0",
-                                  lessonInfoTab === 'autor' ? "border-app-tertiary text-app-tertiary bg-white" : "border-transparent text-app-on-surface-variant/40 hover:text-app-on-surface"
+                                  "shrink-0 flex items-center gap-2 transition-all font-heading font-bold uppercase tracking-[0.15em] text-[10px]",
+                                  "md:px-8 md:py-5 md:border-b-2",
+                                  "px-5 py-2.5 rounded-full border md:rounded-none",
+                                  lessonInfoTab === 'autor' 
+                                    ? "bg-app-tertiary text-white border-app-tertiary md:bg-white md:text-app-tertiary md:border-app-tertiary" 
+                                    : "bg-white text-app-on-surface-variant/60 border-app-outline-variant md:bg-transparent md:border-transparent md:hover:text-app-on-surface"
                                 )}
                               >
                                 <Users className="w-3.5 h-3.5" />
@@ -878,7 +903,7 @@ export default function App() {
                           </div>
                         </div>
                         
-                        <div className="min-h-[200px] px-2 py-4 md:py-8">
+                        <div className="min-h-[200px] py-4 md:py-8">
                           <AnimatePresence mode="wait">
                             {lessonInfoTab === 'conteudo' && (
                               <motion.div
@@ -895,30 +920,34 @@ export default function App() {
                                     <p className="text-[10px] font-bold text-app-on-surface-variant/40 uppercase tracking-widest font-heading">Visão Geral do Desempenho</p>
                                   </div>
                                   
-                                  <div className="grid grid-cols-1 gap-6">
-                                    <div className="space-y-2">
+                                  <div className="grid grid-cols-2 gap-4">
+                                    <div className="space-y-1.5">
                                       <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest font-heading">
-                                        <span className="text-app-on-surface-variant">Progresso</span>
-                                        <span className="text-app-tertiary">{course.progress}%</span>
+                                        <span className="text-app-on-surface-variant/60">Progresso</span>
                                       </div>
-                                      <div className="h-1.5 w-full bg-app-outline-variant/10 rounded-full overflow-hidden">
-                                        <div 
-                                          className="h-full bg-app-tertiary transition-all duration-1000" 
-                                          style={{ width: `${course.progress}%` }} 
-                                        />
+                                      <div className="flex items-center gap-3">
+                                        <div className="flex-1 h-1.5 bg-app-outline-variant/10 rounded-full overflow-hidden">
+                                          <div 
+                                            className="h-full bg-app-tertiary" 
+                                            style={{ width: `${course.progress}%` }} 
+                                          />
+                                        </div>
+                                        <span className="text-[10px] font-black text-app-tertiary font-heading">{course.progress}%</span>
                                       </div>
                                     </div>
                                     
-                                    <div className="space-y-2">
+                                    <div className="space-y-1.5">
                                       <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest font-heading">
-                                        <span className="text-app-on-surface-variant">Aproveitamento</span>
-                                        <span className="text-[#eb6200]">{course.performance}%</span>
+                                        <span className="text-app-on-surface-variant/60">Aproveitamento</span>
                                       </div>
-                                      <div className="h-1.5 w-full bg-[#eb6200]/10 rounded-full overflow-hidden">
-                                        <div 
-                                          className="h-full bg-gradient-to-r from-[#eb6200] to-[#ff914d] transition-all duration-1000" 
-                                          style={{ width: `${course.performance}%` }} 
-                                />
+                                      <div className="flex items-center gap-3">
+                                        <div className="flex-1 h-1.5 bg-[#eb6200]/10 rounded-full overflow-hidden">
+                                          <div 
+                                            className="h-full bg-gradient-to-r from-[#eb6200] to-[#ff914d]" 
+                                            style={{ width: `${course.performance}%` }} 
+                                          />
+                                        </div>
+                                        <span className="text-[10px] font-black text-[#eb6200] font-heading">{course.performance}%</span>
                                       </div>
                                     </div>
                                   </div>
@@ -934,35 +963,36 @@ export default function App() {
                                         </div>
                                         <h4 className="text-xs font-black uppercase tracking-widest text-app-on-surface/60 font-heading">{module.title}</h4>
                                       </div>
-                                      <div className="bg-white rounded-[2rem] border border-app-outline-variant/10 shadow-sm divide-y divide-app-outline-variant/5">
+                                      <div className="bg-white rounded-[1.5rem] border border-app-outline-variant/10 shadow-sm overflow-hidden">
                                         {module.lessons.map((lesson) => (
                                           <button
                                             key={lesson.id}
                                             onClick={() => setSelectedLesson(lesson)}
                                             className={cn(
-                                              "w-full p-5 text-left transition-all flex items-center justify-between group",
-                                              selectedLesson?.id === lesson.id ? "bg-gray-50" : "hover:bg-gray-50/50"
+                                              "w-full p-4 text-left transition-all flex items-center justify-between group border-b border-app-outline-variant/5 last:border-b-0",
+                                              selectedLesson?.id === lesson.id ? "bg-[#fff5eb]" : "hover:bg-gray-50/50"
                                             )}
                                           >
-                                            <div className="flex items-center gap-4">
+                                            <div className="flex items-center gap-3">
                                               <div className={cn(
-                                                "w-10 h-10 rounded-xl flex items-center justify-center transition-all",
-                                                selectedLesson?.id === lesson.id ? "bg-app-tertiary text-white shadow-lg shadow-app-tertiary/20" : "bg-app-outline-variant/10 text-app-on-surface-variant"
+                                                "w-8 h-8 rounded-lg flex items-center justify-center transition-all",
+                                                selectedLesson?.id === lesson.id ? "bg-app-tertiary text-white" : lesson.completed ? "bg-green-100 text-green-600" : "bg-app-outline-variant/10 text-app-on-surface-variant"
                                               )}>
-                                                {lesson.completed ? <CheckCircle2 className="w-5 h-5" /> : (lesson.type === 'video' ? <PlayCircle className="w-5 h-5" /> : <FileText className="w-5 h-5" />)}
+                                                {lesson.completed ? <CheckCircle2 className="w-4 h-4" /> : (lesson.type === 'video' ? <PlayCircle className="w-4 h-4" /> : <FileText className="w-4 h-4" />)}
                                               </div>
-                                              <div>
+                                              <div className="min-w-0">
                                                 <p className={cn(
-                                                  "text-sm font-bold tracking-tight font-heading",
-                                                  selectedLesson?.id === lesson.id ? "text-app-on-surface" : "text-app-on-surface/80"
+                                                  "text-[13px] font-bold tracking-tight truncate",
+                                                  selectedLesson?.id === lesson.id ? "text-app-tertiary" : "text-app-on-surface"
                                                 )}>{lesson.title}</p>
-                                                <p className="text-[9px] font-bold text-app-on-surface-variant/40 uppercase tracking-widest">{lesson.type}</p>
+                                                <div className="flex gap-2">
+                                                  <span className="text-[8px] font-black text-app-on-surface-variant/40 uppercase tracking-widest">{lesson.type}</span>
+                                                </div>
                                               </div>
                                             </div>
-                                            <ChevronRight className={cn(
-                                              "w-4 h-4 transition-transform",
-                                              selectedLesson?.id === lesson.id ? "text-app-tertiary translate-x-1" : "text-app-on-surface-variant/20"
-                                            )} />
+                                            {selectedLesson?.id === lesson.id && (
+                                              <div className="w-1.5 h-1.5 rounded-full bg-app-tertiary animate-pulse" />
+                                            )}
                                           </button>
                                         ))}
                                       </div>
