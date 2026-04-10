@@ -743,7 +743,7 @@ export default function App() {
                           </div>
                         </div>
                       ) : selectedLesson?.videoUrl ? (
-                        selectedLesson?.videoUrl.includes('youtube.com') || selectedLesson?.videoUrl.includes('youtu.be') ? (
+                        selectedLesson?.videoUrl?.includes('youtube.com') || selectedLesson?.videoUrl?.includes('youtu.be') ? (
                           <iframe
                             src={selectedLesson?.videoUrl}
                             className="w-full h-full"
@@ -976,7 +976,7 @@ export default function App() {
                 </Button>
                 <div className="flex items-center gap-2">
                   <Badge variant="outline" className="bg-app-surface border-app-outline-variant">
-                    {selectedLesson?.type.toUpperCase()}
+                    {selectedLesson?.type?.toUpperCase()}
                   </Badge>
                   {selectedLesson?.duration && (
                     <div className="flex items-center gap-1 text-xs text-app-on-surface-variant">
