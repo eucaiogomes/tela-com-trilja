@@ -1,10 +1,12 @@
 
-export type LessonType = 'video' | 'evaluation' | 'text' | 'document' | 'scorm';
+export type LessonType = 'video' | 'document' | 'evaluation' | 'scorm' | 'webconference' | 'in-person' | 'recording';
+export type LessonStatus = 'in-progress' | 'not-viewed' | 'completed';
 
 export interface Lesson {
   id: string;
   title: string;
   type: LessonType;
+  status?: LessonStatus;
   duration?: string;
   completed: boolean;
   lastVisited?: boolean;

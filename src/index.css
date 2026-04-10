@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -11,6 +12,8 @@
   --color-app-on-surface-variant: #434750;
   --color-app-on-primary-container: #7fa6e7;
   --color-app-outline-variant: #c3c6d1;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Outfit", sans-serif;
 }
 
 @utility scrollbar-none {

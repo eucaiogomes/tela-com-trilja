@@ -24,7 +24,14 @@ import {
   Eye,
   ArrowLeft,
   Download,
-  ExternalLink
+  ExternalLink,
+  Menu,
+  ChevronLeft,
+  Video,
+  Mic,
+  Package,
+  ClipboardCheck,
+  FileDown
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
@@ -77,6 +84,8 @@ export default function App() {
   const [course] = useState<Course>(MOCK_COURSE);
   const [activeTab, setActiveTab] = useState('trilhas');
   const [mainNav, setMainNav] = useState<'trilhas' | 'treinamentos'>('trilhas');
+  const [trainingSidebarTab, setTrainingSidebarTab] = useState<'conteudo' | 'desempenho' | 'info'>('conteudo');
+  const [isTrainingSidebarOpen, setIsTrainingSidebarOpen] = useState(true);
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
 
   const handleLessonClick = (lesson: Lesson) => {
@@ -90,7 +99,18 @@ export default function App() {
   return (
     <div className="min-h-screen bg-app-background font-sans text-app-on-surface">
       {/* Header (Navbar) */}
-      <header className="bg-[#00254e] border-b border-white/10 px-4 md:px-6 py-2 flex items-center justify-between sticky top-0 z-50">
+      <div className={cn(
+        "z-50 transition-all duration-300",
+        selectedLesson && mainNav === 'treinamentos' 
+          ? "fixed top-0 left-0 right-0 h-2 group" 
+          : "sticky top-0"
+      )}>
+        <header className={cn(
+          "bg-[#00254e] border-b border-white/10 px-4 md:px-6 py-2 flex items-center justify-between transition-all duration-300",
+          selectedLesson && mainNav === 'treinamentos' 
+            ? "absolute top-0 left-0 right-0 -translate-y-full group-hover:translate-y-0 shadow-2xl" 
+            : ""
+        )}>
         <div className="flex items-center gap-4 md:gap-8">
           {/* Logo */}
           <div className="text-white font-bold text-lg md:text-xl tracking-tight flex items-center gap-2">
@@ -151,49 +171,437 @@ export default function App() {
           </div>
         </div>
       </header>
+    </div>
 
       {/* Breadcrumbs */}
-      <div className="px-4 md:px-6 py-3 bg-app-surface border-b border-app-outline-variant overflow-x-auto scrollbar-none">
-        <div className="min-w-max">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/" className="flex items-center gap-1 text-app-on-surface-variant hover:text-app-tertiary">
-                  <Home className="w-4 h-4" />
-                  Início
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator>
-                <ChevronRight className="w-4 h-4 text-app-outline-variant" />
-              </BreadcrumbSeparator>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/sala-de-aula" className="text-app-on-surface-variant hover:text-app-tertiary">
-                  Sala de Aula
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator>
-                <ChevronRight className="w-4 h-4 text-app-outline-variant" />
-              </BreadcrumbSeparator>
-              <BreadcrumbItem>
-                <BreadcrumbPage className="font-medium text-app-on-surface">
-                  {course.title}
-                </BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+      {!(selectedLesson && mainNav === 'treinamentos') && (
+        <div className="px-4 md:px-6 py-3 bg-app-surface border-b border-app-outline-variant overflow-x-auto scrollbar-none">
+          <div className="min-w-max">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/" className="flex items-center gap-1 text-app-on-surface-variant hover:text-app-tertiary">
+                    <Home className="w-4 h-4" />
+                    Início
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator>
+                  <ChevronRight className="w-4 h-4 text-app-outline-variant" />
+                </BreadcrumbSeparator>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/sala-de-aula" className="text-app-on-surface-variant hover:text-app-tertiary">
+                    Sala de Aula
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator>
+                  <ChevronRight className="w-4 h-4 text-app-outline-variant" />
+                </BreadcrumbSeparator>
+                <BreadcrumbItem>
+                  <BreadcrumbLink 
+                    href="#" 
+                    onClick={(e) => { e.preventDefault(); closeLesson(); }}
+                    className={cn(
+                      "text-app-on-surface-variant hover:text-app-tertiary",
+                      !selectedLesson && "font-medium text-app-on-surface pointer-events-none"
+                    )}
+                  >
+                    {course.title}
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                {selectedLesson && (
+                  <>
+                    <BreadcrumbSeparator>
+                      <ChevronRight className="w-4 h-4 text-app-outline-variant" />
+                    </BreadcrumbSeparator>
+                    <BreadcrumbItem>
+                      <BreadcrumbPage className="font-medium text-app-on-surface">
+                        {selectedLesson.title}
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </>
+                )}
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
         </div>
-      </div>
+      )}
 
-      <main className="max-w-[1400px] mx-auto p-4 md:p-6">
+      <main className={cn(
+        "mx-auto",
+        selectedLesson && mainNav === 'treinamentos' ? "w-full p-0" : "max-w-[1400px] p-4 md:p-6"
+      )}>
         <AnimatePresence mode="wait">
           {selectedLesson ? (
-            <motion.div
-              key="lesson-view"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="space-y-6"
-            >
+            mainNav === 'treinamentos' ? (
+              <motion.div
+                key="training-lesson-view"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="flex h-screen overflow-hidden bg-[#f8f9fa]"
+              >
+                {/* Sidebar */}
+                <AnimatePresence initial={false}>
+                  {isTrainingSidebarOpen && (
+                    <motion.aside 
+                      initial={{ width: 0, opacity: 0 }}
+                      animate={{ width: 320, opacity: 1 }}
+                      exit={{ width: 0, opacity: 0 }}
+                      transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                      className="bg-white border-r border-app-outline-variant flex flex-col h-full shadow-xl z-20 overflow-hidden shrink-0"
+                    >
+                      <div className="w-[320px] flex flex-col h-full">
+                        <div className="p-6 bg-[#00254e] text-white space-y-6">
+                          <div className="space-y-4">
+                            <button 
+                              onClick={() => setIsTrainingSidebarOpen(false)}
+                              className="p-1.5 bg-white/10 rounded transition-colors hover:bg-white/20"
+                            >
+                              <Menu className="w-5 h-5" />
+                            </button>
+                            <h2 className="font-bold text-lg leading-tight text-left font-heading tracking-tight">{course.title}</h2>
+                          </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-[10px] font-bold uppercase tracking-[0.1em] font-heading">
+                        <span className="text-white/60">Progresso</span>
+                        <span className="text-app-tertiary bg-app-tertiary/10 px-1.5 py-0.5 rounded font-heading">{course.progress}%</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-app-tertiary transition-all duration-1000" 
+                          style={{ width: `${course.progress}%` }} 
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex border-b border-app-outline-variant bg-app-surface font-heading">
+                    <button 
+                      onClick={() => setTrainingSidebarTab('conteudo')}
+                      className={cn(
+                        "flex-1 py-4 text-[10px] font-bold uppercase tracking-[0.1em] border-b-2 flex flex-col items-center gap-1.5 transition-colors font-heading",
+                        trainingSidebarTab === 'conteudo' ? "border-app-tertiary text-app-tertiary" : "border-transparent text-app-on-surface-variant hover:text-app-on-surface"
+                      )}
+                    >
+                      <Folder className="w-4 h-4" />
+                      Conteúdo
+                    </button>
+                    <button 
+                      onClick={() => setTrainingSidebarTab('desempenho')}
+                      className={cn(
+                        "flex-1 py-4 text-[10px] font-bold uppercase tracking-[0.1em] border-b-2 flex flex-col items-center gap-1.5 transition-colors font-heading",
+                        trainingSidebarTab === 'desempenho' ? "border-app-tertiary text-app-tertiary" : "border-transparent text-app-on-surface-variant hover:text-app-on-surface"
+                      )}
+                    >
+                      <BarChart3 className="w-4 h-4" />
+                      Desempenho
+                    </button>
+                    <button 
+                      onClick={() => setTrainingSidebarTab('info')}
+                      className={cn(
+                        "flex-1 py-4 text-[10px] font-bold uppercase tracking-[0.1em] border-b-2 flex flex-col items-center gap-1.5 transition-colors font-heading",
+                        trainingSidebarTab === 'info' ? "border-app-tertiary text-app-tertiary" : "border-transparent text-app-on-surface-variant hover:text-app-on-surface"
+                      )}
+                    >
+                      <Info className="w-4 h-4" />
+                      Info
+                    </button>
+                  </div>
+
+                  <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-app-outline-variant bg-white">
+                    {trainingSidebarTab === 'conteudo' ? (
+                      course.modules.flatMap(m => m.lessons).map((lesson, idx) => {
+                        const isActive = lesson.id === selectedLesson.id;
+                        
+                        const getTypeLabel = (type: string) => {
+                          switch(type) {
+                            case 'video': return 'Vídeo';
+                            case 'document': return 'Documento';
+                            case 'evaluation': return 'Avaliação';
+                            case 'scorm': return 'Scorm';
+                            case 'webconference': return 'Webconferência';
+                            case 'in-person': return 'Aula Presencial';
+                            case 'recording': return 'Gravação';
+                            default: return 'Conteúdo';
+                          }
+                        };
+
+                        const getStatusLabel = (status?: string) => {
+                          switch(status) {
+                            case 'completed': return 'Concluído';
+                            case 'in-progress': return 'Em andamento';
+                            case 'not-viewed': return 'Não visualizado';
+                            default: return 'Não visualizado';
+                          }
+                        };
+
+                        const getStatusColor = (status?: string) => {
+                          switch(status) {
+                            case 'completed': return 'bg-green-100 text-green-700';
+                            case 'in-progress': return 'bg-blue-100 text-blue-700';
+                            case 'not-viewed': return 'bg-gray-100 text-gray-600';
+                            default: return 'bg-gray-100 text-gray-600';
+                          }
+                        };
+
+                        const getTypeIcon = (type: string) => {
+                          switch(type) {
+                            case 'video': return <PlayCircle className="w-4 h-4" />;
+                            case 'document': return <FileDown className="w-4 h-4" />;
+                            case 'evaluation': return <ClipboardCheck className="w-4 h-4" />;
+                            case 'scorm': return <Package className="w-4 h-4" />;
+                            case 'webconference': return <Video className="w-4 h-4" />;
+                            case 'in-person': return <Users className="w-4 h-4" />;
+                            case 'recording': return <Mic className="w-4 h-4" />;
+                            default: return <FileText className="w-4 h-4" />;
+                          }
+                        };
+
+                        return (
+                          <button 
+                            key={lesson.id}
+                            onClick={() => setSelectedLesson(lesson)}
+                            className={cn(
+                              "w-full p-5 text-left border-b border-app-outline-variant/20 transition-all relative group",
+                              isActive ? "bg-[#fff5eb] border-l-4 border-l-[#eb6200]" : "hover:bg-gray-50 border-l-4 border-l-transparent"
+                            )}
+                          >
+                            <div className="flex items-start gap-4">
+                              <div className={cn(
+                                "mt-1 shrink-0",
+                                isActive ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
+                              )}>
+                                {lesson.completed ? (
+                                  <CheckCircle2 className="w-5 h-5" />
+                                ) : (
+                                  <div className="w-5 h-5 rounded-full border-2 border-current opacity-30" />
+                                )}
+                              </div>
+                              <div className="flex-1 min-w-0 space-y-2">
+                                <p className={cn(
+                                  "text-[15px] font-semibold leading-tight tracking-tight font-heading",
+                                  isActive ? "text-[#eb6200]" : "text-[#1a1a1a]"
+                                )}>
+                                  {lesson.title}
+                                </p>
+                                <div className="flex flex-wrap gap-2 font-heading">
+                                  <span className={cn(
+                                    "inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-[0.05em] font-heading",
+                                    isActive ? "bg-[#eb6200]/10 text-[#eb6200]" : "bg-gray-100 text-gray-500"
+                                  )}>
+                                    {getTypeIcon(lesson.type)}
+                                    {getTypeLabel(lesson.type)}
+                                  </span>
+                                  <span className={cn(
+                                    "inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-[0.05em] font-heading",
+                                    getStatusColor(lesson.status)
+                                  )}>
+                                    {getStatusLabel(lesson.status)}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </button>
+                        );
+                      })
+                    ) : trainingSidebarTab === 'desempenho' ? (
+                      <div className="p-6 space-y-8">
+                        {/* Highlights */}
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="bg-app-background p-4 rounded-2xl border border-app-outline-variant/20">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-app-on-surface-variant mb-1 font-heading">Aproveitamento</p>
+                            <p className="text-2xl font-black text-app-tertiary font-heading tracking-tight">100%</p>
+                          </div>
+                          <div className="bg-app-background p-4 rounded-2xl border border-app-outline-variant/20">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-app-on-surface-variant mb-1 font-heading">Tempo Online</p>
+                            <p className="text-2xl font-black text-app-primary font-heading tracking-tight">02:45h</p>
+                          </div>
+                        </div>
+
+                        {/* Mini Chart */}
+                        <div className="space-y-4">
+                          <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-app-on-surface-variant font-heading">Evolução de Notas</p>
+                          <div className="h-32 w-full">
+                            <ResponsiveContainer width="100%" height="100%">
+                              <BarChart data={PERFORMANCE_DATA}>
+                                <Bar 
+                                  dataKey="score" 
+                                  radius={[4, 4, 0, 0]}
+                                >
+                                  {PERFORMANCE_DATA.map((entry, index) => (
+                                    <Cell 
+                                      key={`cell-${index}`} 
+                                      fill={entry.score >= 70 ? '#eb6200' : '#00254e'} 
+                                      fillOpacity={0.8}
+                                    />
+                                  ))}
+                                </Bar>
+                                <Tooltip 
+                                  cursor={{ fill: 'transparent' }}
+                                  content={({ active, payload }) => {
+                                    if (active && payload && payload.length) {
+                                      return (
+                                        <div className="bg-white p-2 border border-app-outline-variant/20 rounded shadow-sm text-[10px] font-bold font-heading">
+                                          {payload[0].value}%
+                                        </div>
+                                      );
+                                    }
+                                    return null;
+                                  }}
+                                />
+                              </BarChart>
+                            </ResponsiveContainer>
+                          </div>
+                        </div>
+
+                        {/* Content List */}
+                        <div className="space-y-4">
+                          <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-app-on-surface-variant font-heading">Detalhamento por Conteúdo</p>
+                          <div className="space-y-3">
+                            {course.modules.flatMap(m => m.lessons).map((lesson) => (
+                              <div key={lesson.id} className="p-4 rounded-2xl border border-app-outline-variant/10 bg-gray-50/50 space-y-3">
+                                <p className="text-xs font-bold text-app-on-surface font-heading tracking-tight">{lesson.title}</p>
+                                <div className="flex flex-wrap gap-2 font-heading">
+                                  <span className="px-2 py-0.5 rounded bg-white border border-app-outline-variant/20 text-[9px] font-bold uppercase tracking-[0.05em] text-app-tertiary font-heading">
+                                    Aprov: 100%
+                                  </span>
+                                  <span className="px-2 py-0.5 rounded bg-white border border-app-outline-variant/20 text-[9px] font-bold uppercase tracking-[0.05em] text-app-primary font-heading">
+                                    Prog: {lesson.completed ? '100%' : '0%'}
+                                  </span>
+                                  <span className={cn(
+                                    "px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-[0.05em] font-heading",
+                                    lesson.completed ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"
+                                  )}>
+                                    {lesson.completed ? 'Concluído' : 'Pendente'}
+                                  </span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="p-8 text-center space-y-4">
+                        <Info className="w-12 h-12 text-app-outline-variant mx-auto opacity-20" />
+                        <p className="text-sm font-medium text-app-on-surface-variant font-heading">Informações do curso em breve.</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </motion.aside>
+              )}
+            </AnimatePresence>
+
+            {/* Main Content Area */}
+            <main className="flex-1 overflow-y-auto bg-[#f8f9fa] scrollbar-thin scrollbar-thumb-app-outline-variant relative min-w-0">
+                  {/* Toggle Button when Sidebar is closed */}
+                  {!isTrainingSidebarOpen && (
+                    <motion.button
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      onClick={() => setIsTrainingSidebarOpen(true)}
+                      className="absolute top-6 left-6 z-30 p-2 bg-[#00254e] text-white rounded-lg shadow-lg hover:bg-[#003a75] transition-colors"
+                    >
+                      <Menu className="w-6 h-6" />
+                    </motion.button>
+                  )}
+                  
+                  <div className="max-w-5xl mx-auto p-8 md:p-12 space-y-10">
+                    {/* Video Player Section */}
+                    <div className="relative aspect-video rounded-3xl overflow-hidden bg-black shadow-[0_32px_64px_-12px_rgba(0,0,0,0.3)] group">
+                      {selectedLesson.videoUrl ? (
+                        selectedLesson.videoUrl.includes('youtube.com') || selectedLesson.videoUrl.includes('youtu.be') ? (
+                          <iframe
+                            src={selectedLesson.videoUrl}
+                            className="w-full h-full"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        ) : (
+                          <video 
+                            src={selectedLesson.videoUrl} 
+                            controls 
+                            className="w-full h-full object-contain"
+                          />
+                        )
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-zinc-900">
+                          <PlayCircle className="w-24 h-24 text-white/30 group-hover:text-white/60 transition-all duration-500 scale-90 group-hover:scale-100" />
+                        </div>
+                      )}
+                      
+                      {/* Navigation Overlays */}
+                      <div className="absolute inset-0 flex items-center justify-between px-8 pointer-events-none">
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const all = course.modules.flatMap(m => m.lessons);
+                            const idx = all.findIndex(l => l.id === selectedLesson.id);
+                            if (idx > 0) setSelectedLesson(all[idx - 1]);
+                          }}
+                          className="pointer-events-auto w-28 h-28 bg-[#5c2d0c]/85 hover:bg-[#5c2d0c] text-white rounded-[2rem] flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl backdrop-blur-sm group/btn"
+                        >
+                          <ChevronLeft className="w-10 h-10 transition-transform group-hover/btn:-translate-x-1" />
+                          <span className="text-[10px] font-black uppercase tracking-[0.2em] font-heading">Anterior</span>
+                        </button>
+                        
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const all = course.modules.flatMap(m => m.lessons);
+                            const idx = all.findIndex(l => l.id === selectedLesson.id);
+                            if (idx < all.length - 1) setSelectedLesson(all[idx + 1]);
+                          }}
+                          className="pointer-events-auto w-28 h-28 bg-[#5c2d0c]/85 hover:bg-[#5c2d0c] text-white rounded-[2rem] flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl backdrop-blur-sm group/btn"
+                        >
+                          <ChevronRight className="w-10 h-10 transition-transform group-hover/btn:translate-x-1" />
+                          <span className="text-[10px] font-black uppercase tracking-[0.2em] font-heading">Próximo</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Lesson Info Section */}
+                    <div className="space-y-8">
+                      <h1 className="text-4xl font-black text-app-on-surface tracking-tight leading-tight font-heading">
+                        {selectedLesson.title}
+                      </h1>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <Card className="border-app-outline-variant/50 shadow-sm rounded-2xl overflow-hidden">
+                          <CardHeader className="bg-app-surface/50 border-b border-app-outline-variant/30 py-4">
+                            <CardTitle className="text-xs font-black uppercase tracking-[0.15em] text-app-on-surface-variant font-heading">Curso do Curso</CardTitle>
+                          </CardHeader>
+                          <CardContent className="p-6">
+                            <div className="flex items-center gap-3 text-app-on-surface">
+                              <div className="w-2 h-2 rounded-full bg-app-tertiary" />
+                              <p className="text-sm font-bold font-heading">Progresso e Cora</p>
+                            </div>
+                          </CardContent>
+                        </Card>
+                        
+                        <Card className="border-app-outline-variant/50 shadow-sm rounded-2xl overflow-hidden">
+                          <CardHeader className="bg-app-surface/50 border-b border-app-outline-variant/30 py-4">
+                            <CardTitle className="text-xs font-black uppercase tracking-[0.15em] text-app-on-surface-variant font-heading">Notas</CardTitle>
+                          </CardHeader>
+                          <CardContent className="p-6">
+                            <div className="h-16 bg-app-background/50 rounded-xl border-2 border-dashed border-app-outline-variant/50 flex items-center justify-center">
+                              <p className="text-xs font-bold text-app-on-surface-variant/50 uppercase tracking-wider font-heading">Nenhuma nota adicionada</p>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    </div>
+                  </div>
+                </main>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="lesson-view"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="space-y-6"
+              >
               <div className="flex items-center justify-between">
                 <Button variant="ghost" onClick={closeLesson} className="flex items-center gap-2 text-app-on-surface-variant hover:text-app-tertiary">
                   <ArrowLeft className="w-4 h-4" />
@@ -332,8 +740,9 @@ export default function App() {
                 </aside>
               </div>
             </motion.div>
-          ) : (
-            <motion.div
+          )
+        ) : (
+          <motion.div
               key="course-overview"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
