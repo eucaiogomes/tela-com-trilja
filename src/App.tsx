@@ -257,7 +257,7 @@ export default function App() {
                     </BreadcrumbSeparator>
                     <BreadcrumbItem>
                       <BreadcrumbPage className="font-medium text-app-on-surface">
-                        {selectedLesson.title}
+                        {selectedLesson?.title}
                       </BreadcrumbPage>
                     </BreadcrumbItem>
                   </>
@@ -425,7 +425,7 @@ export default function App() {
                                                 onClick={() => setSelectedLesson(subLesson)}
                                                 className={cn(
                                                   "w-full py-3.5 pl-16 pr-6 text-left hover:bg-white transition-colors flex items-center gap-3 border-l-4 border-l-transparent",
-                                                  selectedLesson.id === subLesson.id ? "bg-white border-l-[#eb6200]" : ""
+                                                  selectedLesson?.id === subLesson.id ? "bg-white border-l-[#eb6200]" : ""
                                                 )}
                                               >
                                                 <div 
@@ -442,7 +442,7 @@ export default function App() {
                                                 </div>
                                                 <span className={cn(
                                                   "text-xs font-medium truncate",
-                                                  selectedLesson.id === subLesson.id ? "text-app-on-surface font-bold" : "text-app-on-surface-variant"
+                                                  selectedLesson?.id === subLesson.id ? "text-app-on-surface font-bold" : "text-app-on-surface-variant"
                                                 )}>{subLesson.title}</span>
                                               </button>
                                             ))}
@@ -454,7 +454,7 @@ export default function App() {
                                         onClick={() => setSelectedLesson(lesson)}
                                         className={cn(
                                           "w-full px-8 py-5 text-left transition-all relative group flex items-start gap-4 border-l-4",
-                                          lesson.id === selectedLesson.id ? "bg-[#fff5eb] border-l-[#eb6200]" : "hover:bg-gray-50 border-l-transparent"
+                                          lesson.id === selectedLesson?.id ? "bg-[#fff5eb] border-l-[#eb6200]" : "hover:bg-gray-50 border-l-transparent"
                                         )}
                                       >
                                         <div 
@@ -472,7 +472,7 @@ export default function App() {
                                         <div className="flex-1 min-w-0">
                                           <p className={cn(
                                             "text-sm font-bold tracking-tight font-heading",
-                                            lesson.id === selectedLesson.id ? "text-[#eb6200]" : "text-[#1a1a1a]"
+                                            lesson.id === selectedLesson?.id ? "text-[#eb6200]" : "text-[#1a1a1a]"
                                           )}>{lesson.title}</p>
                                           <div className="flex gap-2 mt-1">
                                             <span className="text-[9px] font-bold uppercase tracking-widest text-app-on-surface-variant/40">{lesson.type}</span>
@@ -488,7 +488,7 @@ export default function App() {
                         </Accordion>
                       ) : (
                         course.modules.flatMap(m => m.lessons).map((lesson, idx) => {
-                          const isActive = lesson.id === selectedLesson.id;
+                          const isActive = lesson.id === selectedLesson?.id;
                           
                           const getTypeLabel = (type: string) => {
                             switch(type) {
@@ -707,7 +707,7 @@ export default function App() {
                         <ChevronRight className="w-3 h-3 text-app-on-surface-variant/30" />
                         <span className="text-app-on-surface-variant/40 truncate max-w-[150px] md:max-w-[250px]">{course.title}</span>
                         <ChevronRight className="w-3 h-3 text-app-on-surface-variant/30" />
-                        <span className="text-app-tertiary">{selectedLesson.title}</span>
+                        <span className="text-app-tertiary">{selectedLesson?.title}</span>
                       </nav>
                       
                       <button 
@@ -721,10 +721,10 @@ export default function App() {
 
                     {/* Video Player Section */}
                     <div className="relative aspect-video rounded-3xl overflow-hidden bg-black shadow-[0_32px_64px_-12px_rgba(0,0,0,0.3)] group">
-                      {selectedLesson.fileUrl ? (
+                      {selectedLesson?.fileUrl ? (
                         <div className="w-full h-full bg-white relative">
                           <iframe
-                            src={selectedLesson.fileUrl}
+                            src={selectedLesson?.fileUrl}
                             className="w-full h-full border-none pointer-events-auto"
                             title="Document Viewer"
                           />
@@ -732,7 +732,7 @@ export default function App() {
                              <div className="bg-white/90 backdrop-blur-sm p-4 rounded-2xl shadow-xl pointer-events-auto flex items-center gap-4">
                                <p className="text-xs font-bold text-app-on-surface uppercase tracking-wider">Problemas ao visualizar?</p>
                                <a 
-                                 href={selectedLesson.fileUrl} 
+                                 href={selectedLesson?.fileUrl} 
                                  target="_blank" 
                                  rel="noopener noreferrer"
                                  className="px-4 py-2 bg-app-tertiary text-white text-[10px] font-bold uppercase tracking-widest rounded-xl hover:bg-app-tertiary-hover transition-colors"
@@ -742,24 +742,24 @@ export default function App() {
                              </div>
                           </div>
                         </div>
-                      ) : selectedLesson.videoUrl ? (
-                        selectedLesson.videoUrl.includes('youtube.com') || selectedLesson.videoUrl.includes('youtu.be') ? (
+                      ) : selectedLesson?.videoUrl ? (
+                        selectedLesson?.videoUrl.includes('youtube.com') || selectedLesson?.videoUrl.includes('youtu.be') ? (
                           <iframe
-                            src={selectedLesson.videoUrl}
+                            src={selectedLesson?.videoUrl}
                             className="w-full h-full"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                           />
                         ) : (
                           <video 
-                            src={selectedLesson.videoUrl} 
+                            src={selectedLesson?.videoUrl} 
                             controls 
                             className="w-full h-full object-contain"
                           />
                         )
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-zinc-900">
-                          {selectedLesson.type === 'document' ? (
+                          {selectedLesson?.type === 'document' ? (
                             <FileText className="w-24 h-24 text-white/30 group-hover:text-white/60 transition-all duration-500 scale-90 group-hover:scale-100" />
                           ) : (
                             <PlayCircle className="w-24 h-24 text-white/30 group-hover:text-white/60 transition-all duration-500 scale-90 group-hover:scale-100" />
@@ -775,7 +775,7 @@ export default function App() {
                             onClick={(e) => {
                               e.stopPropagation();
                               const all = course.modules.flatMap(m => m.lessons);
-                              const idx = all.findIndex(l => l.id === selectedLesson.id);
+                              const idx = all.findIndex(l => l.id === selectedLesson?.id);
                               if (idx > 0) setSelectedLesson(all[idx - 1]);
                             }}
                             className="opacity-0 group-hover/nav-left:opacity-100 w-36 h-36 bg-[#eb6200]/90 hover:bg-[#eb6200] text-white rounded-2xl flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl backdrop-blur-sm group/btn"
@@ -794,7 +794,7 @@ export default function App() {
                             onClick={(e) => {
                               e.stopPropagation();
                               const all = course.modules.flatMap(m => m.lessons);
-                              const idx = all.findIndex(l => l.id === selectedLesson.id);
+                              const idx = all.findIndex(l => l.id === selectedLesson?.id);
                               if (idx < all.length - 1) setSelectedLesson(all[idx + 1]);
                             }}
                             className="opacity-0 group-hover/nav-right:opacity-100 w-36 h-36 bg-[#eb6200]/90 hover:bg-[#eb6200] text-white rounded-2xl flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl backdrop-blur-sm group/btn"
@@ -809,7 +809,7 @@ export default function App() {
                     {/* Lesson Info Section */}
                     <div className="space-y-8">
                       <h1 className="text-4xl font-black text-app-on-surface tracking-tight leading-tight font-heading">
-                        {selectedLesson.title}
+                        {selectedLesson?.title}
                       </h1>
                       
                       <div className="bg-white rounded-3xl border border-app-outline-variant/30 shadow-sm overflow-hidden">
@@ -863,8 +863,8 @@ export default function App() {
                                 className="space-y-6"
                               >
                                 <div className="prose prose-sm max-w-none text-app-on-surface-variant/90 font-sans leading-relaxed">
-                                  {selectedLesson.content ? (
-                                    <p className="font-medium text-sm">{selectedLesson.content}</p>
+                                  {selectedLesson?.content ? (
+                                    <p className="font-medium text-sm">{selectedLesson?.content}</p>
                                   ) : (
                                     <p className="font-medium text-sm italic">Nenhuma descrição detalhada disponível para este conteúdo.</p>
                                   )}
@@ -881,7 +881,7 @@ export default function App() {
                                 className="space-y-6"
                               >
                                 <p className="text-app-on-surface-variant/90 leading-relaxed font-sans text-sm font-medium max-w-3xl">
-                                  {selectedLesson.description || "Nenhum resumo disponível para este conteúdo."}
+                                  {selectedLesson?.description || "Nenhum resumo disponível para este conteúdo."}
                                 </p>
                                 <div className="flex items-center gap-8 pt-6 border-t border-app-outline-variant/10">
                                   <div className="flex items-center gap-2.5 text-app-on-surface-variant/70">
@@ -976,12 +976,12 @@ export default function App() {
                 </Button>
                 <div className="flex items-center gap-2">
                   <Badge variant="outline" className="bg-app-surface border-app-outline-variant">
-                    {selectedLesson.type.toUpperCase()}
+                    {selectedLesson?.type.toUpperCase()}
                   </Badge>
-                  {selectedLesson.duration && (
+                  {selectedLesson?.duration && (
                     <div className="flex items-center gap-1 text-xs text-app-on-surface-variant">
                       <Clock className="w-3 h-3" />
-                      {selectedLesson.duration}
+                      {selectedLesson?.duration}
                     </div>
                   )}
                 </div>
@@ -990,14 +990,14 @@ export default function App() {
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-8">
                 <div className="space-y-6">
                   <Card className="overflow-hidden border-app-outline-variant bg-black aspect-video flex items-center justify-center relative group">
-                    {selectedLesson.type === 'video' ? (
+                    {selectedLesson?.type === 'video' ? (
                       <div className="w-full h-full flex items-center justify-center bg-zinc-900">
                         <PlayCircle className="w-16 h-16 text-white/50 group-hover:text-app-tertiary transition-colors cursor-pointer" />
                         <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                          <p className="text-white text-sm font-medium">{selectedLesson.title}</p>
+                          <p className="text-white text-sm font-medium">{selectedLesson?.title}</p>
                         </div>
                       </div>
-                    ) : selectedLesson.type === 'evaluation' ? (
+                    ) : selectedLesson?.type === 'evaluation' ? (
                       <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-100 p-8 text-center space-y-4">
                         <FileText className="w-16 h-16 text-app-tertiary" />
                         <h3 className="text-xl font-bold text-app-on-surface">Avaliação de Reação</h3>
@@ -1031,17 +1031,17 @@ export default function App() {
 
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-1">
-                      <h1 className="text-2xl font-bold text-app-on-surface">{selectedLesson.title}</h1>
+                      <h1 className="text-2xl font-bold text-app-on-surface">{selectedLesson?.title}</h1>
                       <p className="text-sm text-app-on-surface-variant">
-                        Módulo: {course.modules.find(m => m.lessons.some(l => l.id === selectedLesson.id))?.title}
+                        Módulo: {course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id))?.title}
                       </p>
                     </div>
                     <Button 
                       className="bg-app-tertiary hover:bg-app-tertiary-hover text-white flex items-center gap-2"
                       onClick={() => {
-                        const currentModule = course.modules.find(m => m.lessons.some(l => l.id === selectedLesson.id));
+                        const currentModule = course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id));
                         if (currentModule) {
-                          const currentIndex = currentModule.lessons.findIndex(l => l.id === selectedLesson.id);
+                          const currentIndex = currentModule.lessons.findIndex(l => l.id === selectedLesson?.id);
                           if (currentIndex < currentModule.lessons.length - 1) {
                             setSelectedLesson(currentModule.lessons[currentIndex + 1]);
                           } else {
@@ -1063,7 +1063,7 @@ export default function App() {
                   </div>
 
                   <div className="prose prose-sm max-w-none text-app-on-surface-variant pt-4 border-t border-app-outline-variant">
-                    <p className="whitespace-pre-line">{selectedLesson.description || 'Sem descrição disponível para esta aula.'}</p>
+                    <p className="whitespace-pre-line">{selectedLesson?.description || 'Sem descrição disponível para esta aula.'}</p>
                   </div>
                 </div>
 
@@ -1074,13 +1074,13 @@ export default function App() {
                     </CardHeader>
                     <CardContent className="p-0">
                       <div className="divide-y divide-app-outline-variant">
-                        {course.modules.find(m => m.lessons.some(l => l.id === selectedLesson.id))?.lessons.map((lesson) => (
+                        {course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id))?.lessons.map((lesson) => (
                           <button
                             key={lesson.id}
                             onClick={() => handleLessonClick(lesson)}
                             className={cn(
                               "w-full p-4 flex items-start gap-3 text-left transition-colors hover:bg-app-background",
-                              lesson.id === selectedLesson.id ? "bg-app-tertiary/5 border-l-4 border-app-tertiary" : "pl-5"
+                              lesson.id === selectedLesson?.id ? "bg-app-tertiary/5 border-l-4 border-app-tertiary" : "pl-5"
                             )}
                           >
                             <div className={cn(
@@ -1092,7 +1092,7 @@ export default function App() {
                             <div className="flex-1 min-w-0">
                               <p className={cn(
                                 "text-sm font-medium truncate",
-                                lesson.id === selectedLesson.id ? "text-app-tertiary" : "text-app-on-surface"
+                                lesson.id === selectedLesson?.id ? "text-app-tertiary" : "text-app-on-surface"
                               )}>
                                 {lesson.title}
                               </p>
