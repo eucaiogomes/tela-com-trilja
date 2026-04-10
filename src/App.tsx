@@ -691,11 +691,11 @@ export default function App() {
 
             {/* Main Content Area */}
             <main className="flex-1 overflow-y-auto bg-[#f8f9fa] scrollbar-thin scrollbar-thumb-app-outline-variant relative min-w-0">
-                  <div className={cn(
-                    "mx-auto transition-all duration-500 ease-in-out",
-                    isTrainingSidebarOpen ? "max-w-7xl" : "max-w-7xl",
-                    "pt-0 md:pt-4 px-0 md:px-10 pb-12 space-y-0 md:space-y-6"
-                  )}>
+                    <div className={cn(
+                      "mx-auto transition-all duration-500 ease-in-out",
+                      isTrainingSidebarOpen ? "max-w-7xl" : "max-w-7xl",
+                      "pt-0 md:pt-6 px-0 md:px-10 pb-12 space-y-0 md:space-y-6"
+                    )}>
                     {/* Breadcrumb & Navigation (Desktop Only) */}
                     <div className="hidden md:flex items-center justify-between mb-4">
                       <div className="flex items-center gap-4">
