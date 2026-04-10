@@ -83,7 +83,7 @@ const PERFORMANCE_DATA = [
 export default function App() {
   const [course] = useState<Course>(MOCK_COURSE);
   const [activeTab, setActiveTab] = useState('trilhas');
-  const [mainNav, setMainNav] = useState<'trilhas' | 'treinamentos'>('trilhas');
+  const [mainNav, setMainNav] = useState<'trilhas' | 'treinamentos' | 'trilha2'>('trilhas');
   const [trainingSidebarTab, setTrainingSidebarTab] = useState<'conteudo' | 'desempenho' | 'info'>('conteudo');
   const [isTrainingSidebarOpen, setIsTrainingSidebarOpen] = useState(true);
   const [lessonInfoTab, setLessonInfoTab] = useState<'descricao' | 'resumo' | 'material' | 'autor'>('descricao');
@@ -140,6 +140,15 @@ export default function App() {
               )}
             >
               Treinamentos
+            </button>
+            <button 
+              onClick={() => setMainNav('trilha2')}
+              className={cn(
+                "px-4 py-2 rounded-lg font-semibold text-sm transition-colors",
+                mainNav === 'trilha2' ? "bg-white/10 text-app-tertiary" : "text-app-on-primary-container hover:text-white"
+              )}
+            >
+              Trilha 2
             </button>
           </nav>
         </div>
@@ -1056,7 +1065,7 @@ export default function App() {
                   </div>
 
                   <TabsContent value="conteudos" className="mt-6 space-y-4">
-                    {mainNav === 'trilhas' ? (
+                    {mainNav !== 'treinamentos' ? (
                       <Accordion type="single" collapsible defaultValue={"m4" as any} className="space-y-3">
                         {course.modules.map((module) => (
                           <AccordionItem 
