@@ -371,20 +371,36 @@ export default function App() {
                     {trainingSidebarTab === 'conteudo' ? (
                       mainNav === 'trilha2' ? (
                         <Accordion type="multiple" defaultValue={course.modules.map(m => m.id)} className="w-full border-none">
-                          {course.modules.map((module, index) => (
-                            <AccordionItem key={module.id} value={module.id} className="border-none relative">
-                              {/* Linha da Trilha */}
-                              {index < course.modules.length - 1 && (
-                                <div className="absolute left-[39px] top-12 bottom-0 w-0.5 bg-app-outline-variant/30 z-0" />
-                              )}
-                              <AccordionTrigger className="px-6 py-4 bg-gray-50/50 hover:bg-gray-100/50 hover:no-underline border-b border-app-outline-variant/10 group relative z-10">
-                                <div className="flex items-center gap-3 text-left">
-                                  <div className="w-8 h-8 rounded-full bg-white border-2 border-app-outline-variant flex items-center justify-center text-[10px] font-bold text-app-on-surface-variant group-data-[state=open]:border-app-tertiary group-data-[state=open]:text-app-tertiary transition-all shadow-sm">
-                                    {index + 1}
+                          {course.modules.map((module, index) => {
+                            const isModuleCompleted = module.lessons.every(lesson => {
+                              if (lesson.type === 'training' && lesson.lessons) {
+                                return lesson.lessons.every(sub => sub.completed);
+                              }
+                              return lesson.completed;
+                            });
+
+                            return (
+                              <AccordionItem key={module.id} value={module.id} className="border-none relative">
+                                {/* Linha da Trilha */}
+                                {index < course.modules.length - 1 && (
+                                  <div className="absolute left-[39px] top-12 bottom-0 w-0.5 bg-app-outline-variant/30 z-0" />
+                                )}
+                                <AccordionTrigger className="px-6 py-4 bg-gray-50/50 hover:bg-gray-100/50 hover:no-underline border-b border-app-outline-variant/10 group relative z-10">
+                                  <div className="flex items-center gap-3 text-left">
+                                    <div className={cn(
+                                      "w-8 h-8 rounded-full bg-white border-2 flex items-center justify-center text-[10px] font-bold transition-all shadow-sm",
+                                      isModuleCompleted 
+                                        ? "border-green-500 text-green-500 bg-green-50" 
+                                        : "border-app-outline-variant text-app-on-surface-variant group-data-[state=open]:border-app-tertiary group-data-[state=open]:text-app-tertiary"
+                                    )}>
+                                      {index + 1}
+                                    </div>
+                                    <span className={cn(
+                                      "text-xs font-bold uppercase tracking-widest font-heading",
+                                      isModuleCompleted ? "text-green-600" : "text-app-on-surface"
+                                    )}>{module.title}</span>
                                   </div>
-                                  <span className="text-xs font-bold uppercase tracking-widest text-app-on-surface font-heading">{module.title}</span>
-                                </div>
-                              </AccordionTrigger>
+                                </AccordionTrigger>
                               <AccordionContent className="p-0 border-b border-app-outline-variant/10">
                                 {module.lessons.map((lesson) => (
                                   <div key={lesson.id}>
