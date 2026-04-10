@@ -859,76 +859,38 @@ export default function App() {
                         {/* Sticky Tabs Bar */}
                         <div className="sticky top-0 z-30 -mx-4 px-4 py-2 bg-[#f8f9fa] md:bg-[#f8f9fa]/80 md:backdrop-blur-md">
                           <div className="md:bg-white md:rounded-2xl md:border md:border-app-outline-variant/30 md:shadow-lg md:shadow-black/[0.03] overflow-hidden">
-                            <div className="flex overflow-x-auto scrollbar-none gap-2 md:gap-0 md:bg-gray-50/30 py-2 md:py-0">
-                              <button 
-                                onClick={() => setLessonInfoTab('descricao')}
-                                className={cn(
-                                  "shrink-0 flex items-center gap-2 transition-all font-heading font-bold uppercase tracking-[0.15em] text-[10px]",
-                                  "md:px-8 md:py-5 md:border-b-2",
-                                  "px-5 py-2.5 rounded-full border md:rounded-none",
-                                  lessonInfoTab === 'descricao' 
-                                    ? "bg-app-tertiary text-white border-app-tertiary md:bg-white md:text-app-tertiary md:border-app-tertiary" 
-                                    : "bg-white text-app-on-surface-variant/60 border-app-outline-variant md:bg-transparent md:border-transparent md:hover:text-app-on-surface"
-                                )}
-                              >
-                                <Info className="w-3.5 h-3.5" />
-                                Descrição
-                              </button>
-                              <button 
-                                onClick={() => setLessonInfoTab('conteudo')}
-                                className={cn(
-                                  "md:hidden shrink-0 flex items-center gap-2 transition-all font-heading font-bold uppercase tracking-[0.15em] text-[10px]",
-                                  "px-5 py-2.5 rounded-full border",
-                                  lessonInfoTab === 'conteudo' 
-                                    ? "bg-app-tertiary text-white border-app-tertiary" 
-                                    : "bg-white text-app-on-surface-variant/60 border-app-outline-variant"
-                                )}
-                              >
-                                <List className="w-3.5 h-3.5" />
-                                Conteúdo
-                              </button>
-                              <button 
-                                onClick={() => setLessonInfoTab('resumo')}
-                                className={cn(
-                                  "shrink-0 flex items-center gap-2 transition-all font-heading font-bold uppercase tracking-[0.15em] text-[10px]",
-                                  "md:px-8 md:py-5 md:border-b-2",
-                                  "px-5 py-2.5 rounded-full border md:rounded-none",
-                                  lessonInfoTab === 'resumo' 
-                                    ? "bg-app-tertiary text-white border-app-tertiary md:bg-white md:text-app-tertiary md:border-app-tertiary" 
-                                    : "bg-white text-app-on-surface-variant/60 border-app-outline-variant md:bg-transparent md:border-transparent md:hover:text-app-on-surface"
-                                )}
-                              >
-                                <MessageSquare className="w-3.5 h-3.5" />
-                                Resumo
-                              </button>
-                              <button 
-                                onClick={() => setLessonInfoTab('material')}
-                                className={cn(
-                                  "shrink-0 flex items-center gap-2 transition-all font-heading font-bold uppercase tracking-[0.15em] text-[10px]",
-                                  "md:px-8 md:py-5 md:border-b-2",
-                                  "px-5 py-2.5 rounded-full border md:rounded-none",
-                                  lessonInfoTab === 'material' 
-                                    ? "bg-app-tertiary text-white border-app-tertiary md:bg-white md:text-app-tertiary md:border-app-tertiary" 
-                                    : "bg-white text-app-on-surface-variant/60 border-app-outline-variant md:bg-transparent md:border-transparent md:hover:text-app-on-surface"
-                                )}
-                              >
-                                <FileDown className="w-3.5 h-3.5" />
-                                Material Complementar
-                              </button>
-                              <button 
-                                onClick={() => setLessonInfoTab('autor')}
-                                className={cn(
-                                  "shrink-0 flex items-center gap-2 transition-all font-heading font-bold uppercase tracking-[0.15em] text-[10px]",
-                                  "md:px-8 md:py-5 md:border-b-2",
-                                  "px-5 py-2.5 rounded-full border md:rounded-none",
-                                  lessonInfoTab === 'autor' 
-                                    ? "bg-app-tertiary text-white border-app-tertiary md:bg-white md:text-app-tertiary md:border-app-tertiary" 
-                                    : "bg-white text-app-on-surface-variant/60 border-app-outline-variant md:bg-transparent md:border-transparent md:hover:text-app-on-surface"
-                                )}
-                              >
-                                <Users className="w-3.5 h-3.5" />
-                                Autor
-                              </button>
+                            <div className="flex overflow-x-auto scrollbar-none gap-2 md:gap-0 md:bg-gray-50/30 py-2 md:py-0 relative">
+                              {[
+                                { id: 'descricao', label: 'Descrição', icon: Info },
+                                { id: 'conteudo', label: 'Conteúdo', icon: List, mobileOnly: true },
+                                { id: 'resumo', label: 'Resumo', icon: MessageSquare },
+                                { id: 'material', label: 'Material Complementar', icon: FileDown },
+                                { id: 'autor', label: 'Autor', icon: Users }
+                              ].map((tab) => (
+                                <button 
+                                  key={tab.id}
+                                  onClick={() => setLessonInfoTab(tab.id as any)}
+                                  className={cn(
+                                    "shrink-0 flex items-center gap-2 transition-all font-heading font-bold uppercase tracking-[0.15em] text-[10px] relative",
+                                    "md:px-8 md:py-5",
+                                    "px-5 py-2.5 rounded-full border md:rounded-none md:border-none",
+                                    tab.mobileOnly && "md:hidden",
+                                    lessonInfoTab === tab.id 
+                                      ? "bg-[#eb6200] text-white border-[#eb6200] md:bg-transparent md:text-[#eb6200]" 
+                                      : "bg-white text-app-on-surface-variant/60 border-app-outline-variant md:bg-transparent md:hover:text-app-on-surface"
+                                  )}
+                                >
+                                  <tab.icon className="w-3.5 h-3.5" />
+                                  {tab.label}
+                                  {lessonInfoTab === tab.id && (
+                                    <motion.div 
+                                      layoutId="activeTabIndicator"
+                                      className="hidden md:block absolute bottom-0 left-8 right-8 h-1 bg-[#eb6200] rounded-t-full"
+                                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                    />
+                                  )}
+                                </button>
+                              ))}
                             </div>
                           </div>
                         </div>
