@@ -603,7 +603,7 @@ export default function App() {
                       {/* Navigation Overlays */}
                       <div className="absolute inset-0 flex pointer-events-none">
                         {/* Area de Hover Esquerda */}
-                        <div className="flex-1 h-full flex items-center justify-start pl-8 group/nav-left pointer-events-auto">
+                        <div className="flex-1 h-full flex items-center justify-start pl-2 group/nav-left pointer-events-auto">
                           <button 
                             onClick={(e) => {
                               e.stopPropagation();
@@ -611,7 +611,7 @@ export default function App() {
                               const idx = all.findIndex(l => l.id === selectedLesson.id);
                               if (idx > 0) setSelectedLesson(all[idx - 1]);
                             }}
-                            className="opacity-0 group-hover/nav-left:opacity-100 w-36 h-36 bg-[#eb6200]/90 hover:bg-[#eb6200] text-white rounded-[2.5rem] flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl backdrop-blur-sm group/btn"
+                            className="opacity-0 group-hover/nav-left:opacity-100 w-36 h-36 bg-[#eb6200]/90 hover:bg-[#eb6200] text-white rounded-2xl flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl backdrop-blur-sm group/btn"
                           >
                             <ChevronLeft className="w-12 h-12 transition-transform group-hover/btn:-translate-x-1" />
                             <span className="text-xs font-black uppercase tracking-[0.2em] font-heading">Anterior</span>
@@ -622,7 +622,7 @@ export default function App() {
                         <div className="w-1/2" />
 
                         {/* Area de Hover Direita */}
-                        <div className="flex-1 h-full flex items-center justify-end pr-8 group/nav-right pointer-events-auto">
+                        <div className="flex-1 h-full flex items-center justify-end pr-2 group/nav-right pointer-events-auto">
                           <button 
                             onClick={(e) => {
                               e.stopPropagation();
@@ -630,7 +630,7 @@ export default function App() {
                               const idx = all.findIndex(l => l.id === selectedLesson.id);
                               if (idx < all.length - 1) setSelectedLesson(all[idx + 1]);
                             }}
-                            className="opacity-0 group-hover/nav-right:opacity-100 w-36 h-36 bg-[#eb6200]/90 hover:bg-[#eb6200] text-white rounded-[2.5rem] flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl backdrop-blur-sm group/btn"
+                            className="opacity-0 group-hover/nav-right:opacity-100 w-36 h-36 bg-[#eb6200]/90 hover:bg-[#eb6200] text-white rounded-2xl flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl backdrop-blur-sm group/btn"
                           >
                             <ChevronRight className="w-12 h-12 transition-transform group-hover/btn:translate-x-1" />
                             <span className="text-xs font-black uppercase tracking-[0.2em] font-heading">Próximo</span>
