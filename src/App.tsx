@@ -811,52 +811,75 @@ export default function App() {
                     </div>
 
                     {/* Lesson Info Section */}
-                    <div className="space-y-8">
-                      <h1 className="text-4xl font-black text-app-on-surface tracking-tight leading-tight font-heading">
-                        {selectedLesson?.title}
-                      </h1>
-                      
-                      <div className="bg-white rounded-3xl border border-app-outline-variant/30 shadow-sm overflow-hidden">
-                        <div className="flex border-b border-app-outline-variant/30 bg-gray-50/50">
-                          <button 
-                            onClick={() => setLessonInfoTab('descricao')}
-                            className={cn(
-                              "px-8 py-5 text-[10px] font-semibold uppercase tracking-[0.2em] border-b-2 transition-all font-heading",
-                              lessonInfoTab === 'descricao' ? "border-app-tertiary text-app-tertiary bg-white" : "border-transparent text-app-on-surface-variant hover:text-app-on-surface"
-                            )}
-                          >
-                            Descrição
-                          </button>
-                          <button 
-                            onClick={() => setLessonInfoTab('resumo')}
-                            className={cn(
-                              "px-8 py-5 text-[10px] font-semibold uppercase tracking-[0.2em] border-b-2 transition-all font-heading",
-                              lessonInfoTab === 'resumo' ? "border-app-tertiary text-app-tertiary bg-white" : "border-transparent text-app-on-surface-variant hover:text-app-on-surface"
-                            )}
-                          >
-                            Resumo
-                          </button>
-                          <button 
-                            onClick={() => setLessonInfoTab('material')}
-                            className={cn(
-                              "px-8 py-5 text-[10px] font-semibold uppercase tracking-[0.2em] border-b-2 transition-all font-heading",
-                              lessonInfoTab === 'material' ? "border-app-tertiary text-app-tertiary bg-white" : "border-transparent text-app-on-surface-variant hover:text-app-on-surface"
-                            )}
-                          >
-                            Material Complementar
-                          </button>
-                          <button 
-                            onClick={() => setLessonInfoTab('autor')}
-                            className={cn(
-                              "px-8 py-5 text-[10px] font-semibold uppercase tracking-[0.2em] border-b-2 transition-all font-heading",
-                              lessonInfoTab === 'autor' ? "border-app-tertiary text-app-tertiary bg-white" : "border-transparent text-app-on-surface-variant hover:text-app-on-surface"
-                            )}
-                          >
-                            Autor
-                          </button>
+                    <div className="space-y-10">
+                      <div className="flex flex-col gap-4">
+                        <div className="flex flex-wrap items-center gap-3">
+                          <Badge variant="outline" className="bg-app-tertiary/5 border-app-tertiary/20 text-app-tertiary px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-widest">
+                            {selectedLesson?.type === 'video' ? 'Video Aula' : selectedLesson?.type?.toUpperCase()}
+                          </Badge>
+                          <div className="flex items-center gap-1.5 text-app-on-surface-variant/40">
+                            <span className="w-1 h-1 rounded-full bg-current" />
+                            <p className="text-[10px] font-bold uppercase tracking-widest font-heading">
+                              Módulo: {course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id))?.title}
+                            </p>
+                          </div>
                         </div>
                         
-                        <div className="p-8">
+                        <h1 className="text-4xl md:text-5xl font-black text-app-on-surface tracking-tight leading-[0.9] font-heading max-w-4xl">
+                          {selectedLesson?.title}
+                        </h1>
+                      </div>
+                      
+                      <div className="space-y-8">
+                        {/* Sticky Tabs Bar */}
+                        <div className="sticky top-0 z-30 -mx-4 px-4 py-2 bg-[#f8f9fa]/80 backdrop-blur-md">
+                          <div className="bg-white rounded-2xl border border-app-outline-variant/30 shadow-lg shadow-black/[0.03] overflow-hidden">
+                            <div className="flex overflow-x-auto scrollbar-none bg-gray-50/30">
+                              <button 
+                                onClick={() => setLessonInfoTab('descricao')}
+                                className={cn(
+                                  "px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] border-b-2 transition-all font-heading flex items-center gap-2 shrink-0",
+                                  lessonInfoTab === 'descricao' ? "border-app-tertiary text-app-tertiary bg-white" : "border-transparent text-app-on-surface-variant/40 hover:text-app-on-surface"
+                                )}
+                              >
+                                <Info className="w-3.5 h-3.5" />
+                                Descrição
+                              </button>
+                              <button 
+                                onClick={() => setLessonInfoTab('resumo')}
+                                className={cn(
+                                  "px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] border-b-2 transition-all font-heading flex items-center gap-2 shrink-0",
+                                  lessonInfoTab === 'resumo' ? "border-app-tertiary text-app-tertiary bg-white" : "border-transparent text-app-on-surface-variant/40 hover:text-app-on-surface"
+                                )}
+                              >
+                                <MessageSquare className="w-3.5 h-3.5" />
+                                Resumo
+                              </button>
+                              <button 
+                                onClick={() => setLessonInfoTab('material')}
+                                className={cn(
+                                  "px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] border-b-2 transition-all font-heading flex items-center gap-2 shrink-0",
+                                  lessonInfoTab === 'material' ? "border-app-tertiary text-app-tertiary bg-white" : "border-transparent text-app-on-surface-variant/40 hover:text-app-on-surface"
+                                )}
+                              >
+                                <FileDown className="w-3.5 h-3.5" />
+                                Material
+                              </button>
+                              <button 
+                                onClick={() => setLessonInfoTab('autor')}
+                                className={cn(
+                                  "px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] border-b-2 transition-all font-heading flex items-center gap-2 shrink-0",
+                                  lessonInfoTab === 'autor' ? "border-app-tertiary text-app-tertiary bg-white" : "border-transparent text-app-on-surface-variant/40 hover:text-app-on-surface"
+                                )}
+                              >
+                                <Users className="w-3.5 h-3.5" />
+                                Autor
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="min-h-[200px] px-2">
                           <AnimatePresence mode="wait">
                             {lessonInfoTab === 'descricao' && (
                               <motion.div
@@ -864,14 +887,39 @@ export default function App() {
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
-                                className="space-y-6"
+                                className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12"
                               >
-                                <div className="prose prose-sm max-w-none text-app-on-surface-variant/90 font-sans leading-relaxed">
-                                  {selectedLesson?.content ? (
-                                    <p className="font-medium text-sm">{selectedLesson?.content}</p>
-                                  ) : (
-                                    <p className="font-medium text-sm italic">Nenhuma descrição detalhada disponível para este conteúdo.</p>
-                                  )}
+                                <div className="space-y-6">
+                                  <h3 className="text-xl font-bold text-app-on-surface font-heading">Sobre este conteúdo</h3>
+                                  <div className="prose prose-sm max-w-none text-app-on-surface-variant leading-relaxed font-sans">
+                                    {selectedLesson?.content ? (
+                                      <p className="text-base font-medium whitespace-pre-line">{selectedLesson?.content}</p>
+                                    ) : (
+                                      <p className="text-base font-medium italic opacity-50">{selectedLesson?.description || "Nenhuma descrição detalhada disponível."}</p>
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="space-y-6 bg-white p-6 rounded-3xl border border-app-outline-variant/20 shadow-sm h-fit">
+                                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-app-on-surface-variant font-heading">Metadados</h4>
+                                  <dl className="space-y-4">
+                                    <div>
+                                      <dt className="text-[10px] font-bold text-app-on-surface-variant/40 uppercase font-heading">Tipo</dt>
+                                      <dd className="text-sm font-bold text-app-on-surface mt-0.5">{selectedLesson?.type?.toUpperCase()}</dd>
+                                    </div>
+                                    <div>
+                                      <dt className="text-[10px] font-bold text-app-on-surface-variant/40 uppercase font-heading">Status</dt>
+                                      <dd className="flex items-center gap-2 mt-1">
+                                        <div className={cn("w-2 h-2 rounded-full", selectedLesson?.completed ? "bg-green-500" : "bg-app-tertiary")} />
+                                        <span className="text-sm font-bold text-app-on-surface">{selectedLesson?.completed ? 'Concluído' : 'Em Andamento'}</span>
+                                      </dd>
+                                    </div>
+                                    {selectedLesson?.duration && (
+                                      <div>
+                                        <dt className="text-[10px] font-bold text-app-on-surface-variant/40 uppercase font-heading">Duração</dt>
+                                        <dd className="text-sm font-bold text-app-on-surface mt-0.5">{selectedLesson?.duration}</dd>
+                                      </div>
+                                    )}
+                                  </dl>
                                 </div>
                               </motion.div>
                             )}
@@ -882,19 +930,33 @@ export default function App() {
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
-                                className="space-y-6"
+                                className="space-y-10"
                               >
-                                <p className="text-app-on-surface-variant/90 leading-relaxed font-sans text-sm font-medium max-w-3xl">
-                                  {selectedLesson?.description || "Nenhum resumo disponível para este conteúdo."}
-                                </p>
-                                <div className="flex items-center gap-8 pt-6 border-t border-app-outline-variant/10">
-                                  <div className="flex items-center gap-2.5 text-app-on-surface-variant/70">
-                                    <Clock className="w-4 h-4" />
-                                    <span className="text-[11px] font-semibold font-heading uppercase tracking-wider">Duração: 05:00</span>
+                                <div className="max-w-4xl p-8 bg-white rounded-3xl border-l-[6px] border-app-tertiary shadow-xl shadow-app-tertiary/5">
+                                  <h3 className="text-lg font-black text-app-tertiary uppercase tracking-tighter mb-4 font-heading italic">Wrap Up</h3>
+                                  <p className="text-lg text-app-on-surface font-medium leading-relaxed font-sans italic">
+                                    "{selectedLesson?.description || "Resumo em processamento..."}"
+                                  </p>
+                                </div>
+                                
+                                <div className="flex flex-wrap items-center gap-12 pt-8 border-t border-app-outline-variant/10">
+                                  <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 rounded-2xl bg-app-tertiary/10 flex items-center justify-center text-app-tertiary shadow-inner">
+                                      <Clock className="w-5 h-5" />
+                                    </div>
+                                    <div className="space-y-0.5">
+                                      <span className="text-[10px] font-black text-app-on-surface-variant/30 uppercase tracking-widest font-heading">Duração Est.</span>
+                                      <p className="text-sm font-black text-app-on-surface font-heading">{selectedLesson?.duration || '05:00'}</p>
+                                    </div>
                                   </div>
-                                  <div className="flex items-center gap-2.5 text-app-on-surface-variant/70">
-                                    <Award className="w-4 h-4" />
-                                    <span className="text-[11px] font-semibold font-heading uppercase tracking-wider">Certificado incluso</span>
+                                  <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 rounded-2xl bg-app-primary/10 flex items-center justify-center text-app-primary shadow-inner">
+                                      <Award className="w-5 h-5" />
+                                    </div>
+                                    <div className="space-y-0.5">
+                                      <span className="text-[10px] font-black text-app-on-surface-variant/30 uppercase tracking-widest font-heading">Conquista</span>
+                                      <p className="text-sm font-black text-app-on-surface font-heading">Conclusão de Módulo</p>
+                                    </div>
                                   </div>
                                 </div>
                               </motion.div>
@@ -906,25 +968,36 @@ export default function App() {
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
-                                className="space-y-4"
+                                className="space-y-8"
                               >
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                  <button className="flex items-center gap-4 p-5 rounded-2xl border border-app-outline-variant/20 hover:border-app-tertiary/40 hover:bg-app-tertiary/[0.02] transition-all group text-left">
-                                    <div className="w-12 h-12 rounded-xl bg-app-tertiary/10 flex items-center justify-center text-app-tertiary group-hover:scale-110 transition-transform">
-                                      <FileDown className="w-5 h-5" />
+                                <div className="flex items-center justify-between">
+                                  <h3 className="text-xl font-bold text-app-on-surface font-heading">Arquivos para download</h3>
+                                  <Badge className="bg-app-tertiary/10 text-app-tertiary border-none">2 Arquivos</Badge>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                  <button className="flex flex-col gap-4 p-6 rounded-3xl bg-white border border-app-outline-variant/20 hover:border-app-tertiary/40 hover:shadow-2xl hover:shadow-app-tertiary/10 transition-all group text-left relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                      <FileDown className="w-20 h-20 -mr-6 -mt-6 rotate-12" />
                                     </div>
-                                    <div className="space-y-0.5">
-                                      <p className="text-sm font-semibold text-app-on-surface font-heading tracking-tight">Guia de Configuração.pdf</p>
-                                      <p className="text-[10px] font-bold text-app-on-surface-variant/40 uppercase tracking-[0.1em] font-heading">2.4 MB • PDF</p>
+                                    <div className="w-14 h-14 rounded-2xl bg-app-tertiary/10 flex items-center justify-center text-app-tertiary group-hover:scale-110 transition-transform relative z-10">
+                                      <FileDown className="w-6 h-6" />
+                                    </div>
+                                    <div className="space-y-1 relative z-10">
+                                      <p className="text-sm font-bold text-app-on-surface font-heading tracking-tight">Guia de Configuração.pdf</p>
+                                      <p className="text-[10px] font-black text-app-on-surface-variant/40 uppercase tracking-widest font-heading">2.4 MB • Suporte ao Módulo</p>
                                     </div>
                                   </button>
-                                  <button className="flex items-center gap-4 p-5 rounded-2xl border border-app-outline-variant/20 hover:border-app-tertiary/40 hover:bg-app-tertiary/[0.02] transition-all group text-left">
-                                    <div className="w-12 h-12 rounded-xl bg-app-tertiary/10 flex items-center justify-center text-app-tertiary group-hover:scale-110 transition-transform">
-                                      <ExternalLink className="w-5 h-5" />
+                                  
+                                  <button className="flex flex-col gap-4 p-6 rounded-3xl bg-white border border-app-outline-variant/20 hover:border-app-tertiary/40 hover:shadow-2xl hover:shadow-app-tertiary/10 transition-all group text-left relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                      <ExternalLink className="w-20 h-20 -mr-6 -mt-6 rotate-12" />
                                     </div>
-                                    <div className="space-y-0.5">
-                                      <p className="text-sm font-semibold text-app-on-surface font-heading tracking-tight">Link da Documentação</p>
-                                      <p className="text-[10px] font-bold text-app-on-surface-variant/40 uppercase tracking-[0.1em] font-heading">Acesso Externo</p>
+                                    <div className="w-14 h-14 rounded-2xl bg-app-tertiary/10 flex items-center justify-center text-app-tertiary group-hover:scale-110 transition-transform relative z-10">
+                                      <ExternalLink className="w-6 h-6" />
+                                    </div>
+                                    <div className="space-y-1 relative z-10">
+                                      <p className="text-sm font-bold text-app-on-surface font-heading tracking-tight">Base de Conhecimento</p>
+                                      <p className="text-[10px] font-black text-app-on-surface-variant/40 uppercase tracking-widest font-heading">Link Externo • Documentação</p>
                                     </div>
                                   </button>
                                 </div>
@@ -937,24 +1010,28 @@ export default function App() {
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
-                                className="flex items-center gap-8"
+                                className="flex flex-col md:flex-row items-center md:items-start gap-10 bg-white p-10 rounded-[2.5rem] border border-app-outline-variant/10 shadow-sm"
                               >
-                                <div className="w-24 h-24 rounded-2xl overflow-hidden bg-app-outline-variant/10 shrink-0 shadow-sm">
+                                <div className="w-32 h-32 rounded-3xl overflow-hidden bg-app-outline-variant/10 shrink-0 shadow-2xl rotate-3">
                                   <img 
-                                    src="https://picsum.photos/seed/author/200/200" 
+                                    src="https://picsum.photos/seed/author/400/400" 
                                     alt="Autor" 
                                     className="w-full h-full object-cover"
                                     referrerPolicy="no-referrer"
                                   />
                                 </div>
-                                <div className="space-y-2">
-                                  <div className="space-y-0.5">
-                                    <p className="text-2xl font-bold text-app-on-surface font-heading tracking-tight">Equipe Movidesk</p>
-                                    <p className="text-[11px] font-bold text-app-tertiary font-heading uppercase tracking-[0.15em]">Especialistas em Sucesso do Cliente</p>
+                                <div className="space-y-6 text-center md:text-left">
+                                  <div className="space-y-1">
+                                    <p className="text-3xl font-black text-app-on-surface font-heading tracking-tighter italic">Equipe Movidesk</p>
+                                    <p className="text-[11px] font-bold text-app-tertiary font-heading uppercase tracking-[0.25em]">Especialistas em CS</p>
                                   </div>
-                                  <p className="text-sm text-app-on-surface-variant/80 leading-relaxed font-sans font-medium max-w-2xl">
-                                    Nossa equipe de especialistas trabalha para garantir que você tenha a melhor experiência possível configurando sua plataforma.
+                                  <p className="text-lg text-app-on-surface-variant/80 leading-relaxed font-sans font-medium max-w-2xl italic">
+                                    "Nossa missão é garantir que cada detalhe da sua plataforma esteja perfeitamente alinhado com o sucesso do seu cliente. Estamos aqui para guiar sua jornada de configuração."
                                   </p>
+                                  <div className="flex justify-center md:justify-start gap-3">
+                                    <button className="px-4 py-2 bg-app-tertiary/10 text-app-tertiary text-[10px] font-bold uppercase tracking-widest rounded-full hover:bg-app-tertiary hover:text-white transition-all">Perfil</button>
+                                    <button className="px-4 py-2 bg-gray-100 text-gray-600 text-[10px] font-bold uppercase tracking-widest rounded-full hover:bg-gray-200 transition-all">Mentoria</button>
+                                  </div>
                                 </div>
                               </motion.div>
                             )}
