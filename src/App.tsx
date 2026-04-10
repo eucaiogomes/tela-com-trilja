@@ -872,42 +872,17 @@ export default function App() {
                             {lessonInfoTab === 'descricao' && (
                               <motion.div
                                 key="descricao"
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="max-w-4xl"
                               >
-                                <div className="space-y-6">
-                                  <h3 className="text-xl font-bold text-app-on-surface font-heading">Sobre este conteúdo</h3>
-                                  <div className="prose prose-sm max-w-none text-app-on-surface-variant leading-relaxed font-sans">
-                                    {selectedLesson?.content ? (
-                                      <p className="text-base font-medium whitespace-pre-line">{selectedLesson?.content}</p>
-                                    ) : (
-                                      <p className="text-base font-medium italic opacity-50">{selectedLesson?.description || "Nenhuma descrição detalhada disponível."}</p>
-                                    )}
-                                  </div>
-                                </div>
-                                <div className="space-y-6 bg-white p-6 rounded-3xl border border-app-outline-variant/20 shadow-sm h-fit">
-                                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-app-on-surface-variant font-heading">Metadados</h4>
-                                  <dl className="space-y-4">
-                                    <div>
-                                      <dt className="text-[10px] font-bold text-app-on-surface-variant/40 uppercase font-heading">Tipo</dt>
-                                      <dd className="text-sm font-bold text-app-on-surface mt-0.5">{selectedLesson?.type?.toUpperCase()}</dd>
-                                    </div>
-                                    <div>
-                                      <dt className="text-[10px] font-bold text-app-on-surface-variant/40 uppercase font-heading">Status</dt>
-                                      <dd className="flex items-center gap-2 mt-1">
-                                        <div className={cn("w-2 h-2 rounded-full", selectedLesson?.completed ? "bg-green-500" : "bg-app-tertiary")} />
-                                        <span className="text-sm font-bold text-app-on-surface">{selectedLesson?.completed ? 'Concluído' : 'Em Andamento'}</span>
-                                      </dd>
-                                    </div>
-                                    {selectedLesson?.duration && (
-                                      <div>
-                                        <dt className="text-[10px] font-bold text-app-on-surface-variant/40 uppercase font-heading">Duração</dt>
-                                        <dd className="text-sm font-bold text-app-on-surface mt-0.5">{selectedLesson?.duration}</dd>
-                                      </div>
-                                    )}
-                                  </dl>
+                                <div className="prose prose-sm max-w-none text-app-on-surface-variant leading-relaxed font-sans">
+                                  {selectedLesson?.content ? (
+                                    <p className="text-lg font-medium whitespace-pre-line text-app-on-surface-variant/80">{selectedLesson?.content}</p>
+                                  ) : (
+                                    <p className="text-lg font-medium italic text-app-on-surface-variant/40">{selectedLesson?.description || "Nenhuma descrição detalhada disponível."}</p>
+                                  )}
                                 </div>
                               </motion.div>
                             )}
@@ -915,37 +890,19 @@ export default function App() {
                             {lessonInfoTab === 'resumo' && (
                               <motion.div
                                 key="resumo"
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                className="space-y-10"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="max-w-4xl"
                               >
-                                <div className="max-w-4xl p-8 bg-white rounded-3xl border-l-[6px] border-app-tertiary shadow-xl shadow-app-tertiary/5">
-                                  <h3 className="text-lg font-black text-app-tertiary uppercase tracking-tighter mb-4 font-heading italic">Wrap Up</h3>
-                                  <p className="text-lg text-app-on-surface font-medium leading-relaxed font-sans italic">
-                                    "{selectedLesson?.description || "Resumo em processamento..."}"
-                                  </p>
-                                </div>
-                                
-                                <div className="flex flex-wrap items-center gap-12 pt-8 border-t border-app-outline-variant/10">
-                                  <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-2xl bg-app-tertiary/10 flex items-center justify-center text-app-tertiary shadow-inner">
-                                      <Clock className="w-5 h-5" />
-                                    </div>
-                                    <div className="space-y-0.5">
-                                      <span className="text-[10px] font-black text-app-on-surface-variant/30 uppercase tracking-widest font-heading">Duração Est.</span>
-                                      <p className="text-sm font-black text-app-on-surface font-heading">{selectedLesson?.duration || '05:00'}</p>
-                                    </div>
-                                  </div>
-                                  <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-2xl bg-app-primary/10 flex items-center justify-center text-app-primary shadow-inner">
-                                      <Award className="w-5 h-5" />
-                                    </div>
-                                    <div className="space-y-0.5">
-                                      <span className="text-[10px] font-black text-app-on-surface-variant/30 uppercase tracking-widest font-heading">Conquista</span>
-                                      <p className="text-sm font-black text-app-on-surface font-heading">Conclusão de Módulo</p>
-                                    </div>
-                                  </div>
+                                <div className="prose prose-sm max-w-none text-app-on-surface-variant leading-relaxed font-sans">
+                                  {selectedLesson?.description ? (
+                                    <p className="text-lg font-medium whitespace-pre-line text-app-on-surface-variant/80 italic">
+                                      {selectedLesson?.description}
+                                    </p>
+                                  ) : (
+                                    <p className="text-lg font-medium italic text-app-on-surface-variant/40">Nenhum resumo disponível para este conteúdo.</p>
+                                  )}
                                 </div>
                               </motion.div>
                             )}
