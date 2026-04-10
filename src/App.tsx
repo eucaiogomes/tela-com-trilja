@@ -813,18 +813,6 @@ export default function App() {
                     {/* Lesson Info Section */}
                     <div className="space-y-10">
                       <div className="flex flex-col gap-4">
-                        <div className="flex flex-wrap items-center gap-3">
-                          <Badge variant="outline" className="bg-app-tertiary/5 border-app-tertiary/20 text-app-tertiary px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-widest">
-                            {selectedLesson?.type === 'video' ? 'Video Aula' : selectedLesson?.type?.toUpperCase()}
-                          </Badge>
-                          <div className="flex items-center gap-1.5 text-app-on-surface-variant/40">
-                            <span className="w-1 h-1 rounded-full bg-current" />
-                            <p className="text-[10px] font-bold uppercase tracking-widest font-heading">
-                              Módulo: {course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id))?.title}
-                            </p>
-                          </div>
-                        </div>
-                        
                         <h1 className="text-4xl md:text-5xl font-black text-app-on-surface tracking-tight leading-[0.9] font-heading max-w-4xl">
                           {selectedLesson?.title}
                         </h1>
