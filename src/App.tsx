@@ -693,7 +693,7 @@ export default function App() {
                   )}
                   
                   <div className={cn(
-                    "mx-auto p-6 md:p-10 space-y-8 transition-all duration-500 ease-in-out",
+                    "mx-auto px-6 pt-1 md:px-10 md:pt-2 pb-12 space-y-4 transition-all duration-500 ease-in-out",
                     isTrainingSidebarOpen ? "max-w-7xl" : "max-w-7xl"
                   )}>
                     {/* Breadcrumb & Navigation */}
