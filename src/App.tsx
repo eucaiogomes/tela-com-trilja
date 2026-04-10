@@ -697,7 +697,7 @@ export default function App() {
                       "pt-0 md:pt-6 px-0 md:px-10 pb-12 space-y-0 md:space-y-6"
                     )}>
                     {/* Breadcrumb & Navigation (Desktop Only) */}
-                    <div className="hidden md:flex items-center justify-between mb-4">
+                    <div className="hidden md:flex items-center justify-between mb-8">
                       <div className="flex items-center gap-4">
                         {!isTrainingSidebarOpen && (
                           <motion.button
@@ -822,7 +822,7 @@ export default function App() {
                             <X className="w-4 h-4" />
                           </button>
                         </div>
-                        <h1 className="text-xl md:text-5xl font-bold md:font-black text-app-on-surface tracking-tight leading-tight md:leading-[0.9] font-heading max-w-4xl">
+                        <h1 className="text-xl md:text-4xl font-bold md:font-black text-app-on-surface tracking-tight leading-tight md:leading-[0.9] font-heading max-w-4xl">
                           {selectedLesson?.title}
                         </h1>
                       </div>
