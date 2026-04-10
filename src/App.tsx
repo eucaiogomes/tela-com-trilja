@@ -31,7 +31,8 @@ import {
   Mic,
   Package,
   ClipboardCheck,
-  FileDown
+  FileDown,
+  List
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
@@ -132,18 +133,18 @@ export default function App() {
   return (
     <div className="min-h-screen bg-app-background font-sans text-app-on-surface">
       {/* Header (Navbar) */}
-      <div className={cn(
-        "z-50 transition-all duration-300",
-        selectedLesson && (mainNav === 'treinamentos' || mainNav === 'trilha2') 
-          ? "fixed top-0 left-0 right-0 h-2 group" 
-          : "sticky top-0"
-      )}>
-        <header className={cn(
-          "bg-[#00254e] border-b border-white/10 px-4 md:px-6 py-2 flex items-center justify-between transition-all duration-300",
-          selectedLesson && (mainNav === 'treinamentos' || mainNav === 'trilha2')
-            ? "absolute top-0 left-0 right-0 -translate-y-full group-hover:translate-y-0 shadow-2xl" 
-            : ""
+      <header className={cn(
+          "z-50 w-full transition-all duration-300",
+          selectedLesson && (mainNav === 'treinamentos' || mainNav === 'trilha2') 
+          ? "md:fixed md:top-0 md:left-0 md:right-0 md:h-2 md:group sticky top-0 bg-[#00254e] border-b border-white/10 shadow-sm" 
+          : "sticky top-0 bg-[#00254e] border-b border-white/10 shadow-sm"
         )}>
+          <div className={cn(
+            "px-4 md:px-6 py-2 flex items-center justify-between transition-all duration-300",
+            selectedLesson && (mainNav === 'treinamentos' || mainNav === 'trilha2') 
+            ? "md:absolute md:top-0 md:left-0 md:right-0 md:-translate-y-full md:group-hover:translate-y-0 md:shadow-2xl bg-[#00254e]" 
+            : "bg-[#00254e]"
+          )}>
         <div className="flex items-center gap-4 md:gap-8">
           {/* Logo */}
           <div className="text-white font-bold text-lg md:text-xl tracking-tight flex items-center gap-2">
@@ -290,7 +291,7 @@ export default function App() {
                       animate={{ width: 320, opacity: 1 }}
                       exit={{ width: 0, opacity: 0 }}
                       transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                      className="bg-white border-r border-app-outline-variant flex flex-col h-full shadow-xl z-20 overflow-hidden shrink-0"
+                      className="hidden md:flex bg-white border-r border-app-outline-variant flex-col h-full shadow-xl z-20 overflow-hidden shrink-0"
                     >
                       <div className="w-[320px] flex flex-col h-full">
                         <div className="p-6 bg-[#00254e] text-white space-y-6">
@@ -695,7 +696,7 @@ export default function App() {
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
                             onClick={() => setIsTrainingSidebarOpen(true)}
-                            className="p-2 bg-white border border-app-outline-variant/30 rounded-xl shadow-sm text-app-on-surface-variant hover:text-app-tertiary hover:border-app-tertiary/30 transition-all group"
+                            className="hidden md:flex p-2 bg-white border border-app-outline-variant/30 rounded-xl shadow-sm text-app-on-surface-variant hover:text-app-tertiary hover:border-app-tertiary/30 transition-all group"
                           >
                             <Menu className="w-5 h-5 flex-shrink-0" />
                           </motion.button>
@@ -834,6 +835,16 @@ export default function App() {
                                 Descrição
                               </button>
                               <button 
+                                onClick={() => setLessonInfoTab('conteudo')}
+                                className={cn(
+                                  "md:hidden px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] border-b-2 transition-all font-heading flex items-center gap-2 shrink-0",
+                                  lessonInfoTab === 'conteudo' ? "border-app-tertiary text-app-tertiary bg-white" : "border-transparent text-app-on-surface-variant/40 hover:text-app-on-surface"
+                                )}
+                              >
+                                <List className="w-3.5 h-3.5" />
+                                Conteúdo
+                              </button>
+                              <button 
                                 onClick={() => setLessonInfoTab('resumo')}
                                 className={cn(
                                   "px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] border-b-2 transition-all font-heading flex items-center gap-2 shrink-0",
@@ -867,8 +878,100 @@ export default function App() {
                           </div>
                         </div>
                         
-                        <div className="min-h-[200px] px-2">
+                        <div className="min-h-[200px] px-2 py-4 md:py-8">
                           <AnimatePresence mode="wait">
+                            {lessonInfoTab === 'conteudo' && (
+                              <motion.div
+                                key="conteudo"
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 10 }}
+                                className="space-y-8"
+                              >
+                                {/* Progress Section */}
+                                <div className="p-6 bg-white rounded-[2rem] border border-app-outline-variant/10 shadow-sm space-y-6">
+                                  <div className="space-y-1">
+                                    <h3 className="text-xl font-black text-app-on-surface font-heading tracking-tight italic">Configurando o seu Movidesk</h3>
+                                    <p className="text-[10px] font-bold text-app-on-surface-variant/40 uppercase tracking-widest font-heading">Visão Geral do Desempenho</p>
+                                  </div>
+                                  
+                                  <div className="grid grid-cols-1 gap-6">
+                                    <div className="space-y-2">
+                                      <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest font-heading">
+                                        <span className="text-app-on-surface-variant">Progresso</span>
+                                        <span className="text-app-tertiary">{course.progress}%</span>
+                                      </div>
+                                      <div className="h-1.5 w-full bg-app-outline-variant/10 rounded-full overflow-hidden">
+                                        <div 
+                                          className="h-full bg-app-tertiary transition-all duration-1000" 
+                                          style={{ width: `${course.progress}%` }} 
+                                        />
+                                      </div>
+                                    </div>
+                                    
+                                    <div className="space-y-2">
+                                      <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest font-heading">
+                                        <span className="text-app-on-surface-variant">Aproveitamento</span>
+                                        <span className="text-[#eb6200]">{course.performance}%</span>
+                                      </div>
+                                      <div className="h-1.5 w-full bg-[#eb6200]/10 rounded-full overflow-hidden">
+                                        <div 
+                                          className="h-full bg-gradient-to-r from-[#eb6200] to-[#ff914d] transition-all duration-1000" 
+                                          style={{ width: `${course.performance}%` }} 
+                                />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Modules List Replicated from Sidebar */}
+                                <div className="space-y-4">
+                                  {course.modules.map((module, mIdx) => (
+                                    <div key={module.id} className="space-y-3">
+                                      <div className="flex items-center gap-3 px-4">
+                                        <div className="w-6 h-6 rounded-full bg-app-tertiary/10 flex items-center justify-center text-[10px] font-black text-app-tertiary font-heading">
+                                          {mIdx + 1}
+                                        </div>
+                                        <h4 className="text-xs font-black uppercase tracking-widest text-app-on-surface/60 font-heading">{module.title}</h4>
+                                      </div>
+                                      <div className="bg-white rounded-[2rem] border border-app-outline-variant/10 shadow-sm divide-y divide-app-outline-variant/5">
+                                        {module.lessons.map((lesson) => (
+                                          <button
+                                            key={lesson.id}
+                                            onClick={() => setSelectedLesson(lesson)}
+                                            className={cn(
+                                              "w-full p-5 text-left transition-all flex items-center justify-between group",
+                                              selectedLesson?.id === lesson.id ? "bg-gray-50" : "hover:bg-gray-50/50"
+                                            )}
+                                          >
+                                            <div className="flex items-center gap-4">
+                                              <div className={cn(
+                                                "w-10 h-10 rounded-xl flex items-center justify-center transition-all",
+                                                selectedLesson?.id === lesson.id ? "bg-app-tertiary text-white shadow-lg shadow-app-tertiary/20" : "bg-app-outline-variant/10 text-app-on-surface-variant"
+                                              )}>
+                                                {lesson.completed ? <CheckCircle2 className="w-5 h-5" /> : (lesson.type === 'video' ? <PlayCircle className="w-5 h-5" /> : <FileText className="w-5 h-5" />)}
+                                              </div>
+                                              <div>
+                                                <p className={cn(
+                                                  "text-sm font-bold tracking-tight font-heading",
+                                                  selectedLesson?.id === lesson.id ? "text-app-on-surface" : "text-app-on-surface/80"
+                                                )}>{lesson.title}</p>
+                                                <p className="text-[9px] font-bold text-app-on-surface-variant/40 uppercase tracking-widest">{lesson.type}</p>
+                                              </div>
+                                            </div>
+                                            <ChevronRight className={cn(
+                                              "w-4 h-4 transition-transform",
+                                              selectedLesson?.id === lesson.id ? "text-app-tertiary translate-x-1" : "text-app-on-surface-variant/20"
+                                            )} />
+                                          </button>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </motion.div>
+                            )}
+
                             {lessonInfoTab === 'descricao' && (
                               <motion.div
                                 key="descricao"
