@@ -81,7 +81,7 @@ const PERFORMANCE_DATA = [
 ];
 
 export default function App() {
-  const [course] = useState<Course>(MOCK_COURSE);
+  const [course, setCourse] = useState<Course>(MOCK_COURSE);
   const [activeTab, setActiveTab] = useState('trilhas');
   const [mainNav, setMainNav] = useState<'trilhas' | 'treinamentos' | 'trilha2'>('trilhas');
   const [trainingSidebarTab, setTrainingSidebarTab] = useState<'conteudo' | 'desempenho' | 'info'>('conteudo');
@@ -95,6 +95,38 @@ export default function App() {
 
   const closeLesson = () => {
     setSelectedLesson(null);
+  };
+
+  const toggleLessonComplete = (lessonId: string) => {
+    setCourse(prevCourse => {
+      const newModules = prevCourse.modules.map(module => ({
+        ...module,
+        lessons: module.lessons.map(lesson => {
+          if (lesson.id === lessonId) {
+            const updated = { ...lesson, completed: !lesson.completed };
+            if (selectedLesson?.id === lessonId) {
+              setSelectedLesson(updated);
+            }
+            return updated;
+          }
+          if (lesson.type === 'training' && lesson.lessons) {
+            const updatedSubLessons = lesson.lessons.map(sub => {
+              if (sub.id === lessonId) {
+                const subUpdated = { ...sub, completed: !sub.completed };
+                if (selectedLesson?.id === lessonId) {
+                  setSelectedLesson(subUpdated);
+                }
+                return subUpdated;
+              }
+              return sub;
+            });
+            return { ...lesson, lessons: updatedSubLessons };
+          }
+          return lesson;
+        })
+      }));
+      return { ...prevCourse, modules: newModules };
+    });
   };
 
   return (
@@ -380,11 +412,17 @@ export default function App() {
                                                   selectedLesson.id === subLesson.id ? "bg-white border-l-[#eb6200]" : ""
                                                 )}
                                               >
-                                                <div className={cn(
-                                                  "shrink-0",
-                                                  selectedLesson.id === subLesson.id ? "text-[#eb6200]" : "text-app-on-surface-variant/30"
-                                                )}>
-                                                  {subLesson.type === 'video' ? <PlayCircle className="w-4 h-4" /> : <FileText className="w-4 h-4" />}
+                                                <div 
+                                                  onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    toggleLessonComplete(subLesson.id);
+                                                  }}
+                                                  className={cn(
+                                                    "shrink-0 cursor-pointer hover:scale-110 transition-transform",
+                                                    selectedLesson?.id === subLesson.id ? "text-[#eb6200]" : subLesson.completed ? "text-green-500" : "text-app-on-surface-variant/30"
+                                                  )}
+                                                >
+                                                  {subLesson.completed ? <CheckCircle2 className="w-4 h-4" /> : (subLesson.type === 'video' ? <PlayCircle className="w-4 h-4" /> : <FileText className="w-4 h-4" />)}
                                                 </div>
                                                 <span className={cn(
                                                   "text-xs font-medium truncate",
@@ -403,10 +441,16 @@ export default function App() {
                                           lesson.id === selectedLesson.id ? "bg-[#fff5eb] border-l-[#eb6200]" : "hover:bg-gray-50 border-l-transparent"
                                         )}
                                       >
-                                        <div className={cn(
-                                          "mt-1 shrink-0",
-                                          lesson.id === selectedLesson.id ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
-                                        )}>
+                                        <div 
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            toggleLessonComplete(lesson.id);
+                                          }}
+                                          className={cn(
+                                            "mt-1 shrink-0 cursor-pointer hover:scale-110 transition-transform",
+                                            lesson.id === selectedLesson?.id ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
+                                          )}
+                                        >
                                           {lesson.completed ? <CheckCircle2 className="w-5 h-5" /> : <div className="w-5 h-5 rounded-full border-2 border-current opacity-30" />}
                                         </div>
                                         <div className="flex-1 min-w-0">
