@@ -546,10 +546,15 @@ export default function App() {
                               )}
                             >
                               <div className="flex items-start gap-4">
-                                <div className={cn(
-                                  "mt-1 shrink-0",
-                                  isActive ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
-                                )}>
+                                <div 
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleLessonComplete(lesson.id);
+                                  }}
+                                  className={cn(
+                                    "mt-1 shrink-0 cursor-pointer hover:scale-110 transition-transform",
+                                    isActive ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
+                                  )}>
                                   {lesson.completed ? (
                                     <CheckCircle2 className="w-5 h-5" />
                                   ) : (
@@ -688,7 +693,7 @@ export default function App() {
                   
                   <div className={cn(
                     "mx-auto p-6 md:p-10 space-y-8 transition-all duration-500 ease-in-out",
-                    isTrainingSidebarOpen ? "max-w-7xl" : (mainNav === 'trilha2' ? "max-w-7xl" : "max-w-[1600px]")
+                    isTrainingSidebarOpen ? "max-w-7xl" : "max-w-7xl"
                   )}>
                     {/* Breadcrumb & Navigation */}
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
