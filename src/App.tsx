@@ -339,12 +339,16 @@ export default function App() {
                     {trainingSidebarTab === 'conteudo' ? (
                       mainNav === 'trilha2' ? (
                         <Accordion type="multiple" defaultValue={course.modules.map(m => m.id)} className="w-full border-none">
-                          {course.modules.map((module) => (
-                            <AccordionItem key={module.id} value={module.id} className="border-none">
-                              <AccordionTrigger className="px-6 py-4 bg-gray-50/50 hover:bg-gray-100/50 hover:no-underline border-b border-app-outline-variant/10 group">
+                          {course.modules.map((module, index) => (
+                            <AccordionItem key={module.id} value={module.id} className="border-none relative">
+                              {/* Linha da Trilha */}
+                              {index < course.modules.length - 1 && (
+                                <div className="absolute left-[39px] top-12 bottom-0 w-0.5 bg-app-outline-variant/30 z-0" />
+                              )}
+                              <AccordionTrigger className="px-6 py-4 bg-gray-50/50 hover:bg-gray-100/50 hover:no-underline border-b border-app-outline-variant/10 group relative z-10">
                                 <div className="flex items-center gap-3 text-left">
-                                  <div className="w-8 h-8 rounded-lg bg-app-primary/5 flex items-center justify-center text-app-primary group-data-[state=open]:bg-app-tertiary/10 group-data-[state=open]:text-app-tertiary transition-colors">
-                                    <Folder className="w-4 h-4" />
+                                  <div className="w-8 h-8 rounded-full bg-white border-2 border-app-outline-variant flex items-center justify-center text-[10px] font-bold text-app-on-surface-variant group-data-[state=open]:border-app-tertiary group-data-[state=open]:text-app-tertiary transition-all shadow-sm">
+                                    {index + 1}
                                   </div>
                                   <span className="text-xs font-bold uppercase tracking-widest text-app-on-surface font-heading">{module.title}</span>
                                 </div>
