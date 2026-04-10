@@ -628,7 +628,7 @@ export default function App() {
                   
                   <div className={cn(
                     "mx-auto p-6 md:p-10 space-y-8 transition-all duration-500 ease-in-out",
-                    isTrainingSidebarOpen ? "max-w-7xl" : (mainNav === 'trilha2' ? "max-w-6xl" : "max-w-[1600px]")
+                    isTrainingSidebarOpen ? "max-w-7xl" : (mainNav === 'trilha2' ? "max-w-7xl" : "max-w-[1600px]")
                   )}>
                     {/* Breadcrumb & Navigation */}
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
