@@ -709,18 +709,46 @@ export default function App() {
                             <Menu className="w-5 h-5 flex-shrink-0" />
                           </motion.button>
                         )}
-                        <nav className="flex items-center flex-wrap gap-2 text-[10px] font-bold uppercase tracking-[0.2em] font-heading">
-                          <button 
-                            onClick={closeLesson}
-                            className="text-app-on-surface-variant/60 hover:text-app-tertiary transition-colors"
-                          >
-                            {mainNav === 'treinamentos' ? 'Treinamentos' : 'Trilha 2'}
-                          </button>
-                          <ChevronRight className="w-3 h-3 text-app-on-surface-variant/30" />
-                          <span className="text-app-on-surface-variant/40 truncate max-w-[250px]">{course.title}</span>
-                          <ChevronRight className="w-3 h-3 text-app-on-surface-variant/30" />
-                          <span className="text-app-tertiary">{selectedLesson?.title}</span>
-                        </nav>
+                        <Breadcrumb className="bg-transparent shadow-none border-none p-0">
+                          <BreadcrumbList className="gap-1 md:gap-1">
+                            <BreadcrumbItem>
+                              <BreadcrumbLink 
+                                onClick={() => { setView('home'); setSelectedLesson(null); }}
+                                className="flex items-center gap-1.5 text-app-on-surface-variant/60 hover:text-app-tertiary transition-colors cursor-pointer"
+                              >
+                                <Home className="h-3.5 w-3.5" />
+                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] font-heading">Início</span>
+                              </BreadcrumbLink>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator className="opacity-30">
+                              <ChevronRight className="h-3 w-3" />
+                            </BreadcrumbSeparator>
+                            <BreadcrumbItem>
+                              <BreadcrumbLink 
+                                onClick={closeLesson}
+                                className="text-app-on-surface-variant/60 hover:text-app-tertiary transition-colors cursor-pointer"
+                              >
+                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] font-heading">Sala de Aula</span>
+                              </BreadcrumbLink>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator className="opacity-30">
+                              <ChevronRight className="h-3 w-3" />
+                            </BreadcrumbSeparator>
+                            <BreadcrumbItem>
+                              <span className="text-[10px] font-bold uppercase tracking-[0.2em] font-heading text-app-on-surface-variant/40 truncate max-w-[200px]">
+                                {course.title}
+                              </span>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator className="opacity-30">
+                              <ChevronRight className="h-3 w-3" />
+                            </BreadcrumbSeparator>
+                            <BreadcrumbItem>
+                              <BreadcrumbPage className="text-[10px] font-bold uppercase tracking-[0.2em] font-heading text-app-tertiary">
+                                {selectedLesson?.title}
+                              </BreadcrumbPage>
+                            </BreadcrumbItem>
+                          </BreadcrumbList>
+                        </Breadcrumb>
                       </div>
                     </div>
 
