@@ -18,7 +18,8 @@ export const MOCK_COURSE: Course = {
           status: 'completed',
           completed: true, 
           videoUrl: 'https://www.youtube.com/embed/-QDkKLqWX9o',
-          description: 'Seja bem-vindo ao curso de configuração do Movidesk!'
+          description: 'Seja bem-vindo ao curso de configuração do Movidesk!',
+          content: 'Nesta aula de boas-vindas, vamos explorar os objetivos deste treinamento e como você pode tirar o melhor proveito de cada módulo para configurar sua plataforma Movidesk com sucesso.'
         },
         { 
           id: 'l2', 

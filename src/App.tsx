@@ -86,7 +86,7 @@ export default function App() {
   const [mainNav, setMainNav] = useState<'trilhas' | 'treinamentos'>('trilhas');
   const [trainingSidebarTab, setTrainingSidebarTab] = useState<'conteudo' | 'desempenho' | 'info'>('conteudo');
   const [isTrainingSidebarOpen, setIsTrainingSidebarOpen] = useState(true);
-  const [lessonInfoTab, setLessonInfoTab] = useState<'resumo' | 'material' | 'autor'>('resumo');
+  const [lessonInfoTab, setLessonInfoTab] = useState<'descricao' | 'resumo' | 'material' | 'autor'>('descricao');
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
 
   const handleLessonClick = (lesson: Lesson) => {
@@ -648,6 +648,15 @@ export default function App() {
                       <div className="bg-white rounded-3xl border border-app-outline-variant/30 shadow-sm overflow-hidden">
                         <div className="flex border-b border-app-outline-variant/30 bg-gray-50/50">
                           <button 
+                            onClick={() => setLessonInfoTab('descricao')}
+                            className={cn(
+                              "px-8 py-5 text-[10px] font-semibold uppercase tracking-[0.2em] border-b-2 transition-all font-heading",
+                              lessonInfoTab === 'descricao' ? "border-app-tertiary text-app-tertiary bg-white" : "border-transparent text-app-on-surface-variant hover:text-app-on-surface"
+                            )}
+                          >
+                            Descrição
+                          </button>
+                          <button 
                             onClick={() => setLessonInfoTab('resumo')}
                             className={cn(
                               "px-8 py-5 text-[10px] font-semibold uppercase tracking-[0.2em] border-b-2 transition-all font-heading",
@@ -678,6 +687,24 @@ export default function App() {
                         
                         <div className="p-8">
                           <AnimatePresence mode="wait">
+                            {lessonInfoTab === 'descricao' && (
+                              <motion.div
+                                key="descricao"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="space-y-6"
+                              >
+                                <div className="prose prose-sm max-w-none text-app-on-surface-variant/90 font-sans leading-relaxed">
+                                  {selectedLesson.content ? (
+                                    <p className="font-medium text-sm">{selectedLesson.content}</p>
+                                  ) : (
+                                    <p className="font-medium text-sm italic">Nenhuma descrição detalhada disponível para este conteúdo.</p>
+                                  )}
+                                </div>
+                              </motion.div>
+                            )}
+
                             {lessonInfoTab === 'resumo' && (
                               <motion.div
                                 key="resumo"
