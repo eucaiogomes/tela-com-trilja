@@ -484,7 +484,8 @@ export default function App() {
                                 ))}
                               </AccordionContent>
                             </AccordionItem>
-                          ))}
+                            );
+                          })}
                         </Accordion>
                       ) : (
                         course.modules.flatMap(m => m.lessons).map((lesson, idx) => {
