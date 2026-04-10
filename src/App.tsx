@@ -555,11 +555,11 @@ export default function App() {
                     {/* Video Player Section */}
                     <div className="relative aspect-video rounded-3xl overflow-hidden bg-black shadow-[0_32px_64px_-12px_rgba(0,0,0,0.3)] group">
                       {selectedLesson.fileUrl ? (
-                        <div className="w-full h-full bg-white flex flex-col">
-                          <embed
-                            src={`${selectedLesson.fileUrl}#toolbar=0&navpanes=0&scrollbar=0`}
-                            type="application/pdf"
-                            className="w-full h-full"
+                        <div className="w-full h-full bg-white relative">
+                          <iframe
+                            src={selectedLesson.fileUrl}
+                            className="w-full h-full border-none pointer-events-auto"
+                            title="Document Viewer"
                           />
                           <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/5">
                              <div className="bg-white/90 backdrop-blur-sm p-4 rounded-2xl shadow-xl pointer-events-auto flex items-center gap-4">
