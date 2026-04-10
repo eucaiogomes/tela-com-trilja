@@ -32,7 +32,8 @@ import {
   Package,
   ClipboardCheck,
   FileDown,
-  List
+  List,
+  X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
