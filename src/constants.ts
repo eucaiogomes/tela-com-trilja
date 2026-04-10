@@ -34,6 +34,7 @@ export const MOCK_COURSE: Course = {
           type: 'document', 
           status: 'in-progress',
           completed: false,
+          fileUrl: '/ebook_tecnologia_ead_styled.pdf',
           description: 'Documento PDF com o guia completo das trilhas de aprendizagem.'
         },
       ],

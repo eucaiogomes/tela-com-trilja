@@ -12,6 +12,7 @@ export interface Lesson {
   lastVisited?: boolean;
   description?: string;
   videoUrl?: string;
+  fileUrl?: string;
   content?: string;
 }
 
