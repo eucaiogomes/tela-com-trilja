@@ -102,13 +102,13 @@ export default function App() {
       {/* Header (Navbar) */}
       <div className={cn(
         "z-50 transition-all duration-300",
-        selectedLesson && mainNav === 'treinamentos' 
+        selectedLesson && (mainNav === 'treinamentos' || mainNav === 'trilha2') 
           ? "fixed top-0 left-0 right-0 h-2 group" 
           : "sticky top-0"
       )}>
         <header className={cn(
           "bg-[#00254e] border-b border-white/10 px-4 md:px-6 py-2 flex items-center justify-between transition-all duration-300",
-          selectedLesson && mainNav === 'treinamentos' 
+          selectedLesson && (mainNav === 'treinamentos' || mainNav === 'trilha2')
             ? "absolute top-0 left-0 right-0 -translate-y-full group-hover:translate-y-0 shadow-2xl" 
             : ""
         )}>
@@ -184,7 +184,7 @@ export default function App() {
     </div>
 
       {/* Breadcrumbs */}
-      {!(selectedLesson && mainNav === 'treinamentos') && (
+      {!(selectedLesson && (mainNav === 'treinamentos' || mainNav === 'trilha2')) && (
         <div className="px-4 md:px-6 py-3 bg-app-surface border-b border-app-outline-variant overflow-x-auto scrollbar-none">
           <div className="min-w-max">
             <Breadcrumb>
@@ -238,11 +238,11 @@ export default function App() {
 
       <main className={cn(
         "mx-auto",
-        selectedLesson && mainNav === 'treinamentos' ? "w-full p-0" : "max-w-[1400px] p-4 md:p-6"
+        selectedLesson && (mainNav === 'treinamentos' || mainNav === 'trilha2') ? "w-full p-0" : "max-w-[1400px] p-4 md:p-6"
       )}>
         <AnimatePresence mode="wait">
           {selectedLesson ? (
-            mainNav === 'treinamentos' ? (
+            (mainNav === 'treinamentos' || mainNav === 'trilha2') ? (
               <motion.div
                 key="training-lesson-view"
                 initial={{ opacity: 0 }}
@@ -544,7 +544,7 @@ export default function App() {
                           onClick={closeLesson}
                           className="text-app-on-surface-variant/60 hover:text-app-tertiary transition-colors"
                         >
-                          Treinamentos
+                          {mainNav === 'treinamentos' ? 'Treinamentos' : 'Trilha 2'}
                         </button>
                         <ChevronRight className="w-3 h-3 text-app-on-surface-variant/30" />
                         <span className="text-app-on-surface-variant/40 truncate max-w-[150px] md:max-w-[250px]">{course.title}</span>
@@ -1065,7 +1065,7 @@ export default function App() {
                   </div>
 
                   <TabsContent value="conteudos" className="mt-6 space-y-4">
-                    {mainNav !== 'treinamentos' ? (
+                    {mainNav === 'trilhas' ? (
                       <Accordion type="single" collapsible defaultValue={"m4" as any} className="space-y-3">
                         {course.modules.map((module) => (
                           <AccordionItem 
