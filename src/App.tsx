@@ -213,8 +213,8 @@ export default function App() {
             CG
           </div>
         </div>
+      </div>
       </header>
-    </div>
 
       {/* Breadcrumbs */}
       {!(selectedLesson && (mainNav === 'treinamentos' || mainNav === 'trilha2')) && (
