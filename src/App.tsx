@@ -601,32 +601,41 @@ export default function App() {
                       )}
                       
                       {/* Navigation Overlays */}
-                      <div className="absolute inset-0 flex items-center justify-between px-8 pointer-events-none">
-                        <button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            const all = course.modules.flatMap(m => m.lessons);
-                            const idx = all.findIndex(l => l.id === selectedLesson.id);
-                            if (idx > 0) setSelectedLesson(all[idx - 1]);
-                          }}
-                          className="pointer-events-auto w-28 h-28 bg-[#5c2d0c]/85 hover:bg-[#5c2d0c] text-white rounded-[2rem] flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl backdrop-blur-sm group/btn"
-                        >
-                          <ChevronLeft className="w-10 h-10 transition-transform group-hover/btn:-translate-x-1" />
-                          <span className="text-[10px] font-black uppercase tracking-[0.2em] font-heading">Anterior</span>
-                        </button>
+                      <div className="absolute inset-0 flex pointer-events-none">
+                        {/* Area de Hover Esquerda */}
+                        <div className="flex-1 h-full flex items-center justify-start pl-8 group/nav-left pointer-events-auto">
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const all = course.modules.flatMap(m => m.lessons);
+                              const idx = all.findIndex(l => l.id === selectedLesson.id);
+                              if (idx > 0) setSelectedLesson(all[idx - 1]);
+                            }}
+                            className="opacity-0 group-hover/nav-left:opacity-100 w-28 h-28 bg-[#5c2d0c]/85 hover:bg-[#5c2d0c] text-white rounded-[2rem] flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl backdrop-blur-sm group/btn"
+                          >
+                            <ChevronLeft className="w-10 h-10 transition-transform group-hover/btn:-translate-x-1" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] font-heading">Anterior</span>
+                          </button>
+                        </div>
                         
-                        <button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            const all = course.modules.flatMap(m => m.lessons);
-                            const idx = all.findIndex(l => l.id === selectedLesson.id);
-                            if (idx < all.length - 1) setSelectedLesson(all[idx + 1]);
-                          }}
-                          className="pointer-events-auto w-28 h-28 bg-[#5c2d0c]/85 hover:bg-[#5c2d0c] text-white rounded-[2rem] flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl backdrop-blur-sm group/btn"
-                        >
-                          <ChevronRight className="w-10 h-10 transition-transform group-hover/btn:translate-x-1" />
-                          <span className="text-[10px] font-black uppercase tracking-[0.2em] font-heading">Próximo</span>
-                        </button>
+                        {/* Espaço Central */}
+                        <div className="w-1/2" />
+
+                        {/* Area de Hover Direita */}
+                        <div className="flex-1 h-full flex items-center justify-end pr-8 group/nav-right pointer-events-auto">
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const all = course.modules.flatMap(m => m.lessons);
+                              const idx = all.findIndex(l => l.id === selectedLesson.id);
+                              if (idx < all.length - 1) setSelectedLesson(all[idx + 1]);
+                            }}
+                            className="opacity-0 group-hover/nav-right:opacity-100 w-28 h-28 bg-[#5c2d0c]/85 hover:bg-[#5c2d0c] text-white rounded-[2rem] flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl backdrop-blur-sm group/btn"
+                          >
+                            <ChevronRight className="w-10 h-10 transition-transform group-hover/btn:translate-x-1" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] font-heading">Próximo</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
 
