@@ -851,7 +851,7 @@ export default function App() {
                                 )}
                               >
                                 <FileDown className="w-3.5 h-3.5" />
-                                Material
+                                Material Complementar
                               </button>
                               <button 
                                 onClick={() => setLessonInfoTab('autor')}
