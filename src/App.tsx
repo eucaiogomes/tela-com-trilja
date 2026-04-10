@@ -297,12 +297,21 @@ export default function App() {
                       <div className="w-[320px] flex flex-col h-full">
                         <div className="p-6 bg-[#00254e] text-white space-y-6">
                           <div className="space-y-4">
-                            <button 
-                              onClick={() => setIsTrainingSidebarOpen(false)}
-                              className="p-1.5 bg-white/10 rounded transition-colors hover:bg-white/20"
-                            >
-                              <Menu className="w-5 h-5" />
-                            </button>
+                            <div className="flex items-center justify-between">
+                              <button 
+                                onClick={() => setIsTrainingSidebarOpen(false)}
+                                className="p-1.5 bg-white/10 rounded transition-colors hover:bg-white/20"
+                              >
+                                <Menu className="w-5 h-5 text-white" />
+                              </button>
+                              <button 
+                                onClick={closeLesson}
+                                className="p-1.5 bg-[#eb6200] text-white rounded transition-all hover:bg-[#ff751a] hover:scale-105 active:scale-95 shadow-lg"
+                                title="Voltar para o curso"
+                              >
+                                <ArrowLeft className="w-5 h-5" />
+                              </button>
+                            </div>
                             <h2 className="font-bold text-lg leading-tight text-left font-heading tracking-tight">{course.title}</h2>
                           </div>
                     <div className="space-y-4">
@@ -688,7 +697,7 @@ export default function App() {
                     "pt-0 md:pt-4 px-0 md:px-10 pb-12 space-y-0 md:space-y-6"
                   )}>
                     {/* Breadcrumb & Navigation (Desktop Only) */}
-                    <div className="hidden md:flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                    <div className="hidden md:flex items-center justify-between mb-4">
                       <div className="flex items-center gap-4">
                         {!isTrainingSidebarOpen && (
                           <motion.button
@@ -713,14 +722,6 @@ export default function App() {
                           <span className="text-app-tertiary">{selectedLesson?.title}</span>
                         </nav>
                       </div>
-                      
-                      <button 
-                        onClick={closeLesson}
-                        className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white border border-app-outline-variant/30 text-[10px] font-bold uppercase tracking-[0.15em] font-heading text-app-on-surface-variant hover:text-app-tertiary hover:border-app-tertiary/30 transition-all shadow-sm group"
-                      >
-                        <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-                        Voltar para o curso
-                      </button>
                     </div>
 
                     {/* Video Player Section */}
