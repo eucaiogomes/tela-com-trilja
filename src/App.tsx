@@ -400,7 +400,11 @@ export default function App() {
                             className="h-full bg-[#eb6200] transition-all duration-1000" 
                             style={{ width: `${course.performance}%` }} 
                           />
-                  <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-app-outline-variant bg-white">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                                <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-app-outline-variant bg-white">
                     {(() => {
                       const getStatusLabel = (status?: string) => {
                         switch(status) {
@@ -443,7 +447,6 @@ export default function App() {
                                       )}>{module.title}</span>
                                     </div>
                                     
-                                    {/* Pie Chart Desempenho Módulo */}
                                     <div className="flex gap-2">
                                       <div className="w-10 h-10 shrink-0 relative flex items-center justify-center group-hover:scale-105 transition-transform">
                                         <ProgressPie 
@@ -514,44 +517,52 @@ export default function App() {
                                             lesson.id === selectedLesson?.id ? "bg-[#fff5eb] border-l-[#eb6200]" : "hover:bg-gray-50/60 border-l-transparent"
                                           )}
                                         >
-                                            <div 
-                                              onClick={(e) => {
-                                                e.stopPropagation();
-                                                toggleLessonComplete(lesson.id);
-                                              }}
-                                              className={cn(
-                                                "shrink-0 cursor-pointer hover:scale-110 transition-transform",
-                                                lesson.id === selectedLesson?.id ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
-                                              )}
-                                            >
-                                              {lesson.completed ? <CheckCircle2 className="w-4 h-4" /> : <div className="w-4 h-4 rounded-full border-2 border-current opacity-30" />}
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                              <div className="flex items-center gap-1.5 mb-0.5">
-                                                <span className={cn(
-                                                  "px-1.5 py-0 rounded text-[7px] font-black uppercase tracking-wider border leading-4",
-                                                  lesson.status === 'completed' ? "bg-green-50 text-green-600 border-green-100" :
-                                                  lesson.status === 'in-progress' ? "bg-blue-50 text-blue-600 border-blue-100" :
-                                                  "bg-gray-50 text-gray-400 border-gray-100"
-                                                )}>
-                                                  {getStatusLabel(lesson.status)}
-                                                </span>
-                                              </div>
-                                              <p className={cn(
-                                                "text-[13px] font-bold leading-snug tracking-tight font-heading mb-1.5",
-                                                lesson.id === selectedLesson?.id ? "text-[#eb6200]" : "text-[#1a1a1a]"
-                                              )}>{lesson.title}</p>
-                                              <div className="flex items-center gap-1.5">
-                                                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
-                                                  <ProgressPie value={lesson.completed ? 100 : 0} size={16} innerRadius={5} outerRadius={8} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={5} />
-                                                  {lesson.completed ? 100 : 0}%
-                                                </span>
-                                                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
-                                                  <ProgressPie value={lesson.completed ? 95 : 0} size={16} innerRadius={5} outerRadius={8} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={5} />
-                                                  {lesson.completed ? 95 : 0}%
-                                                </span>
-                                              </div>
-                                            </div>
+                                          {(() => {
+                                            const lPerc = lesson.completed ? 100 : 0;
+                                            const lPerf = lesson.completed ? 95 : 0;
+                                            return (
+                                              <>
+                                                <div 
+                                                  onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    toggleLessonComplete(lesson.id);
+                                                  }}
+                                                  className={cn(
+                                                    "shrink-0 cursor-pointer hover:scale-110 transition-transform",
+                                                    lesson.id === selectedLesson?.id ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
+                                                  )}
+                                                >
+                                                  {lesson.completed ? <CheckCircle2 className="w-4 h-4" /> : <div className="w-4 h-4 rounded-full border-2 border-current opacity-30" />}
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                  <div className="flex items-center gap-1.5 mb-0.5">
+                                                    <span className={cn(
+                                                      "px-1.5 py-0 rounded text-[7px] font-black uppercase tracking-wider border leading-4",
+                                                      lesson.status === 'completed' ? "bg-green-50 text-green-600 border-green-100" :
+                                                      lesson.status === 'in-progress' ? "bg-blue-50 text-blue-600 border-blue-100" :
+                                                      "bg-gray-50 text-gray-400 border-gray-100"
+                                                    )}>
+                                                      {getStatusLabel(lesson.status)}
+                                                    </span>
+                                                  </div>
+                                                  <p className={cn(
+                                                    "text-[13px] font-bold leading-snug tracking-tight font-heading mb-1.5",
+                                                    lesson.id === selectedLesson?.id ? "text-[#eb6200]" : "text-[#1a1a1a]"
+                                                  )}>{lesson.title}</p>
+                                                  <div className="flex items-center gap-1.5">
+                                                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
+                                                      <ProgressPie value={lPerc} size={16} innerRadius={5} outerRadius={8} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={5} />
+                                                      {lPerc}%
+                                                    </span>
+                                                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
+                                                      <ProgressPie value={lPerf} size={16} innerRadius={5} outerRadius={8} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={5} />
+                                                      {lPerf}%
+                                                    </span>
+                                                  </div>
+                                                </div>
+                                              </>
+                                            );
+                                          })()}
                                         </button>
                                       )}
                                     </div>
@@ -561,76 +572,75 @@ export default function App() {
                             );
                           })}
                         </Accordion>
-                          ) : (
-                            <div className="flex flex-col">
-                              {course.modules.flatMap(m => m.lessons).map((lesson) => {
-                                const isActive = lesson.id === selectedLesson?.id;
-                                const percentage = lesson.completed ? 100 : 0;
-                                const performance = lesson.completed ? 95 : 0;
+                      ) : (
+                        <div className="flex flex-col">
+                          {course.modules.flatMap(m => m.lessons).map((lesson) => {
+                            const isActive = lesson.id === selectedLesson?.id;
+                            const percentage = lesson.completed ? 100 : 0;
+                            const performance = lesson.completed ? 95 : 0;
 
-                                return (
-                                  <button 
-                                    key={lesson.id}
-                                    onClick={() => setSelectedLesson(lesson)}
+                            return (
+                              <button 
+                                key={lesson.id}
+                                onClick={() => setSelectedLesson(lesson)}
+                                className={cn(
+                                  "w-full px-4 py-3 text-left border-b border-app-outline-variant/10 transition-all relative group",
+                                  isActive ? "bg-[#fff5eb] border-l-4 border-l-[#eb6200]" : "hover:bg-gray-50/60 border-l-4 border-l-transparent"
+                                )}
+                              >
+                                <div className="flex items-center gap-3">
+                                  <div 
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      toggleLessonComplete(lesson.id);
+                                    }}
                                     className={cn(
-                                      "w-full px-4 py-3 text-left border-b border-app-outline-variant/10 transition-all relative group",
-                                      isActive ? "bg-[#fff5eb] border-l-4 border-l-[#eb6200]" : "hover:bg-gray-50/60 border-l-4 border-l-transparent"
+                                      "shrink-0 cursor-pointer hover:scale-110 transition-transform",
+                                      isActive ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
+                                    )}>
+                                    {lesson.completed ? (
+                                      <CheckCircle2 className="w-4 h-4" />
+                                    ) : (
+                                      <div className="w-4 h-4 rounded-full border-2 border-current opacity-30" />
                                     )}
-                                  >
-                                    <div className="flex items-center gap-3">
-                                      <div 
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          toggleLessonComplete(lesson.id);
-                                        }}
-                                        className={cn(
-                                          "shrink-0 cursor-pointer hover:scale-110 transition-transform",
-                                          isActive ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
-                                        )}>
-                                        {lesson.completed ? (
-                                          <CheckCircle2 className="w-4 h-4" />
-                                        ) : (
-                                          <div className="w-4 h-4 rounded-full border-2 border-current opacity-30" />
-                                        )}
-                                      </div>
-                                      <div className="flex-1 min-w-0">
-                                        <div className="flex items-center gap-1.5 mb-0.5">
-                                          <span className={cn(
-                                            "px-1.5 py-0 rounded text-[7px] font-black uppercase tracking-wider border leading-4",
-                                            lesson.status === 'completed' ? "bg-green-50 text-green-600 border-green-100" :
-                                            lesson.status === 'in-progress' ? "bg-blue-50 text-blue-600 border-blue-100" :
-                                            "bg-gray-50 text-gray-400 border-gray-100"
-                                          )}>
-                                            {getStatusLabel(lesson.status)}
-                                          </span>
-                                        </div>
-
-                                        <p className={cn(
-                                          "text-[13px] font-bold leading-snug tracking-tight font-heading mb-1.5",
-                                          isActive ? "text-[#eb6200]" : "text-[#1a1a1a]"
-                                        )}>
-                                          {lesson.title}
-                                        </p>
-                                        
-                                        <div className="flex items-center gap-1.5">
-                                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
-                                            <ProgressPie value={percentage} size={16} innerRadius={5} outerRadius={8} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={5} />
-                                            {percentage}%
-                                          </span>
-                                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
-                                            <ProgressPie value={performance} size={16} innerRadius={5} outerRadius={8} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={5} />
-                                            {performance}%
-                                          </span>
-                                        </div>
-                                      </div>
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-1.5 mb-0.5">
+                                      <span className={cn(
+                                        "px-1.5 py-0 rounded text-[7px] font-black uppercase tracking-wider border leading-4",
+                                        lesson.status === 'completed' ? "bg-green-50 text-green-600 border-green-100" :
+                                        lesson.status === 'in-progress' ? "bg-blue-50 text-blue-600 border-blue-100" :
+                                        "bg-gray-50 text-gray-400 border-gray-100"
+                                      )}>
+                                        {getStatusLabel(lesson.status)}
+                                      </span>
                                     </div>
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          );
-                        })()
-                      }
+
+                                    <p className={cn(
+                                      "text-[13px] font-bold leading-snug tracking-tight font-heading mb-1.5",
+                                      isActive ? "text-[#eb6200]" : "text-[#1a1a1a]"
+                                    )}>
+                                      {lesson.title}
+                                    </p>
+                                    
+                                    <div className="flex items-center gap-1.5">
+                                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
+                                        <ProgressPie value={percentage} size={16} innerRadius={5} outerRadius={8} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={5} />
+                                        {percentage}%
+                                      </span>
+                                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
+                                        <ProgressPie value={performance} size={16} innerRadius={5} outerRadius={8} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={5} />
+                                        {performance}%
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      );
+                    })()}
                     </div>
                   </div>
                 </motion.aside>
