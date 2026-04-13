@@ -431,7 +431,8 @@ export default function App() {
                                 </AccordionTrigger>
                               <AccordionContent className="p-0 border-b border-app-outline-variant/10">
                                 {module.lessons.map((lesson) => (
-                                  <div key={lesson                                    {lesson.type === 'training' ? (
+                                  <div key={lesson.id}>
+                                    {lesson.type === 'training' ? (
                                       <Accordion type="single" collapsible className="w-full">
                                         <AccordionItem value="training-sub" className="border-none">
                                           <AccordionTrigger className="w-full px-8 py-4 hover:bg-app-background/50 hover:no-underline group/train">
@@ -801,44 +802,49 @@ export default function App() {
                         </div>
                       )}
                       
-                      {/* Navigation Overlays (Desktop Only) */}
-                      <div className="hidden md:flex absolute inset-0 pointer-events-none">
-                        {/* Area de Hover Esquerda */}
-                        <div className="flex-1 h-full flex items-center justify-start pl-2 group/nav-left pointer-events-auto">
-                          <button 
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              const all = course.modules.flatMap(m => m.lessons);
-                              const idx = all.findIndex(l => l.id === selectedLesson?.id);
-                              if (idx > 0) setSelectedLesson(all[idx - 1]);
-                            }}
-                            className="opacity-0 group-hover/nav-left:opacity-100 w-36 h-36 bg-[#eb6200]/90 hover:bg-[#eb6200] text-white rounded-2xl flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl backdrop-blur-sm group/btn"
-                          >
-                            <ChevronLeft className="w-12 h-12 transition-transform group-hover/btn:-translate-x-1" />
-                            <span className="text-xs font-black uppercase tracking-[0.2em] font-heading">Anterior</span>
-                          </button>
-                        </div>
-                        
-                        {/* Espaço Central */}
-                        <div className="w-1/2" />
+                      {/* Interaction Layer (Formerly internal navigation) */}
+                      <div className="hidden md:flex absolute inset-0 pointer-events-none group-hover:bg-black/5 transition-colors duration-500" />
+                    </div>
 
-                        {/* Area de Hover Direita */}
-                        <div className="flex-1 h-full flex items-center justify-end pr-2 group/nav-right pointer-events-auto">
-                          <button 
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              const all = course.modules.flatMap(m => m.lessons);
-                              const idx = all.findIndex(l => l.id === selectedLesson?.id);
-                              if (idx < all.length - 1) setSelectedLesson(all[idx + 1]);
-                            }}
-                            className="opacity-0 group-hover/nav-right:opacity-100 w-36 h-36 bg-[#eb6200]/90 hover:bg-[#eb6200] text-white rounded-2xl flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl backdrop-blur-sm group/btn"
-                          >
-                            <ChevronRight className="w-12 h-12 transition-transform group-hover/btn:translate-x-1" />
-                            <span className="text-xs font-black uppercase tracking-[0.2em] font-heading">Próximo</span>
-                          </button>
-                        </div>
+                    {/* External Navigation Controls */}
+                    <div className="hidden md:block absolute top-[280px] left-0 right-0 pointer-events-none z-30">
+                      <div className="mx-auto max-w-[1340px] px-2 flex justify-between">
+                        {/* Anterior Button */}
+                        <motion.button 
+                          whileHover={{ scale: 1.1, x: -5 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const all = course.modules.flatMap(m => m.lessons);
+                            const idx = all.findIndex(l => l.id === selectedLesson?.id);
+                            if (idx > 0) setSelectedLesson(all[idx - 1]);
+                          }}
+                          className="pointer-events-auto w-14 h-14 bg-white/90 backdrop-blur-md text-[#eb6200] rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-app-outline-variant/10 hover:bg-[#eb6200] hover:text-white transition-all duration-300 group/nav"
+                          title="Aula Anterior"
+                        >
+                          <ChevronLeft className="w-8 h-8" />
+                          <span className="absolute -bottom-8 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Anterior</span>
+                        </motion.button>
+                        
+                        {/* Próximo Button */}
+                        <motion.button 
+                          whileHover={{ scale: 1.1, x: 5 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const all = course.modules.flatMap(m => m.lessons);
+                            const idx = all.findIndex(l => l.id === selectedLesson?.id);
+                            if (idx < all.length - 1) setSelectedLesson(all[idx + 1]);
+                          }}
+                          className="pointer-events-auto w-14 h-14 bg-[#eb6200] text-white rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
+                          title="Próxima Aula"
+                        >
+                          <ChevronRight className="w-8 h-8" />
+                          <span className="absolute -bottom-8 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Próxima Aula</span>
+                        </motion.button>
                       </div>
                     </div>
+
 
                     {/* Lesson Info Section */}
                     <div className="space-y-6 md:space-y-10 px-4 md:px-0 pt-4 md:pt-0">
