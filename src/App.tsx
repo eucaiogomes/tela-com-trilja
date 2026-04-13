@@ -784,7 +784,7 @@ export default function App() {
 
                     {/* Video Player Section with Centered Controls */}
                     <div className="relative group/player-nav">
-                      <div className="relative aspect-video md:rounded-3xl overflow-hidden bg-black md:shadow-[0_32px_64px_-12px_rgba(0,0,0,0.3)] group z-20">
+                      <div className="relative aspect-video overflow-hidden bg-black md:shadow-[0_32px_64px_-12px_rgba(0,0,0,0.3)] group z-20">
                         {selectedLesson?.fileUrl ? (
                           <div className="w-full h-full bg-white relative">
                             <iframe
