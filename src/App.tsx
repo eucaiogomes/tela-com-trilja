@@ -814,25 +814,19 @@ export default function App() {
 
 
                     {/* Lesson Info Section */}
-                    <div className="space-y-3 md:space-y-4 px-4 md:px-0 pt-3 md:pt-4 border-t border-app-outline-variant/20">
-                      <div className="flex flex-col gap-1 md:gap-2">
-                        <div className="md:hidden flex items-center justify-between mb-1">
-                          <span className="text-[10px] font-bold text-app-tertiary uppercase tracking-widest">
-                            {course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id))?.title}
-                          </span>
+                    <div className="space-y-2 md:space-y-2.5 px-4 md:px-0 pt-2 md:pt-2 border-t border-app-outline-variant/20">
+                      <div className="flex flex-col">
+                        <div className="md:hidden flex items-center justify-end mb-1">
                           <button onClick={closeLesson} className="p-1 text-app-on-surface-variant/40 hover:text-app-tertiary">
                             <X className="w-4 h-4" />
                           </button>
                         </div>
-                        <span className="hidden md:block text-[10px] font-bold text-app-on-surface-variant/40 uppercase tracking-[0.2em] font-heading">
-                          {course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id))?.title}
-                        </span>
                         <h1 className="text-xl md:text-3xl font-bold md:font-black text-app-on-surface tracking-tight leading-tight font-heading max-w-4xl">
                           {selectedLesson?.title}
                         </h1>
                       </div>
 
-                      <div className="space-y-3 md:space-y-4">
+                      <div className="space-y-2 md:space-y-2.5">
                         {/* Sticky Tabs Bar */}
                         <div className="sticky top-0 z-30 -mx-4 px-4 py-2 bg-[#f8f9fa] md:bg-[#f8f9fa]/80 md:backdrop-blur-md">
                           <div className="md:bg-white md:rounded-2xl md:border md:border-app-outline-variant/30 md:shadow-lg md:shadow-black/[0.03] overflow-hidden">
