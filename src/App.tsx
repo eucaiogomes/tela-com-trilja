@@ -774,7 +774,7 @@ export default function App() {
 
                       {/* External Navigation Controls - Truly Outside the Player */}
                       <div className="hidden md:block absolute top-1/2 -translate-y-1/2 -left-20 pointer-events-none z-30">
-                        {/* Lateral Button - to change size manually, edit w-[60px] h-[60px] and w-9 h-9 below */}
+                        {/* Lateral Button - to change size manually, edit w-[62px] h-[62px] and w-9 h-9 below */}
                         <motion.button
                           whileHover={{ scale: 1.1, x: -8 }}
                           whileTap={{ scale: 0.95 }}
@@ -784,7 +784,7 @@ export default function App() {
                             const idx = all.findIndex(l => l.id === selectedLesson?.id);
                             if (idx > 0) setSelectedLesson(all[idx - 1]);
                           }}
-                          className="pointer-events-auto w-[60px] h-[60px] bg-[#eb6200] text-white rounded-2xl flex items-center justify-center shadow-[0_12px_24px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
+                          className="pointer-events-auto w-[62px] h-[62px] bg-[#eb6200] text-white rounded-2xl flex items-center justify-center shadow-[0_12px_24px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
                           title="Aula Anterior"
                         >
                           <ChevronLeft className="w-9 h-9" />
@@ -802,7 +802,7 @@ export default function App() {
                             const idx = all.findIndex(l => l.id === selectedLesson?.id);
                             if (idx < all.length - 1) setSelectedLesson(all[idx + 1]);
                           }}
-                          className="pointer-events-auto w-[60px] h-[60px] bg-[#eb6200] text-white rounded-2xl flex items-center justify-center shadow-[0_12px_24px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
+                          className="pointer-events-auto w-[62px] h-[62px] bg-[#eb6200] text-white rounded-2xl flex items-center justify-center shadow-[0_12px_24px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
                           title="Próxima Aula"
                         >
                           <ChevronRight className="w-9 h-9" />
