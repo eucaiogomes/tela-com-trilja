@@ -327,38 +327,32 @@ export default function App() {
                       className="hidden md:flex bg-white border-r border-app-outline-variant flex-col h-full shadow-xl z-20 overflow-hidden shrink-0"
                     >
                       <div className="w-[320px] flex flex-col h-full">
-                        <div className="p-6 bg-[#00254e] text-white space-y-6">
-                          <div className="space-y-4">
-                            <div className="flex items-center justify-between h-9">
-                              {/* Empty space where buttons used to be */}
-                            </div>
-                            <h2 className="font-bold text-lg leading-tight text-left font-heading tracking-tight">{course.title}</h2>
-
-                          </div>
-                    <div className="space-y-4">
+                        <div className="px-6 pt-10 pb-5 bg-[#00254e] text-white space-y-4">
+                          <h2 className="font-bold text-base leading-tight text-left font-heading tracking-tight">{course.title}</h2>
+                    <div className="space-y-3">
                       {/* Progresso Bar */}
-                      <div className="space-y-2">
+                      <div className="space-y-1.5">
                         <div className="flex justify-between text-[10px] font-bold uppercase tracking-[0.1em] font-heading">
-                          <span className="text-white/60">Progresso</span>
-                          <span className="text-app-tertiary bg-app-tertiary/10 px-1.5 py-0.5 rounded font-heading">{course.progress}%</span>
+                          <span className="text-white/50">Progresso</span>
+                          <span className="text-white font-black">{course.progress}%</span>
                         </div>
-                        <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                        <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
                           <div 
-                            className="h-full bg-app-tertiary transition-all duration-1000" 
+                            className="h-full bg-[#eb6200] transition-all duration-1000" 
                             style={{ width: `${course.progress}%` }} 
                           />
                         </div>
                       </div>
 
                       {/* Aproveitamento Bar */}
-                      <div className="space-y-2">
+                      <div className="space-y-1.5">
                         <div className="flex justify-between text-[10px] font-bold uppercase tracking-[0.1em] font-heading">
-                          <span className="text-white/60">Aproveitamento</span>
-                          <span className="text-app-tertiary bg-app-tertiary/10 px-1.5 py-0.5 rounded font-heading">{course.performance}%</span>
+                          <span className="text-white/50">Aproveitamento</span>
+                          <span className="text-white font-black">{course.performance}%</span>
                         </div>
-                        <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                        <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
                           <div 
-                            className="h-full bg-app-tertiary transition-all duration-1000" 
+                            className="h-full bg-[#eb6200] transition-all duration-1000" 
                             style={{ width: `${course.performance}%` }} 
                           />
                         </div>
@@ -730,15 +724,12 @@ export default function App() {
                     <div className={cn(
                       "mx-auto transition-all duration-500 ease-in-out",
                       isTrainingSidebarOpen ? "max-w-7xl" : "max-w-7xl",
-                      "pt-20 md:pt-24 px-4 md:px-10 pb-12 space-y-6 md:space-y-8"
+                      "pt-16 md:pt-18 px-4 md:px-10 pb-12 space-y-4 md:space-y-6"
                     )}>
 
                     {/* Breadcrumb & Navigation (Desktop Only) */}
-                    <div className="hidden md:flex items-center justify-between mb-8">
+                    <div className="hidden md:flex items-center justify-between mb-4">
                       <div className="flex items-center gap-4">
-                        {/* The floating buttons will handle the sidebar toggle */}
-                        <div className="w-10 h-10 flex-shrink-0" /> {/* Spacer for the floating button */}
-
                         <Breadcrumb className="bg-transparent shadow-none border-none p-0">
                           <BreadcrumbList className="gap-1 md:gap-1">
                             <BreadcrumbItem>
@@ -876,8 +867,8 @@ export default function App() {
 
 
                     {/* Lesson Info Section */}
-                    <div className="space-y-6 md:space-y-10 px-4 md:px-0 pt-4 md:pt-0">
-                      <div className="flex flex-col gap-1 md:gap-4">
+                    <div className="space-y-5 md:space-y-8 px-4 md:px-0 pt-5 md:pt-6 border-t border-app-outline-variant/20">
+                      <div className="flex flex-col gap-1 md:gap-2">
                         <div className="md:hidden flex items-center justify-between mb-1">
                           <span className="text-[10px] font-bold text-app-tertiary uppercase tracking-widest">
                             {course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id))?.title}
@@ -886,7 +877,10 @@ export default function App() {
                             <X className="w-4 h-4" />
                           </button>
                         </div>
-                        <h1 className="text-xl md:text-4xl font-bold md:font-black text-app-on-surface tracking-tight leading-tight md:leading-[0.9] font-heading max-w-4xl">
+                        <span className="hidden md:block text-[10px] font-bold text-app-on-surface-variant/40 uppercase tracking-[0.2em] font-heading">
+                          {course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id))?.title}
+                        </span>
+                        <h1 className="text-xl md:text-3xl font-bold md:font-black text-app-on-surface tracking-tight leading-tight font-heading max-w-4xl">
                           {selectedLesson?.title}
                         </h1>
                       </div>
