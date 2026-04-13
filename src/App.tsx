@@ -348,12 +348,13 @@ export default function App() {
                 <div className="fixed top-4 left-0 z-[60] flex items-center gap-3 px-6 pointer-events-none">
 
                   {/* Hamburger Button */}
+                  {/* Hamburger Button - to change size manually, edit p-3 (padding) and w-6 h-6 (icon size) below */}
                   <button
                     onClick={() => setIsTrainingSidebarOpen(!isTrainingSidebarOpen)}
-                    className="pointer-events-auto p-2.5 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
+                    className="pointer-events-auto p-3 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
                     title={isTrainingSidebarOpen ? "Fechar Menu" : "Abrir Menu"}
                   >
-                    <Menu className="w-5 h-5 flex-shrink-0" />
+                    <Menu className="w-6 h-6 flex-shrink-0" />
                   </button>
 
                   {/* Back Button - follows sidebar */}
@@ -364,9 +365,9 @@ export default function App() {
                   >
                     <button
                       onClick={closeLesson}
-                      className="pointer-events-auto p-2.5 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
+                      className="pointer-events-auto p-3 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
                     >
-                      <ArrowLeft className="w-5 h-5" />
+                      <ArrowLeft className="w-6 h-6" />
                     </button>
                   </motion.div>
 
@@ -774,6 +775,7 @@ export default function App() {
 
                       {/* External Navigation Controls - Truly Outside the Player */}
                       <div className="hidden md:block absolute top-1/2 -translate-y-1/2 -left-20 pointer-events-none z-30">
+                        {/* Lateral Button - to change size manually, edit w-[60px] h-[60px] and w-9 h-9 below */}
                         <motion.button
                           whileHover={{ scale: 1.1, x: -8 }}
                           whileTap={{ scale: 0.95 }}
@@ -783,10 +785,10 @@ export default function App() {
                             const idx = all.findIndex(l => l.id === selectedLesson?.id);
                             if (idx > 0) setSelectedLesson(all[idx - 1]);
                           }}
-                          className="pointer-events-auto w-14 h-14 bg-[#eb6200] text-white rounded-2xl flex items-center justify-center shadow-[0_12px_24px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
+                          className="pointer-events-auto w-[60px] h-[60px] bg-[#eb6200] text-white rounded-2xl flex items-center justify-center shadow-[0_12px_24px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
                           title="Aula Anterior"
                         >
-                          <ChevronLeft className="w-8 h-8" />
+                          <ChevronLeft className="w-9 h-9" />
                           <span className="absolute -bottom-10 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Anterior</span>
                         </motion.button>
                       </div>
@@ -801,10 +803,10 @@ export default function App() {
                             const idx = all.findIndex(l => l.id === selectedLesson?.id);
                             if (idx < all.length - 1) setSelectedLesson(all[idx + 1]);
                           }}
-                          className="pointer-events-auto w-14 h-14 bg-[#eb6200] text-white rounded-2xl flex items-center justify-center shadow-[0_12px_24px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
+                          className="pointer-events-auto w-[60px] h-[60px] bg-[#eb6200] text-white rounded-2xl flex items-center justify-center shadow-[0_12px_24px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
                           title="Próxima Aula"
                         >
-                          <ChevronRight className="w-8 h-8" />
+                          <ChevronRight className="w-9 h-9" />
                           <span className="absolute -bottom-10 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Próxima Aula</span>
                         </motion.button>
                       </div>
