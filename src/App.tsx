@@ -287,31 +287,25 @@ export default function App() {
                 className="flex h-screen overflow-hidden bg-[#f8f9fa] relative"
               >
                 {/* Global Floating Controls */}
-                <div className="fixed top-4 left-0 z-[60] flex items-center gap-3 px-6 pointer-events-none w-full">
+                <div className="fixed top-4 left-0 z-[60] flex items-center gap-3 px-6 pointer-events-none">
 
+                  {/* Hamburger Button */}
                   <button 
                     onClick={() => setIsTrainingSidebarOpen(!isTrainingSidebarOpen)}
-                    className="pointer-events-auto p-2 bg-white/40 hover:bg-white/90 backdrop-blur-sm border border-app-outline-variant/20 rounded-xl shadow-lg text-[#00254e] hover:text-[#eb6200] transition-all hover:scale-105 active:scale-95 group opacity-60 hover:opacity-100"
+                    className="pointer-events-auto p-2.5 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
                     title={isTrainingSidebarOpen ? "Fechar Menu" : "Abrir Menu"}
                   >
                     <Menu className="w-5 h-5 flex-shrink-0" />
                   </button>
 
-                  <motion.div
-                    animate={{ x: isTrainingSidebarOpen ? 276 : 0 }}
-                    transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                    className="pointer-events-none"
+                  {/* Back Button */}
+                  <button 
+                    onClick={closeLesson}
+                    className="pointer-events-auto p-2.5 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
+                    title="Voltar para o curso"
                   >
-                    <button 
-                      onClick={closeLesson}
-                      className="pointer-events-auto p-2.5 bg-[#eb6200]/40 hover:bg-[#eb6200] text-white rounded-xl shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center gap-2 group pr-5 opacity-60 hover:opacity-100 backdrop-blur-sm"
-                      title="Sair da aula"
-                    >
-
-                      <ArrowLeft className="w-5 h-5" />
-                      <span className="text-[10px] font-bold uppercase tracking-[0.15em] overflow-hidden whitespace-nowrap max-w-0 group-hover:max-w-[100px] transition-all duration-500">Voltar para o curso</span>
-                    </button>
-                  </motion.div>
+                    <ArrowLeft className="w-5 h-5" />
+                  </button>
 
                 </div>
 
@@ -327,7 +321,7 @@ export default function App() {
                       className="hidden md:flex bg-white border-r border-app-outline-variant flex-col h-full shadow-xl z-20 overflow-hidden shrink-0"
                     >
                       <div className="w-[320px] flex flex-col h-full">
-                        <div className="px-6 pt-10 pb-5 bg-[#00254e] text-white space-y-4">
+                        <div className="px-6 pt-14 pb-5 bg-[#00254e] text-white space-y-4">
                           <h2 className="font-bold text-base leading-tight text-left font-heading tracking-tight">{course.title}</h2>
                     <div className="space-y-3">
                       {/* Progresso Bar */}
