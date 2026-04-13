@@ -385,7 +385,7 @@ export default function App() {
                     >
                       <div className="w-[320px] flex flex-col h-full">
                         <div className="px-6 pt-14 pb-5 bg-[#00254e] text-white space-y-4">
-                          <h2 className="font-bold text-base leading-tight text-left font-heading tracking-tight">{course.title}</h2>
+                          <h2 className="font-bold text-[17.5px] leading-tight text-left font-heading tracking-tight">{course.title}</h2>
                           <div className="space-y-3">
                             {/* Progresso Bar */}
                             <div className="space-y-1.5">
@@ -442,7 +442,7 @@ export default function App() {
                                       {index < course.modules.length - 1 && (
                                         <div className="absolute left-[39px] top-12 bottom-0 w-0.5 bg-app-outline-variant/30 z-0" />
                                       )}
-                                      <AccordionTrigger className="px-6 py-4 bg-gray-50/50 hover:bg-gray-100/50 hover:no-underline border-b border-app-outline-variant/10 group relative z-10 w-full">
+                                      <AccordionTrigger className="px-6 py-5 bg-gray-50/50 hover:bg-gray-100/50 hover:no-underline border-b border-app-outline-variant/10 group relative z-10 w-full">
                                         <div className="flex items-center justify-between w-full gap-4">
                                           <div className="flex items-center gap-3 text-left">
                                             <div className={cn(
@@ -454,7 +454,7 @@ export default function App() {
                                               {index + 1}
                                             </div>
                                             <span className={cn(
-                                              "text-xs font-bold uppercase tracking-widest font-heading line-clamp-2",
+                                              "text-[13px] font-bold uppercase tracking-widest font-heading line-clamp-2",
                                               isModuleCompleted ? "text-green-600" : "text-app-on-surface"
                                             )}>{module.title}</span>
                                           </div>
@@ -476,12 +476,12 @@ export default function App() {
                                             {lesson.type === 'training' && lesson.lessons ? (
                                               <Accordion type="single" collapsible className="w-full">
                                                 <AccordionItem value="training" className="border-none">
-                                                  <AccordionTrigger className="px-8 py-5 hover:bg-gray-50/50 hover:no-underline border-b border-app-outline-variant/5">
+                                                  <AccordionTrigger className="px-8 py-6 hover:bg-gray-50/50 hover:no-underline border-b border-app-outline-variant/5">
                                                     <div className="flex items-center gap-3">
                                                       <div className="w-5 h-5 rounded bg-app-tertiary/10 flex items-center justify-center text-app-tertiary">
                                                         <PlayCircle className="w-3 h-3" />
                                                       </div>
-                                                      <span className="text-[13px] font-bold text-app-on-surface">{lesson.title}</span>
+                                                      <span className="text-[14.5px] font-bold text-app-on-surface">{lesson.title}</span>
                                                     </div>
                                                   </AccordionTrigger>
                                                   <AccordionContent className="p-0 bg-gray-50/30">
@@ -500,18 +500,18 @@ export default function App() {
                                                           <div className="flex items-center gap-3">
                                                             {sub.completed ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <div className="w-4 h-4 rounded-full border-2 border-app-outline-variant/30" />}
                                                             <span className={cn(
-                                                              "text-[13px] font-bold tracking-tight",
+                                                              "text-[14px] font-bold tracking-tight",
                                                               selectedLesson?.id === sub.id ? "text-app-tertiary" : "text-app-on-surface"
                                                             )}>{sub.title}</span>
                                                           </div>
 
                                                           {selectedLesson?.id === sub.id && (
                                                             <div className="flex items-center gap-1.5 pl-7">
-                                                              <span className="inline-flex items-center gap-1.5 px-2 rounded bg-green-50 text-green-700 text-[8px] font-black uppercase border border-green-100">
+                                                              <span className="inline-flex items-center gap-1.5 px-2 rounded bg-green-50 text-green-700 text-[9.5px] font-black uppercase border border-green-100">
                                                                 PROGRESSO
                                                                 <ProgressPie value={subPerc} size={24} innerRadius={9.5} outerRadius={11.5} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={7} />
                                                               </span>
-                                                              <span className="inline-flex items-center gap-1.5 px-2 rounded bg-[#fff5eb] text-[#eb6200] text-[8px] font-black uppercase border border-[#ffead6]">
+                                                              <span className="inline-flex items-center gap-1.5 px-2 rounded bg-[#fff5eb] text-[#eb6200] text-[9.5px] font-black uppercase border border-[#ffead6]">
                                                                 APROVEITAMENTO
                                                                 <ProgressPie value={subPerf} size={24} innerRadius={9.5} outerRadius={11.5} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={7} />
                                                               </span>
@@ -527,7 +527,7 @@ export default function App() {
                                               <button
                                                 onClick={() => setSelectedLesson(lesson)}
                                                 className={cn(
-                                                  "w-full px-4 py-3 text-left transition-all relative group flex items-center gap-3 border-l-4",
+                                                  "w-full px-4 py-4 text-left transition-all relative group flex items-center gap-3 border-l-4",
                                                   lesson.id === selectedLesson?.id ? "bg-[#fff5eb] border-l-[#eb6200]" : "hover:bg-gray-50/60 border-l-transparent"
                                                 )}
                                               >
@@ -551,7 +551,7 @@ export default function App() {
                                                       <div className="flex-1 min-w-0">
                                                         <div className="flex items-center gap-1.5 mb-0.5">
                                                           <span className={cn(
-                                                            "px-1.5 py-0 rounded text-[7px] font-black uppercase tracking-wider border leading-4",
+                                                            "px-1.5 py-0 rounded text-[8.5px] font-black uppercase tracking-wider border leading-4",
                                                             lesson.status === 'completed' ? "bg-green-50 text-green-600 border-green-100" :
                                                               lesson.status === 'in-progress' ? "bg-blue-50 text-blue-600 border-blue-100" :
                                                                 "bg-gray-50 text-gray-400 border-gray-100"
@@ -560,16 +560,16 @@ export default function App() {
                                                           </span>
                                                         </div>
                                                         <p className={cn(
-                                                          "text-[13px] font-bold leading-snug tracking-tight font-heading mb-1.5",
+                                                          "text-[14px] font-bold leading-snug tracking-tight font-heading mb-1.5",
                                                           lesson.id === selectedLesson?.id ? "text-[#eb6200]" : "text-[#1a1a1a]"
                                                         )}>{lesson.title}</p>
                                                         {lesson.id === selectedLesson?.id && (
                                                           <div className="flex items-center gap-1.5">
-                                                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
+                                                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[10.5px] font-black uppercase border border-green-100">
                                                               PROGRESSO
                                                               <ProgressPie value={lPerc} size={26} innerRadius={10.5} outerRadius={12.5} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={8} />
                                                             </span>
-                                                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
+                                                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[10.5px] font-black uppercase border border-[#ffead6]">
                                                               APROVEITAMENTO
                                                               <ProgressPie value={lPerf} size={26} innerRadius={10.5} outerRadius={12.5} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={8} />
                                                             </span>
@@ -600,7 +600,7 @@ export default function App() {
                                       key={lesson.id}
                                       onClick={() => setSelectedLesson(lesson)}
                                       className={cn(
-                                        "w-full px-4 py-3 text-left border-b border-app-outline-variant/10 transition-all relative group",
+                                        "w-full px-5 py-4 text-left border-b border-app-outline-variant/10 transition-all relative group",
                                         isActive ? "bg-[#fff5eb] border-l-4 border-l-[#eb6200]" : "hover:bg-gray-50/60 border-l-4 border-l-transparent"
                                       )}
                                     >
@@ -623,7 +623,7 @@ export default function App() {
                                         <div className="flex-1 min-w-0">
                                           <div className="flex items-center gap-1.5 mb-0.5">
                                             <span className={cn(
-                                              "px-1.5 py-0 rounded text-[7px] font-black uppercase tracking-wider border leading-4",
+                                              "px-1.5 py-0 rounded text-[8.5px] font-black uppercase tracking-wider border leading-4",
                                               lesson.status === 'completed' ? "bg-green-50 text-green-600 border-green-100" :
                                                 lesson.status === 'in-progress' ? "bg-blue-50 text-blue-600 border-blue-100" :
                                                   "bg-gray-50 text-gray-400 border-gray-100"
@@ -633,7 +633,7 @@ export default function App() {
                                           </div>
 
                                           <p className={cn(
-                                            "text-[13px] font-bold leading-snug tracking-tight font-heading mb-1.5",
+                                            "text-[14px] font-bold leading-snug tracking-tight font-heading mb-1.5",
                                             isActive ? "text-[#eb6200]" : "text-[#1a1a1a]"
                                           )}>
                                             {lesson.title}
@@ -641,11 +641,11 @@ export default function App() {
 
                                           {isActive && (
                                             <div className="flex items-center gap-1.5">
-                                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
+                                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[10.5px] font-black uppercase border border-green-100">
                                                 PROGRESSO
                                                 <ProgressPie value={percentage} size={26} innerRadius={10.5} outerRadius={12.5} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={8} />
                                               </span>
-                                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
+                                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[10.5px] font-black uppercase border border-[#ffead6]">
                                                 APROVEITAMENTO
                                                 <ProgressPie value={performance} size={26} innerRadius={10.5} outerRadius={12.5} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={8} />
                                               </span>
