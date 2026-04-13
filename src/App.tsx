@@ -782,94 +782,96 @@ export default function App() {
                       </div>
                     </div>
 
-                    {/* Video Player Section */}
-                    <div className="relative aspect-video md:rounded-3xl overflow-hidden bg-black md:shadow-[0_32px_64px_-12px_rgba(0,0,0,0.3)] group z-20">
-                      {selectedLesson?.fileUrl ? (
-                        <div className="w-full h-full bg-white relative">
-                          <iframe
-                            src={selectedLesson?.fileUrl}
-                            className="w-full h-full border-none pointer-events-auto"
-                            title="Document Viewer"
-                          />
-                          <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/5">
-                             <div className="bg-white/90 backdrop-blur-sm p-4 rounded-2xl shadow-xl pointer-events-auto flex items-center gap-4">
-                               <p className="text-xs font-bold text-app-on-surface uppercase tracking-wider">Problemas ao visualizar?</p>
-                               <a 
-                                 href={selectedLesson?.fileUrl} 
-                                 target="_blank" 
-                                 rel="noopener noreferrer"
-                                 className="px-4 py-2 bg-app-tertiary text-white text-[10px] font-bold uppercase tracking-widest rounded-xl hover:bg-app-tertiary-hover transition-colors"
-                               >
-                                 Abrir em nova aba
-                               </a>
-                             </div>
+                    {/* Video Player Section with Centered Controls */}
+                    <div className="relative group/player-nav">
+                      <div className="relative aspect-video md:rounded-3xl overflow-hidden bg-black md:shadow-[0_32px_64px_-12px_rgba(0,0,0,0.3)] group z-20">
+                        {selectedLesson?.fileUrl ? (
+                          <div className="w-full h-full bg-white relative">
+                            <iframe
+                              src={selectedLesson?.fileUrl}
+                              className="w-full h-full border-none pointer-events-auto"
+                              title="Document Viewer"
+                            />
+                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/5">
+                               <div className="bg-white/90 backdrop-blur-sm p-4 rounded-2xl shadow-xl pointer-events-auto flex items-center gap-4">
+                                 <p className="text-xs font-bold text-app-on-surface uppercase tracking-wider">Problemas ao visualizar?</p>
+                                 <a 
+                                   href={selectedLesson?.fileUrl} 
+                                   target="_blank" 
+                                   rel="noopener noreferrer"
+                                   className="px-4 py-2 bg-app-tertiary text-white text-[10px] font-bold uppercase tracking-widest rounded-xl hover:bg-app-tertiary-hover transition-colors"
+                                 >
+                                   Abrir em nova aba
+                                 </a>
+                               </div>
+                            </div>
                           </div>
-                        </div>
-                      ) : selectedLesson?.videoUrl ? (
-                        selectedLesson?.videoUrl?.includes('youtube.com') || selectedLesson?.videoUrl?.includes('youtu.be') ? (
-                          <iframe
-                            src={selectedLesson?.videoUrl}
-                            className="w-full h-full"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          />
-                        ) : (
-                          <video 
-                            src={selectedLesson?.videoUrl} 
-                            controls 
-                            className="w-full h-full object-contain"
-                          />
-                        )
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-zinc-900">
-                          {selectedLesson?.type === 'document' ? (
-                            <FileText className="w-20 md:w-24 h-20 md:h-24 text-white/30 group-hover:text-white/60 transition-all duration-500 scale-90 group-hover:scale-100" />
+                        ) : selectedLesson?.videoUrl ? (
+                          selectedLesson?.videoUrl?.includes('youtube.com') || selectedLesson?.videoUrl?.includes('youtu.be') ? (
+                            <iframe
+                              src={selectedLesson?.videoUrl}
+                              className="w-full h-full"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                            />
                           ) : (
-                            <PlayCircle className="w-20 md:w-24 h-20 md:h-24 text-white/30 group-hover:text-white/60 transition-all duration-500 scale-90 group-hover:scale-100" />
-                          )}
-                        </div>
-                      )}
-                      
-                      {/* Interaction Layer (Formerly internal navigation) */}
-                      <div className="hidden md:flex absolute inset-0 pointer-events-none group-hover:bg-black/5 transition-colors duration-500" />
-                    </div>
-
-                    {/* External Navigation Controls */}
-                    <div className="hidden md:block absolute top-[280px] left-0 right-0 pointer-events-none z-30">
-                      <div className="mx-auto max-w-[1340px] px-2 flex justify-between">
-                        {/* Anterior Button */}
-                        <motion.button 
-                          whileHover={{ scale: 1.1, x: -5 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            const all = course.modules.flatMap(m => m.lessons);
-                            const idx = all.findIndex(l => l.id === selectedLesson?.id);
-                            if (idx > 0) setSelectedLesson(all[idx - 1]);
-                          }}
-                          className="pointer-events-auto w-14 h-14 bg-white/90 backdrop-blur-md text-[#eb6200] rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-app-outline-variant/10 hover:bg-[#eb6200] hover:text-white transition-all duration-300 group/nav"
-                          title="Aula Anterior"
-                        >
-                          <ChevronLeft className="w-8 h-8" />
-                          <span className="absolute -bottom-8 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Anterior</span>
-                        </motion.button>
+                            <video 
+                              src={selectedLesson?.videoUrl} 
+                              controls 
+                              className="w-full h-full object-contain"
+                            />
+                          )
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-zinc-900">
+                            {selectedLesson?.type === 'document' ? (
+                              <FileText className="w-20 md:w-24 h-20 md:h-24 text-white/30 group-hover:text-white/60 transition-all duration-500 scale-90 group-hover:scale-100" />
+                            ) : (
+                              <PlayCircle className="w-20 md:w-24 h-20 md:h-24 text-white/30 group-hover:text-white/60 transition-all duration-500 scale-90 group-hover:scale-100" />
+                            )}
+                          </div>
+                        )}
                         
-                        {/* Próximo Button */}
-                        <motion.button 
-                          whileHover={{ scale: 1.1, x: 5 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            const all = course.modules.flatMap(m => m.lessons);
-                            const idx = all.findIndex(l => l.id === selectedLesson?.id);
-                            if (idx < all.length - 1) setSelectedLesson(all[idx + 1]);
-                          }}
-                          className="pointer-events-auto w-14 h-14 bg-[#eb6200] text-white rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
-                          title="Próxima Aula"
-                        >
-                          <ChevronRight className="w-8 h-8" />
-                          <span className="absolute -bottom-8 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Próxima Aula</span>
-                        </motion.button>
+                        {/* Interaction Layer */}
+                        <div className="hidden md:flex absolute inset-0 pointer-events-none group-hover:bg-black/5 transition-colors duration-500" />
+                      </div>
+
+                      {/* External Navigation Controls - Vertically Centered */}
+                      <div className="hidden md:block absolute top-1/2 -translate-y-1/2 left-0 right-0 pointer-events-none z-30">
+                        <div className="mx-auto max-w-[1340px] px-2 flex justify-between">
+                          {/* Anterior Button */}
+                          <motion.button 
+                            whileHover={{ scale: 1.1, x: -5 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const all = course.modules.flatMap(m => m.lessons);
+                              const idx = all.findIndex(l => l.id === selectedLesson?.id);
+                              if (idx > 0) setSelectedLesson(all[idx - 1]);
+                            }}
+                            className="pointer-events-auto w-14 h-14 bg-white/90 backdrop-blur-md text-[#eb6200] rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-app-outline-variant/10 hover:bg-[#eb6200] hover:text-white transition-all duration-300 group/nav"
+                            title="Aula Anterior"
+                          >
+                            <ChevronLeft className="w-8 h-8" />
+                            <span className="absolute -bottom-8 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Anterior</span>
+                          </motion.button>
+                          
+                          {/* Próximo Button */}
+                          <motion.button 
+                            whileHover={{ scale: 1.1, x: 5 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const all = course.modules.flatMap(m => m.lessons);
+                              const idx = all.findIndex(l => l.id === selectedLesson?.id);
+                              if (idx < all.length - 1) setSelectedLesson(all[idx + 1]);
+                            }}
+                            className="pointer-events-auto w-14 h-14 bg-[#eb6200] text-white rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
+                            title="Próxima Aula"
+                          >
+                            <ChevronRight className="w-8 h-8" />
+                            <span className="absolute -bottom-8 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Próxima Aula</span>
+                          </motion.button>
+                        </div>
                       </div>
                     </div>
 
