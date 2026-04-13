@@ -71,7 +71,9 @@ import {
   YAxis, 
   CartesianGrid, 
   Tooltip, 
-  Cell 
+  Cell,
+  PieChart,
+  Pie
 } from 'recharts';
 
 const PERFORMANCE_DATA = [
@@ -346,41 +348,18 @@ export default function App() {
                   </div>
                   
                   <div className="flex border-b border-app-outline-variant bg-app-surface font-heading">
-                    <button 
-                      onClick={() => setTrainingSidebarTab('conteudo')}
+                    <div 
                       className={cn(
-                        "flex-1 py-4 text-[10px] font-bold uppercase tracking-[0.1em] border-b-2 flex flex-col items-center gap-1.5 transition-colors font-heading",
-                        trainingSidebarTab === 'conteudo' ? "border-app-tertiary text-app-tertiary" : "border-transparent text-app-on-surface-variant hover:text-app-on-surface"
+                        "flex-1 py-4 text-[10px] font-bold uppercase tracking-[0.1em] border-b-2 flex flex-col items-center gap-1.5 transition-colors font-heading border-app-tertiary text-app-tertiary"
                       )}
                     >
                       <Folder className="w-4 h-4" />
                       Conteúdo
-                    </button>
-                    <button 
-                      onClick={() => setTrainingSidebarTab('desempenho')}
-                      className={cn(
-                        "flex-1 py-4 text-[10px] font-bold uppercase tracking-[0.1em] border-b-2 flex flex-col items-center gap-1.5 transition-colors font-heading",
-                        trainingSidebarTab === 'desempenho' ? "border-app-tertiary text-app-tertiary" : "border-transparent text-app-on-surface-variant hover:text-app-on-surface"
-                      )}
-                    >
-                      <BarChart3 className="w-4 h-4" />
-                      Desempenho
-                    </button>
-                    <button 
-                      onClick={() => setTrainingSidebarTab('info')}
-                      className={cn(
-                        "flex-1 py-4 text-[10px] font-bold uppercase tracking-[0.1em] border-b-2 flex flex-col items-center gap-1.5 transition-colors font-heading",
-                        trainingSidebarTab === 'info' ? "border-app-tertiary text-app-tertiary" : "border-transparent text-app-on-surface-variant hover:text-app-on-surface"
-                      )}
-                    >
-                      <Info className="w-4 h-4" />
-                      Info
-                    </button>
+                    </div>
                   </div>
 
                   <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-app-outline-variant bg-white">
-                    {trainingSidebarTab === 'conteudo' ? (
-                      mainNav === 'trilha2' ? (
+                    {mainNav === 'trilha2' ? (
                         <Accordion type="multiple" defaultValue={course.modules.map(m => m.id)} className="w-full border-none">
                           {course.modules.map((module, index) => {
                             const isModuleCompleted = module.lessons.every(lesson => {
@@ -396,20 +375,47 @@ export default function App() {
                                 {index < course.modules.length - 1 && (
                                   <div className="absolute left-[39px] top-12 bottom-0 w-0.5 bg-app-outline-variant/30 z-0" />
                                 )}
-                                <AccordionTrigger className="px-6 py-4 bg-gray-50/50 hover:bg-gray-100/50 hover:no-underline border-b border-app-outline-variant/10 group relative z-10">
-                                  <div className="flex items-center gap-3 text-left">
-                                    <div className={cn(
-                                      "w-8 h-8 rounded-full bg-white border-2 flex items-center justify-center text-[10px] font-bold transition-all shadow-sm",
-                                      isModuleCompleted 
-                                        ? "border-green-500 text-green-500 bg-green-50" 
-                                        : "border-app-outline-variant text-app-on-surface-variant group-data-[state=open]:border-app-tertiary group-data-[state=open]:text-app-tertiary"
-                                    )}>
-                                      {index + 1}
+                                <AccordionTrigger className="px-6 py-4 bg-gray-50/50 hover:bg-gray-100/50 hover:no-underline border-b border-app-outline-variant/10 group relative z-10 w-full">
+                                  <div className="flex items-center justify-between w-full gap-4">
+                                    <div className="flex items-center gap-3 text-left">
+                                      <div className={cn(
+                                        "w-8 h-8 rounded-full bg-white border-2 flex items-center justify-center text-[10px] font-bold transition-all shadow-sm shrink-0",
+                                        isModuleCompleted 
+                                          ? "border-green-500 text-green-500 bg-green-50" 
+                                          : "border-app-outline-variant text-app-on-surface-variant group-data-[state=open]:border-app-tertiary group-data-[state=open]:text-app-tertiary"
+                                      )}>
+                                        {index + 1}
+                                      </div>
+                                      <span className={cn(
+                                        "text-xs font-bold uppercase tracking-widest font-heading line-clamp-2",
+                                        isModuleCompleted ? "text-green-600" : "text-app-on-surface"
+                                      )}>{module.title}</span>
                                     </div>
-                                    <span className={cn(
-                                      "text-xs font-bold uppercase tracking-widest font-heading",
-                                      isModuleCompleted ? "text-green-600" : "text-app-on-surface"
-                                    )}>{module.title}</span>
+                                    
+                                    {/* Pie Chart Desempenho */}
+                                    <div className="w-10 h-10 shrink-0 relative flex items-center justify-center group-hover:scale-105 transition-transform">
+                                      <ResponsiveContainer width="100%" height="100%">
+                                        <PieChart>
+                                          <Pie
+                                            data={[
+                                              { value: PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0, fill: '#eb6200' },
+                                              { value: 100 - (PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0), fill: '#f1f5f9' }
+                                            ]}
+                                            cx="50%"
+                                            cy="50%"
+                                            innerRadius={12}
+                                            outerRadius={16}
+                                            dataKey="value"
+                                            stroke="none"
+                                            startAngle={90}
+                                            endAngle={-270}
+                                          />
+                                        </PieChart>
+                                      </ResponsiveContainer>
+                                      <span className="absolute text-[8px] font-bold text-app-on-surface-variant font-heading mt-0.5">
+                                        {PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0}%
+                                      </span>
+                                    </div>
                                   </div>
                                 </AccordionTrigger>
                               <AccordionContent className="p-0 border-b border-app-outline-variant/10">
@@ -601,88 +607,7 @@ export default function App() {
                           );
                         })
                       )
-                    ) : trainingSidebarTab === 'desempenho' ? (
-                      <div className="p-6 space-y-8">
-                        {/* Highlights */}
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="bg-app-background p-4 rounded-2xl border border-app-outline-variant/20">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-app-on-surface-variant mb-1 font-heading">Aproveitamento</p>
-                            <p className="text-2xl font-black text-app-tertiary font-heading tracking-tight">100%</p>
-                          </div>
-                          <div className="bg-app-background p-4 rounded-2xl border border-app-outline-variant/20">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-app-on-surface-variant mb-1 font-heading">Tempo Online</p>
-                            <p className="text-2xl font-black text-app-primary font-heading tracking-tight">02:45h</p>
-                          </div>
-                        </div>
-
-                        {/* Mini Chart */}
-                        <div className="space-y-4">
-                          <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-app-on-surface-variant font-heading">Evolução de Notas</p>
-                          <div className="h-32 w-full">
-                            <ResponsiveContainer width="100%" height="100%">
-                              <BarChart data={PERFORMANCE_DATA}>
-                                <Bar 
-                                  dataKey="score" 
-                                  radius={[4, 4, 0, 0]}
-                                >
-                                  {PERFORMANCE_DATA.map((entry, index) => (
-                                    <Cell 
-                                      key={`cell-${index}`} 
-                                      fill={entry.score >= 70 ? '#eb6200' : '#00254e'} 
-                                      fillOpacity={0.8}
-                                    />
-                                  ))}
-                                </Bar>
-                                <Tooltip 
-                                  cursor={{ fill: 'transparent' }}
-                                  content={({ active, payload }) => {
-                                    if (active && payload && payload.length) {
-                                      return (
-                                        <div className="bg-white p-2 border border-app-outline-variant/20 rounded shadow-sm text-[10px] font-bold font-heading">
-                                          {payload[0].value}%
-                                        </div>
-                                      );
-                                    }
-                                    return null;
-                                  }}
-                                />
-                              </BarChart>
-                            </ResponsiveContainer>
-                          </div>
-                        </div>
-
-                        {/* Content List */}
-                        <div className="space-y-4">
-                          <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-app-on-surface-variant font-heading">Detalhamento por Conteúdo</p>
-                          <div className="space-y-3">
-                            {course.modules.flatMap(m => m.lessons).map((lesson) => (
-                              <div key={lesson.id} className="p-4 rounded-2xl border border-app-outline-variant/10 bg-gray-50/50 space-y-3">
-                                <p className="text-xs font-bold text-app-on-surface font-heading tracking-tight">{lesson.title}</p>
-                                <div className="flex flex-wrap gap-2 font-heading">
-                                  <span className="px-2 py-0.5 rounded bg-white border border-app-outline-variant/20 text-[9px] font-bold uppercase tracking-[0.05em] text-app-tertiary font-heading">
-                                    Aprov: 100%
-                                  </span>
-                                  <span className="px-2 py-0.5 rounded bg-white border border-app-outline-variant/20 text-[9px] font-bold uppercase tracking-[0.05em] text-app-primary font-heading">
-                                    Prog: {lesson.completed ? '100%' : '0%'}
-                                  </span>
-                                  <span className={cn(
-                                    "px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-[0.05em] font-heading",
-                                    lesson.completed ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"
-                                  )}>
-                                    {lesson.completed ? 'Concluído' : 'Pendente'}
-                                  </span>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="p-8 text-center space-y-4">
-                        <Info className="w-12 h-12 text-app-outline-variant mx-auto opacity-20" />
-                        <p className="text-sm font-medium text-app-on-surface-variant font-heading">Informações do curso em breve.</p>
-                      </div>
-                    )}
+                    }
                   </div>
                 </div>
               </motion.aside>
