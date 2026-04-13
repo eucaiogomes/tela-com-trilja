@@ -584,7 +584,6 @@ export default function App() {
                                         })()}
                                       </button>
                                     )}
-     )}
                                   </div>
                                 ))}
                               </AccordionContent>
@@ -639,49 +638,61 @@ export default function App() {
                                     <div className="w-5 h-5 rounded-full border-2 border-current opacity-30" />
                                   )}
                                 </div>
-                                                { value: lesson.completed ? 0 : 100, fill: lesson.completed ? '#dcfce7' : '#f3f4f6' }
-                                              ]}
-                                              cx="50%"
-                                              cy="50%"
-                                              innerRadius={0}
-                                              outerRadius={6}
-                                              dataKey="value"
-                                              stroke="none"
-                                              startAngle={90}
-                                              endAngle={-270}
-                                            />
-                                          </PieChart>
-                                        </ResponsiveContainer>
-                                      </div>
-                                      Prog: {lesson.completed ? '100%' : '0%'}
+                                <div className="flex-1 min-w-0">
+                                  <p className={cn(
+                                    "text-[14px] font-bold leading-tight tracking-tight font-heading mb-1.5",
+                                    isActive ? "text-[#eb6200]" : "text-[#1a1a1a]"
+                                  )}>
+                                    {lesson.title}
+                                  </p>
+                                  
+                                  <div className="flex flex-wrap items-center gap-1.5 font-heading">
+                                    {/* Status Tag */}
+                                    <span className={cn(
+                                      "inline-flex items-center px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider",
+                                      getStatusColor(lesson.status)
+                                    )}>
+                                      {getStatusLabel(lesson.status)}
                                     </span>
 
-                                    {/* Tag de Aproveitamento com Gráfico */}
-                                    <span className={cn(
-                                      "inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-[0.05em] font-heading",
-                                      isActive ? "bg-[#eb6200]/10 text-[#eb6200]" : "bg-gray-100 text-gray-500"
-                                    )}>
-                                      <div className="w-3 h-3 shrink-0 relative flex items-center justify-center">
+                                    {/* Progresso Tag */}
+                                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-green-50 text-green-700 text-[9px] font-black uppercase tracking-wider border border-green-100">
+                                      <div className="w-5 h-5 relative flex items-center justify-center">
                                         <ResponsiveContainer width="100%" height="100%">
                                           <PieChart>
                                             <Pie
                                               data={[
-                                                { value: PERFORMANCE_DATA[idx % PERFORMANCE_DATA.length]?.score || 0, fill: isActive ? '#eb6200' : '#6b7280' },
-                                                { value: 100 - (PERFORMANCE_DATA[idx % PERFORMANCE_DATA.length]?.score || 0), fill: isActive ? 'rgba(235, 98, 0, 0.2)' : '#e5e7eb' }
+                                                { value: percentage, fill: '#22c55e' },
+                                                { value: 100 - percentage, fill: '#e2e8f0' }
                                               ]}
-                                              cx="50%"
-                                              cy="50%"
-                                              innerRadius={0}
-                                              outerRadius={6}
-                                              dataKey="value"
-                                              stroke="none"
-                                              startAngle={90}
-                                              endAngle={-270}
+                                              cx="50%" cy="50%" innerRadius={6} outerRadius={9}
+                                              dataKey="value" stroke="none" startAngle={90} endAngle={-270}
                                             />
                                           </PieChart>
                                         </ResponsiveContainer>
+                                        <span className="absolute text-[5px] font-black">{percentage}%</span>
                                       </div>
-                                      Aprov: {PERFORMANCE_DATA[idx % PERFORMANCE_DATA.length]?.score || 0}%
+                                      PROG: {percentage}%
+                                    </span>
+
+                                    {/* Aproveitamento Tag */}
+                                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase tracking-wider border border-[#ffead6]">
+                                      <div className="w-5 h-5 relative flex items-center justify-center">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                          <PieChart>
+                                            <Pie
+                                              data={[
+                                                { value: performance, fill: '#eb6200' },
+                                                { value: 100 - performance, fill: '#e2e8f0' }
+                                              ]}
+                                              cx="50%" cy="50%" innerRadius={6} outerRadius={9}
+                                              dataKey="value" stroke="none" startAngle={90} endAngle={-270}
+                                            />
+                                          </PieChart>
+                                        </ResponsiveContainer>
+                                        <span className="absolute text-[5px] font-black">{performance}%</span>
+                                      </div>
+                                      APROV: {performance}%
                                     </span>
                                   </div>
                                 </div>
