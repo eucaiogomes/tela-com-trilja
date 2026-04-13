@@ -350,10 +350,10 @@ export default function App() {
                   {/* Hamburger Button */}
                   <button
                     onClick={() => setIsTrainingSidebarOpen(!isTrainingSidebarOpen)}
-                    className="pointer-events-auto p-2.5 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
+                    className="pointer-events-auto p-2.5 bg-[#00254e] hover:bg-[#003670] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95 border border-white/10"
                     title={isTrainingSidebarOpen ? "Fechar Menu" : "Abrir Menu"}
                   >
-                    <Menu className="w-5 h-5 flex-shrink-0" />
+                    <Menu className="w-5 h-5 flex-shrink-0 text-white" />
                   </button>
 
                   {/* Back Button - follows sidebar */}
