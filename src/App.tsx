@@ -495,12 +495,12 @@ export default function App() {
 
                                                     <div className="flex items-center gap-1.5 pl-7">
                                                       <span className="inline-flex items-center gap-1.5 px-2 rounded bg-green-50 text-green-700 text-[8px] font-black uppercase border border-green-100">
-                                                        <ProgressPie value={subPerc} size={16} innerRadius={5} outerRadius={7} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={4} />
-                                                        {subPerc}%
+                                                        <ProgressPie value={subPerc} size={20} innerRadius={6} outerRadius={8} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={5} />
+                                                        PROGRESSO: {subPerc}%
                                                       </span>
                                                       <span className="inline-flex items-center gap-1.5 px-2 rounded bg-[#fff5eb] text-[#eb6200] text-[8px] font-black uppercase border border-[#ffead6]">
-                                                        <ProgressPie value={subPerf} size={16} innerRadius={5} outerRadius={7} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={4} />
-                                                        {subPerf}%
+                                                        <ProgressPie value={subPerf} size={20} innerRadius={6} outerRadius={8} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={5} />
+                                                        APROVEITAMENTO: {subPerf}%
                                                       </span>
                                                     </div>
                                                   </button>
@@ -551,12 +551,12 @@ export default function App() {
                                                   )}>{lesson.title}</p>
                                                   <div className="flex items-center gap-1.5">
                                                     <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
-                                                      <ProgressPie value={lPerc} size={16} innerRadius={5} outerRadius={8} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={5} />
-                                                      {lPerc}%
+                                                      <ProgressPie value={lPerc} size={22} innerRadius={7} outerRadius={9} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={6} />
+                                                      PROGRESSO: {lPerc}%
                                                     </span>
                                                     <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
-                                                      <ProgressPie value={lPerf} size={16} innerRadius={5} outerRadius={8} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={5} />
-                                                      {lPerf}%
+                                                      <ProgressPie value={lPerf} size={22} innerRadius={7} outerRadius={9} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={6} />
+                                                      APROVEITAMENTO: {lPerf}%
                                                     </span>
                                                   </div>
                                                 </div>
@@ -625,12 +625,12 @@ export default function App() {
                                     
                                     <div className="flex items-center gap-1.5">
                                       <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
-                                        <ProgressPie value={percentage} size={16} innerRadius={5} outerRadius={8} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={5} />
-                                        {percentage}%
+                                        <ProgressPie value={percentage} size={22} innerRadius={7} outerRadius={9} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={6} />
+                                        PROGRESSO: {percentage}%
                                       </span>
                                       <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
-                                        <ProgressPie value={performance} size={16} innerRadius={5} outerRadius={8} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={5} />
-                                        {performance}%
+                                        <ProgressPie value={performance} size={22} innerRadius={7} outerRadius={9} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={6} />
+                                        APROVEITAMENTO: {performance}%
                                       </span>
                                     </div>
                                   </div>
