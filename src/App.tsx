@@ -84,6 +84,52 @@ const PERFORMANCE_DATA = [
   { name: 'Módulo 5', score: 0 },
 ];
 
+const ProgressPie = ({ 
+  value, 
+  size = 40, 
+  innerRadius = 12, 
+  outerRadius = 16, 
+  activeColor = '#eb6200', 
+  inactiveColor = '#f1f5f9',
+  showText = true,
+  fontSize = 8
+}: { 
+  value: number, 
+  size?: number, 
+  innerRadius?: number, 
+  outerRadius?: number, 
+  activeColor?: string, 
+  inactiveColor?: string,
+  showText?: boolean,
+  fontSize?: number
+}) => (
+  <div className="shrink-0 relative flex items-center justify-center transition-transform" style={{ width: size, height: size }}>
+    <ResponsiveContainer width="100%" height="100%">
+      <PieChart>
+        <Pie
+          data={[
+            { value: value, fill: activeColor },
+            { value: 100 - value, fill: inactiveColor }
+          ]}
+          cx="50%"
+          cy="50%"
+          innerRadius={innerRadius}
+          outerRadius={outerRadius}
+          dataKey="value"
+          stroke="none"
+          startAngle={90}
+          endAngle={-270}
+        />
+      </PieChart>
+    </ResponsiveContainer>
+    {showText && (
+      <span className="absolute font-bold text-app-on-surface-variant font-heading" style={{ fontSize, marginTop: '2px' }}>
+        {value}%
+      </span>
+    )}
+  </div>
+);
+
 export default function App() {
   const [course, setCourse] = useState<Course>(MOCK_COURSE);
   const [activeTab, setActiveTab] = useState('trilhas');
@@ -307,7 +353,6 @@ export default function App() {
                     <button 
                       onClick={closeLesson}
                       className="pointer-events-auto p-2.5 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
-                      title="Voltar para o curso"
                     >
                       <ArrowLeft className="w-5 h-5" />
                     </button>
@@ -396,29 +441,10 @@ export default function App() {
                                     
                                     {/* Pie Chart Desempenho Módulo */}
                                     <div className="flex gap-2">
-                                      <div className="w-10 h-10 shrink-0 relative flex items-center justify-center group-hover:scale-105 transition-transform">
-                                        <ResponsiveContainer width="100%" height="100%">
-                                          <PieChart>
-                                            <Pie
-                                              data={[
-                                                { value: PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0, fill: '#eb6200' },
-                                                { value: 100 - (PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0), fill: '#f1f5f9' }
-                                              ]}
-                                              cx="50%"
-                                              cy="50%"
-                                              innerRadius={12}
-                                              outerRadius={16}
-                                              dataKey="value"
-                                              stroke="none"
-                                              startAngle={90}
-                                              endAngle={-270}
-                                            />
-                                          </PieChart>
-                                        </ResponsiveContainer>
-                                        <span className="absolute text-[8px] font-bold text-app-on-surface-variant font-heading mt-0.5">
-                                          {PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0}%
-                                        </span>
-                                      </div>
+                                      <ProgressPie 
+                                        value={PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0} 
+                                        size={40}
+                                      />
                                     </div>
 
                                   </div>
@@ -473,34 +499,12 @@ export default function App() {
 
                                                   <div className="flex items-center gap-1.5 pl-7">
                                                     {/* Sub-Lesson Status % */}
-                                                    <span className="inline-flex items-center gap-1.5 px-1.5 py-0 px-2 rounded bg-green-50 text-green-700 text-[8px] font-black uppercase border border-green-100">
-                                                      <div className="w-4 h-4 relative flex items-center justify-center">
-                                                        <ResponsiveContainer width="100%" height="100%">
-                                                          <PieChart>
-                                                            <Pie
-                                                              data={[{ value: subPerc, fill: '#22c55e' }, { value: 100 - subPerc, fill: '#e2e8f0' }]}
-                                                              cx="50%" cy="50%" innerRadius={5} outerRadius={7}
-                                                              dataKey="value" stroke="none" startAngle={90} endAngle={-270}
-                                                            />
-                                                          </PieChart>
-                                                        </ResponsiveContainer>
-                                                        <span className="absolute text-[4px]">{subPerc}%</span>
-                                                      </div>
+                                                    <span className="inline-flex items-center gap-1.5 px-2 rounded bg-green-50 text-green-700 text-[8px] font-black uppercase border border-green-100">
+                                                      <ProgressPie value={subPerc} size={16} innerRadius={5} outerRadius={7} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={4} />
                                                       {subPerc}%
                                                     </span>
-                                                    <span className="inline-flex items-center gap-1.5 px-1.5 py-0 px-2 rounded bg-[#fff5eb] text-[#eb6200] text-[8px] font-black uppercase border border-[#ffead6]">
-                                                      <div className="w-4 h-4 relative flex items-center justify-center">
-                                                        <ResponsiveContainer width="100%" height="100%">
-                                                          <PieChart>
-                                                            <Pie
-                                                              data={[{ value: subPerf, fill: '#eb6200' }, { value: 100 - subPerf, fill: '#e2e8f0' }]}
-                                                              cx="50%" cy="50%" innerRadius={5} outerRadius={7}
-                                                              dataKey="value" stroke="none" startAngle={90} endAngle={-270}
-                                                            />
-                                                          </PieChart>
-                                                        </ResponsiveContainer>
-                                                        <span className="absolute text-[4px]">{subPerf}%</span>
-                                                      </div>
+                                                    <span className="inline-flex items-center gap-1.5 px-2 rounded bg-[#fff5eb] text-[#eb6200] text-[8px] font-black uppercase border border-[#ffead6]">
+                                                      <ProgressPie value={subPerf} size={16} innerRadius={5} outerRadius={7} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={4} />
                                                       {subPerf}%
                                                     </span>
                                                   </div>
@@ -555,33 +559,11 @@ export default function App() {
                                                   
                                                   <div className="flex items-center gap-2 pt-1">
                                                     <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-xl bg-green-50 text-green-700 text-[10px] font-black uppercase border border-green-100 shadow-sm">
-                                                      <div className="w-7 h-7 relative flex items-center justify-center">
-                                                        <ResponsiveContainer width="100%" height="100%">
-                                                          <PieChart>
-                                                            <Pie
-                                                              data={[{ value: lPerc, fill: '#22c55e' }, { value: 100 - lPerc, fill: '#e2e8f0' }]}
-                                                              cx="50%" cy="50%" innerRadius={8} outerRadius={12}
-                                                              dataKey="value" stroke="none" startAngle={90} endAngle={-270}
-                                                            />
-                                                          </PieChart>
-                                                        </ResponsiveContainer>
-                                                        <span className="absolute text-[7px] font-black">{lPerc}%</span>
-                                                      </div>
+                                                      <ProgressPie value={lPerc} size={28} innerRadius={8} outerRadius={12} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={7} />
                                                       PROG: {lPerc}%
                                                     </span>
                                                     <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-xl bg-[#fff5eb] text-[#eb6200] text-[10px] font-black uppercase border border-[#ffead6] shadow-sm">
-                                                      <div className="w-7 h-7 relative flex items-center justify-center">
-                                                        <ResponsiveContainer width="100%" height="100%">
-                                                          <PieChart>
-                                                            <Pie
-                                                              data={[{ value: lPerf, fill: '#eb6200' }, { value: 100 - lPerf, fill: '#e2e8f0' }]}
-                                                              cx="50%" cy="50%" innerRadius={8} outerRadius={12}
-                                                              dataKey="value" stroke="none" startAngle={90} endAngle={-270}
-                                                            />
-                                                          </PieChart>
-                                                        </ResponsiveContainer>
-                                                        <span className="absolute text-[7px] font-black">{lPerf}%</span>
-                                                      </div>
+                                                      <ProgressPie value={lPerf} size={28} innerRadius={8} outerRadius={12} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={7} />
                                                       APROV: {lPerf}%
                                                     </span>
                                                   </div>
@@ -668,41 +650,13 @@ export default function App() {
                                   <div className="flex flex-wrap items-center gap-2 pt-1">
                                     {/* Progresso Tag */}
                                     <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-xl bg-green-50 text-green-700 text-[10px] font-black uppercase border border-green-100 shadow-sm">
-                                      <div className="w-7 h-7 relative flex items-center justify-center">
-                                        <ResponsiveContainer width="100%" height="100%">
-                                          <PieChart>
-                                            <Pie
-                                              data={[
-                                                { value: percentage, fill: '#22c55e' },
-                                                { value: 100 - percentage, fill: '#e2e8f0' }
-                                              ]}
-                                              cx="50%" cy="50%" innerRadius={8} outerRadius={12}
-                                              dataKey="value" stroke="none" startAngle={90} endAngle={-270}
-                                            />
-                                          </PieChart>
-                                        </ResponsiveContainer>
-                                        <span className="absolute text-[7px] font-black">{percentage}%</span>
-                                      </div>
+                                      <ProgressPie value={percentage} size={28} innerRadius={8} outerRadius={12} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={7} />
                                       PROG: {percentage}%
                                     </span>
 
                                     {/* Aproveitamento Tag */}
                                     <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-xl bg-[#fff5eb] text-[#eb6200] text-[10px] font-black uppercase border border-[#ffead6] shadow-sm">
-                                      <div className="w-7 h-7 relative flex items-center justify-center">
-                                        <ResponsiveContainer width="100%" height="100%">
-                                          <PieChart>
-                                            <Pie
-                                              data={[
-                                                { value: performance, fill: '#eb6200' },
-                                                { value: 100 - performance, fill: '#e2e8f0' }
-                                              ]}
-                                              cx="50%" cy="50%" innerRadius={8} outerRadius={12}
-                                              dataKey="value" stroke="none" startAngle={90} endAngle={-270}
-                                            />
-                                          </PieChart>
-                                        </ResponsiveContainer>
-                                        <span className="absolute text-[7px] font-black">{performance}%</span>
-                                      </div>
+                                      <ProgressPie value={performance} size={28} innerRadius={8} outerRadius={12} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={7} />
                                       APROV: {performance}%
                                     </span>
                                   </div>
