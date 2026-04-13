@@ -366,17 +366,6 @@ export default function App() {
                     </div>
                   </div>
                   
-                  <div className="flex border-b border-app-outline-variant bg-app-surface font-heading">
-                    <div 
-                      className={cn(
-                        "flex-1 py-4 text-[10px] font-bold uppercase tracking-[0.1em] border-b-2 flex flex-col items-center gap-1.5 transition-colors font-heading border-app-tertiary text-app-tertiary"
-                      )}
-                    >
-                      <Folder className="w-4 h-4" />
-                      Conteúdo
-                    </div>
-                  </div>
-
                   <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-app-outline-variant bg-white">
                     {mainNav === 'trilha2' ? (
                         <Accordion type="multiple" defaultValue={course.modules.map(m => m.id)} className="w-full border-none">
@@ -442,8 +431,7 @@ export default function App() {
                                 </AccordionTrigger>
                               <AccordionContent className="p-0 border-b border-app-outline-variant/10">
                                 {module.lessons.map((lesson) => (
-                                  <div key={lesson.id}>
-                                    {lesson.type === 'training' ? (
+                                  <div key={lesson                                    {lesson.type === 'training' ? (
                                       <Accordion type="single" collapsible className="w-full">
                                         <AccordionItem value="training-sub" className="border-none">
                                           <AccordionTrigger className="w-full px-8 py-4 hover:bg-app-background/50 hover:no-underline group/train">
@@ -453,75 +441,77 @@ export default function App() {
                                               </div>
                                               <div className="text-left">
                                                 <p className="text-sm font-bold text-app-on-surface group-hover/train:text-[#eb6200] transition-colors">{lesson.title}</p>
-                                                <p className="text-[10px] font-bold text-app-on-surface-variant/40 uppercase tracking-widest">Treinamento</p>
                                               </div>
                                             </div>
                                           </AccordionTrigger>
                                           <AccordionContent className="p-0 bg-gray-50/30">
-                                            {lesson.lessons?.map((subLesson) => (
-                                              <button 
-                                                key={subLesson.id}
-                                                onClick={() => setSelectedLesson(subLesson)}
-                                                className={cn(
-                                                  "w-full py-3.5 pl-16 pr-6 text-left hover:bg-white transition-colors flex items-center justify-between border-l-4 border-l-transparent",
-                                                  selectedLesson?.id === subLesson.id ? "bg-white border-l-[#eb6200]" : ""
-                                                )}
-                                              >
-                                                <div className="flex items-center gap-3 overflow-hidden">
-                                                  <div 
-                                                    onClick={(e) => {
-                                                      e.stopPropagation();
-                                                      toggleLessonComplete(subLesson.id);
-                                                    }}
-                                                    className={cn(
-                                                      "shrink-0 cursor-pointer hover:scale-110 transition-transform",
-                                                      selectedLesson?.id === subLesson.id ? "text-[#eb6200]" : subLesson.completed ? "text-green-500" : "text-app-on-surface-variant/30"
-                                                    )}
-                                                  >
-                                                    {subLesson.completed ? <CheckCircle2 className="w-4 h-4" /> : (subLesson.type === 'video' ? <PlayCircle className="w-4 h-4" /> : <FileText className="w-4 h-4" />)}
+                                            {lesson.lessons?.map((subLesson) => {
+                                              const subPerc = subLesson.completed ? 100 : 0;
+                                              const subPerf = subLesson.completed ? 95 : 0;
+                                              return (
+                                                <button 
+                                                  key={subLesson.id}
+                                                  onClick={() => setSelectedLesson(subLesson)}
+                                                  className={cn(
+                                                    "w-full py-3.5 pl-16 pr-6 text-left hover:bg-white transition-colors flex flex-col gap-1.5 border-l-4 border-l-transparent",
+                                                    selectedLesson?.id === subLesson.id ? "bg-white border-l-[#eb6200]" : ""
+                                                  )}
+                                                >
+                                                  <div className="flex items-center gap-3 overflow-hidden">
+                                                    <div 
+                                                      onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        toggleLessonComplete(subLesson.id);
+                                                      }}
+                                                      className={cn(
+                                                        "shrink-0 cursor-pointer hover:scale-110 transition-transform",
+                                                        selectedLesson?.id === subLesson.id ? "text-[#eb6200]" : subLesson.completed ? "text-green-500" : "text-app-on-surface-variant/30"
+                                                      )}
+                                                    >
+                                                      {subLesson.completed ? <CheckCircle2 className="w-4 h-4" /> : (subLesson.type === 'video' ? <PlayCircle className="w-4 h-4" /> : <FileText className="w-4 h-4" />)}
+                                                    </div>
+                                                    <span className={cn(
+                                                      "text-xs font-bold truncate",
+                                                      selectedLesson?.id === subLesson.id ? "text-app-on-surface font-bold" : "text-app-on-surface-variant"
+                                                    )}>{subLesson.title}</span>
                                                   </div>
-                                                  <span className={cn(
-                                                    "text-xs font-medium truncate",
-                                                    selectedLesson?.id === subLesson.id ? "text-app-on-surface font-bold" : "text-app-on-surface-variant"
-                                                  )}>{subLesson.title}</span>
-                                                </div>
 
-                                                {/* Mini Pie Charts for Sub-Lesson */}
-                                                <div className="flex gap-1 shrink-0">
-                                                  <div className="w-8 h-8 relative flex items-center justify-center">
-                                                    <ResponsiveContainer width="100%" height="100%">
-                                                      <PieChart>
-                                                        <Pie
-                                                          data={[
-                                                            { value: subLesson.completed ? 100 : 0, fill: '#eb6200' },
-                                                            { value: subLesson.completed ? 0 : 100, fill: '#f1f5f9' }
-                                                          ]}
-                                                          cx="50%" cy="50%" innerRadius={8} outerRadius={11}
-                                                          dataKey="value" stroke="none" startAngle={90} endAngle={-270}
-                                                        />
-                                                      </PieChart>
-                                                    </ResponsiveContainer>
-                                                    <span className="absolute text-[6px] font-bold text-app-tertiary">P</span>
+                                                  <div className="flex items-center gap-1.5 pl-7">
+                                                    {/* Sub-Lesson Status % */}
+                                                    <span className="inline-flex items-center gap-1.5 px-1.5 py-0 px-2 rounded bg-green-50 text-green-700 text-[8px] font-black uppercase border border-green-100">
+                                                      <div className="w-4 h-4 relative flex items-center justify-center">
+                                                        <ResponsiveContainer width="100%" height="100%">
+                                                          <PieChart>
+                                                            <Pie
+                                                              data={[{ value: subPerc, fill: '#22c55e' }, { value: 100 - subPerc, fill: '#e2e8f0' }]}
+                                                              cx="50%" cy="50%" innerRadius={5} outerRadius={7}
+                                                              dataKey="value" stroke="none" startAngle={90} endAngle={-270}
+                                                            />
+                                                          </PieChart>
+                                                        </ResponsiveContainer>
+                                                        <span className="absolute text-[4px]">{subPerc}%</span>
+                                                      </div>
+                                                      {subPerc}%
+                                                    </span>
+                                                    <span className="inline-flex items-center gap-1.5 px-1.5 py-0 px-2 rounded bg-[#fff5eb] text-[#eb6200] text-[8px] font-black uppercase border border-[#ffead6]">
+                                                      <div className="w-4 h-4 relative flex items-center justify-center">
+                                                        <ResponsiveContainer width="100%" height="100%">
+                                                          <PieChart>
+                                                            <Pie
+                                                              data={[{ value: subPerf, fill: '#eb6200' }, { value: 100 - subPerf, fill: '#e2e8f0' }]}
+                                                              cx="50%" cy="50%" innerRadius={5} outerRadius={7}
+                                                              dataKey="value" stroke="none" startAngle={90} endAngle={-270}
+                                                            />
+                                                          </PieChart>
+                                                        </ResponsiveContainer>
+                                                        <span className="absolute text-[4px]">{subPerf}%</span>
+                                                      </div>
+                                                      {subPerf}%
+                                                    </span>
                                                   </div>
-                                                  <div className="w-8 h-8 relative flex items-center justify-center">
-                                                    <ResponsiveContainer width="100%" height="100%">
-                                                      <PieChart>
-                                                        <Pie
-                                                          data={[
-                                                            { value: subLesson.completed ? 85 : 0, fill: '#22c55e' },
-                                                            { value: subLesson.completed ? 15 : 100, fill: '#f1f5f9' }
-                                                          ]}
-                                                          cx="50%" cy="50%" innerRadius={8} outerRadius={11}
-                                                          dataKey="value" stroke="none" startAngle={90} endAngle={-270}
-                                                        />
-                                                      </PieChart>
-                                                    </ResponsiveContainer>
-                                                    <span className="absolute text-[6px] font-bold text-green-600">A</span>
-                                                  </div>
-                                                </div>
-
-                                              </button>
-                                            ))}
+                                                </button>
+                                              );
+                                            })}
                                           </AccordionContent>
                                         </AccordionItem>
                                       </Accordion>
@@ -533,29 +523,67 @@ export default function App() {
                                           lesson.id === selectedLesson?.id ? "bg-[#fff5eb] border-l-[#eb6200]" : "hover:bg-gray-50 border-l-transparent"
                                         )}
                                       >
-                                        <div 
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            toggleLessonComplete(lesson.id);
-                                          }}
-                                          className={cn(
-                                            "mt-1 shrink-0 cursor-pointer hover:scale-110 transition-transform",
-                                            lesson.id === selectedLesson?.id ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
-                                          )}
-                                        >
-                                          {lesson.completed ? <CheckCircle2 className="w-5 h-5" /> : <div className="w-5 h-5 rounded-full border-2 border-current opacity-30" />}
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                          <p className={cn(
-                                            "text-sm font-bold tracking-tight font-heading",
-                                            lesson.id === selectedLesson?.id ? "text-[#eb6200]" : "text-[#1a1a1a]"
-                                          )}>{lesson.title}</p>
-                                          <div className="flex gap-2 mt-1">
-                                            <span className="text-[9px] font-bold uppercase tracking-widest text-app-on-surface-variant/40">{lesson.type}</span>
-                                          </div>
-                                        </div>
+                                        {(() => {
+                                          const lPerc = lesson.completed ? 100 : 0;
+                                          const lPerf = lesson.completed ? 95 : 0;
+                                          return (
+                                            <>
+                                              <div 
+                                                onClick={(e) => {
+                                                  e.stopPropagation();
+                                                  toggleLessonComplete(lesson.id);
+                                                }}
+                                                className={cn(
+                                                  "mt-1 shrink-0 cursor-pointer hover:scale-110 transition-transform",
+                                                  lesson.id === selectedLesson?.id ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
+                                                )}
+                                              >
+                                                {lesson.completed ? <CheckCircle2 className="w-5 h-5" /> : <div className="w-5 h-5 rounded-full border-2 border-current opacity-30" />}
+                                              </div>
+                                              <div className="flex-1 min-w-0">
+                                                <p className={cn(
+                                                  "text-sm font-bold tracking-tight font-heading mb-1.5",
+                                                  lesson.id === selectedLesson?.id ? "text-[#eb6200]" : "text-[#1a1a1a]"
+                                                )}>{lesson.title}</p>
+                                                <div className="flex items-center gap-1.5">
+                                                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
+                                                    <div className="w-5 h-5 relative flex items-center justify-center">
+                                                      <ResponsiveContainer width="100%" height="100%">
+                                                        <PieChart>
+                                                          <Pie
+                                                            data={[{ value: lPerc, fill: '#22c55e' }, { value: 100 - lPerc, fill: '#e2e8f0' }]}
+                                                            cx="50%" cy="50%" innerRadius={6} outerRadius={9}
+                                                            dataKey="value" stroke="none" startAngle={90} endAngle={-270}
+                                                          />
+                                                        </PieChart>
+                                                      </ResponsiveContainer>
+                                                      <span className="absolute text-[5px]">{lPerc}%</span>
+                                                    </div>
+                                                    PROG: {lPerc}%
+                                                  </span>
+                                                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
+                                                    <div className="w-5 h-5 relative flex items-center justify-center">
+                                                      <ResponsiveContainer width="100%" height="100%">
+                                                        <PieChart>
+                                                          <Pie
+                                                            data={[{ value: lPerf, fill: '#eb6200' }, { value: 100 - lPerf, fill: '#e2e8f0' }]}
+                                                            cx="50%" cy="50%" innerRadius={6} outerRadius={9}
+                                                            dataKey="value" stroke="none" startAngle={90} endAngle={-270}
+                                                          />
+                                                        </PieChart>
+                                                      </ResponsiveContainer>
+                                                      <span className="absolute text-[5px]">{lPerf}%</span>
+                                                    </div>
+                                                    APROV: {lPerf}%
+                                                  </span>
+                                                </div>
+                                              </div>
+                                            </>
+                                          );
+                                        })()}
                                       </button>
                                     )}
+     )}
                                   </div>
                                 ))}
                               </AccordionContent>
@@ -566,26 +594,13 @@ export default function App() {
                       ) : (
                         course.modules.flatMap(m => m.lessons).map((lesson, idx) => {
                           const isActive = lesson.id === selectedLesson?.id;
-                          
-                          const getTypeLabel = (type: string) => {
-                            switch(type) {
-                              case 'video': return 'Vídeo';
-                              case 'document': return 'Documento';
-                              case 'evaluation': return 'Avaliação';
-                              case 'scorm': return 'Scorm';
-                              case 'webconference': return 'Webconferência';
-                              case 'in-person': return 'Aula Presencial';
-                              case 'recording': return 'Gravação';
-                              case 'training': return 'Treinamento';
-                              default: return 'Conteúdo';
-                            }
-                          };
+                          const percentage = lesson.completed ? 100 : 0;
+                          const performance = lesson.completed ? 95 : 0;
 
                           const getStatusLabel = (status?: string) => {
                             switch(status) {
                               case 'completed': return 'Concluído';
                               case 'in-progress': return 'Em andamento';
-                              case 'not-viewed': return 'Não visualizado';
                               default: return 'Não visualizado';
                             }
                           };
@@ -594,22 +609,7 @@ export default function App() {
                             switch(status) {
                               case 'completed': return 'bg-green-100 text-green-700';
                               case 'in-progress': return 'bg-blue-100 text-blue-700';
-                              case 'not-viewed': return 'bg-gray-100 text-gray-600';
                               default: return 'bg-gray-100 text-gray-600';
-                            }
-                          };
-
-                          const getTypeIcon = (type: string) => {
-                            switch(type) {
-                              case 'video': return <PlayCircle className="w-4 h-4" />;
-                              case 'document': return <FileDown className="w-4 h-4" />;
-                              case 'evaluation': return <ClipboardCheck className="w-4 h-4" />;
-                              case 'scorm': return <Package className="w-4 h-4" />;
-                              case 'webconference': return <Video className="w-4 h-4" />;
-                              case 'in-person': return <Users className="w-4 h-4" />;
-                              case 'recording': return <Mic className="w-4 h-4" />;
-                              case 'training': return <Award className="w-4 h-4" />;
-                              default: return <FileText className="w-4 h-4" />;
                             }
                           };
 
@@ -622,14 +622,14 @@ export default function App() {
                                 isActive ? "bg-[#fff5eb] border-l-4 border-l-[#eb6200]" : "hover:bg-gray-50 border-l-4 border-l-transparent"
                               )}
                             >
-                              <div className="flex items-start gap-4">
+                              <div className="flex items-start gap-3">
                                 <div 
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     toggleLessonComplete(lesson.id);
                                   }}
                                   className={cn(
-                                    "mt-1 shrink-0 cursor-pointer hover:scale-110 transition-transform",
+                                    "mt-1.5 shrink-0 cursor-pointer hover:scale-110 transition-transform",
                                     isActive ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
                                   )}>
                                   {lesson.completed ? (
@@ -638,73 +638,6 @@ export default function App() {
                                     <div className="w-5 h-5 rounded-full border-2 border-current opacity-30" />
                                   )}
                                 </div>
-                                <div className="flex-1 min-w-0 space-y-2">
-                                  <div className="flex justify-between items-start gap-4">
-                                    <p className={cn(
-                                      "text-[15px] font-semibold leading-tight tracking-tight font-heading",
-                                      isActive ? "text-[#eb6200]" : "text-[#1a1a1a]"
-                                    )}>
-                                      {lesson.title}
-                                    </p>
-                                    
-                                    {/* Pie Charts representando Progresso e Aproveitamento */}
-                                    <div className="flex gap-2 shrink-0 group-hover:scale-105 transition-transform">
-                                      <div className="w-10 h-10 relative flex items-center justify-center bg-white rounded-xl shadow-sm border border-black/[0.03]">
-                                        <ResponsiveContainer width="100%" height="100%">
-                                          <PieChart>
-                                            <Pie
-                                              data={[
-                                                { value: lesson.completed ? 100 : 0, fill: '#eb6200' },
-                                                { value: lesson.completed ? 0 : 100, fill: '#f1f5f9' }
-                                              ]}
-                                              cx="50%" cy="50%" innerRadius={10} outerRadius={14}
-                                              dataKey="value" stroke="none" startAngle={90} endAngle={-270}
-                                            />
-                                          </PieChart>
-                                        </ResponsiveContainer>
-                                        <div className="absolute flex flex-col items-center justify-center">
-                                          <span className="text-[7px] font-black leading-none text-app-tertiary">P</span>
-                                        </div>
-                                      </div>
-                                      <div className="w-10 h-10 relative flex items-center justify-center bg-white rounded-xl shadow-sm border border-black/[0.03]">
-                                        <ResponsiveContainer width="100%" height="100%">
-                                          <PieChart>
-                                            <Pie
-                                              data={[
-                                                { value: lesson.completed ? 95 : 0, fill: '#22c55e' },
-                                                { value: lesson.completed ? 5 : 100, fill: '#f1f5f9' }
-                                              ]}
-                                              cx="50%" cy="50%" innerRadius={10} outerRadius={14}
-                                              dataKey="value" stroke="none" startAngle={90} endAngle={-270}
-                                            />
-                                          </PieChart>
-                                        </ResponsiveContainer>
-                                        <div className="absolute flex flex-col items-center justify-center">
-                                          <span className="text-[7px] font-black leading-none text-green-600">A</span>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="flex flex-wrap gap-2 font-heading mt-1">
-                                    <span className={cn(
-                                      "inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-[0.05em] font-heading",
-                                      isActive ? "bg-[#eb6200]/10 text-[#eb6200]" : "bg-gray-100 text-gray-500"
-                                    )}>
-                                      {getTypeIcon(lesson.type)}
-                                      {getTypeLabel(lesson.type)}
-                                    </span>
-                                    
-                                    {/* Tag de Progresso com Gráfico */}
-                                    <span className={cn(
-                                      "inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-[0.05em] font-heading",
-                                      lesson.completed ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"
-                                    )}>
-                                      <div className="w-3 h-3 shrink-0 relative flex items-center justify-center">
-                                        <ResponsiveContainer width="100%" height="100%">
-                                          <PieChart>
-                                            <Pie
-                                              data={[
-                                                { value: lesson.completed ? 100 : 0, fill: lesson.completed ? '#15803d' : '#9ca3af' },
                                                 { value: lesson.completed ? 0 : 100, fill: lesson.completed ? '#dcfce7' : '#f3f4f6' }
                                               ]}
                                               cx="50%"
