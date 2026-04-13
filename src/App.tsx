@@ -835,44 +835,43 @@ export default function App() {
                         <div className="hidden md:flex absolute inset-0 pointer-events-none group-hover:bg-black/5 transition-colors duration-500" />
                       </div>
 
-                      {/* External Navigation Controls - Square & Further Out */}
-                      <div className="hidden md:block absolute top-1/2 -translate-y-1/2 left-0 right-0 pointer-events-none z-30">
-                        <div className="mx-auto max-w-[1480px] px-4 flex justify-between">
-                          {/* Anterior Button */}
-                          <motion.button 
-                            whileHover={{ scale: 1.1, x: -8 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              const all = course.modules.flatMap(m => m.lessons);
-                              const idx = all.findIndex(l => l.id === selectedLesson?.id);
-                              if (idx > 0) setSelectedLesson(all[idx - 1]);
-                            }}
-                            className="pointer-events-auto w-14 h-14 bg-[#eb6200] text-white rounded-2xl flex items-center justify-center shadow-[0_12px_24px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
-                            title="Aula Anterior"
-                          >
-                            <ChevronLeft className="w-8 h-8" />
-                            <span className="absolute -bottom-10 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Anterior</span>
-                          </motion.button>
-                          
-                          {/* Próximo Button */}
-                          <motion.button 
-                            whileHover={{ scale: 1.1, x: 8 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              const all = course.modules.flatMap(m => m.lessons);
-                              const idx = all.findIndex(l => l.id === selectedLesson?.id);
-                              if (idx < all.length - 1) setSelectedLesson(all[idx + 1]);
-                            }}
-                            className="pointer-events-auto w-14 h-14 bg-[#eb6200] text-white rounded-2xl flex items-center justify-center shadow-[0_12px_24px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
-                            title="Próxima Aula"
-                          >
-                            <ChevronRight className="w-8 h-8" />
-                            <span className="absolute -bottom-10 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Próxima Aula</span>
-                          </motion.button>
-                        </div>
+                      {/* External Navigation Controls - Truly Outside the Player */}
+                      <div className="hidden md:block absolute top-1/2 -translate-y-1/2 -left-20 pointer-events-none z-30">
+                        <motion.button 
+                          whileHover={{ scale: 1.1, x: -8 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const all = course.modules.flatMap(m => m.lessons);
+                            const idx = all.findIndex(l => l.id === selectedLesson?.id);
+                            if (idx > 0) setSelectedLesson(all[idx - 1]);
+                          }}
+                          className="pointer-events-auto w-14 h-14 bg-[#eb6200] text-white rounded-2xl flex items-center justify-center shadow-[0_12px_24px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
+                          title="Aula Anterior"
+                        >
+                          <ChevronLeft className="w-8 h-8" />
+                          <span className="absolute -bottom-10 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Anterior</span>
+                        </motion.button>
                       </div>
+
+                      <div className="hidden md:block absolute top-1/2 -translate-y-1/2 -right-20 pointer-events-none z-30">
+                        <motion.button 
+                          whileHover={{ scale: 1.1, x: 8 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const all = course.modules.flatMap(m => m.lessons);
+                            const idx = all.findIndex(l => l.id === selectedLesson?.id);
+                            if (idx < all.length - 1) setSelectedLesson(all[idx + 1]);
+                          }}
+                          className="pointer-events-auto w-14 h-14 bg-[#eb6200] text-white rounded-2xl flex items-center justify-center shadow-[0_12px_24px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
+                          title="Próxima Aula"
+                        >
+                          <ChevronRight className="w-8 h-8" />
+                          <span className="absolute -bottom-10 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Próxima Aula</span>
+                        </motion.button>
+                      </div>
+
                     </div>
 
 
