@@ -4,15 +4,15 @@
  */
 
 import { useState } from 'react';
-import { 
-  Home, 
-  ChevronRight, 
-  Folder, 
-  PlayCircle, 
-  FileText, 
-  CheckCircle2, 
-  Clock, 
-  Calendar, 
+import {
+  Home,
+  ChevronRight,
+  Folder,
+  PlayCircle,
+  FileText,
+  CheckCircle2,
+  Clock,
+  Calendar,
   Info,
   Award,
   BarChart3,
@@ -36,11 +36,11 @@ import {
   X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Tabs, 
-  TabsContent, 
-  TabsList, 
-  TabsTrigger 
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
 } from '@/components/ui/tabs';
 import {
   Accordion,
@@ -51,26 +51,26 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { 
-  Breadcrumb, 
-  BreadcrumbItem, 
-  BreadcrumbLink, 
-  BreadcrumbList, 
-  BreadcrumbPage, 
-  BreadcrumbSeparator 
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Course, Lesson } from './types';
 import { MOCK_COURSE } from './constants';
-import { 
-  ResponsiveContainer, 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   Cell,
   PieChart,
   Pie
@@ -84,21 +84,21 @@ const PERFORMANCE_DATA = [
   { name: 'Módulo 5', score: 0 },
 ];
 
-const ProgressPie = ({ 
-  value, 
-  size = 40, 
-  innerRadius = 12, 
-  outerRadius = 16, 
-  activeColor = '#eb6200', 
+const ProgressPie = ({
+  value,
+  size = 40,
+  innerRadius = 12,
+  outerRadius = 16,
+  activeColor = '#eb6200',
   inactiveColor = '#f1f5f9',
   showText = true,
   fontSize = 8
-}: { 
-  value: number, 
-  size?: number, 
-  innerRadius?: number, 
-  outerRadius?: number, 
-  activeColor?: string, 
+}: {
+  value: number,
+  size?: number,
+  innerRadius?: number,
+  outerRadius?: number,
+  activeColor?: string,
   inactiveColor?: string,
   showText?: boolean,
   fontSize?: number
@@ -183,86 +183,86 @@ export default function App() {
     <div className="min-h-screen bg-app-background font-sans text-app-on-surface">
       {/* Header (Navbar) */}
       <header className={cn(
-          "z-50 w-full transition-all duration-300",
-          selectedLesson && (mainNav === 'treinamentos' || mainNav === 'trilha2') 
-          ? "md:fixed md:top-0 md:left-0 md:right-0 md:h-2 md:group sticky top-0 bg-[#00254e] border-b border-white/10 shadow-sm" 
+        "z-50 w-full transition-all duration-300",
+        selectedLesson && (mainNav === 'treinamentos' || mainNav === 'trilha2')
+          ? "md:fixed md:top-0 md:left-0 md:right-0 md:h-2 md:group sticky top-0 bg-[#00254e] border-b border-white/10 shadow-sm"
           : "sticky top-0 bg-[#00254e] border-b border-white/10 shadow-sm"
-        )}>
-          <div className={cn(
-            "px-4 md:px-6 py-2 flex items-center justify-between transition-all duration-300",
-            selectedLesson && (mainNav === 'treinamentos' || mainNav === 'trilha2') 
-            ? "md:absolute md:top-0 md:left-0 md:right-0 md:-translate-y-full md:group-hover:translate-y-0 md:shadow-2xl bg-[#00254e]" 
+      )}>
+        <div className={cn(
+          "px-4 md:px-6 py-2 flex items-center justify-between transition-all duration-300",
+          selectedLesson && (mainNav === 'treinamentos' || mainNav === 'trilha2')
+            ? "md:absolute md:top-0 md:left-0 md:right-0 md:-translate-y-full md:group-hover:translate-y-0 md:shadow-2xl bg-[#00254e]"
             : "bg-[#00254e]"
-          )}>
-        <div className="flex items-center gap-4 md:gap-8">
-          {/* Logo */}
-          <div className="text-white font-bold text-lg md:text-xl tracking-tight flex items-center gap-2">
-            <div className="w-8 h-8 bg-app-tertiary rounded flex items-center justify-center">
-              <Monitor className="w-5 h-5 text-white" />
+        )}>
+          <div className="flex items-center gap-4 md:gap-8">
+            {/* Logo */}
+            <div className="text-white font-bold text-lg md:text-xl tracking-tight flex items-center gap-2">
+              <div className="w-8 h-8 bg-app-tertiary rounded flex items-center justify-center">
+                <Monitor className="w-5 h-5 text-white" />
+              </div>
+              Lector
             </div>
-            Lector
+
+            {/* Nav Items */}
+            <nav className="hidden md:flex items-center gap-1">
+              <button
+                onClick={() => setMainNav('trilhas')}
+                className={cn(
+                  "px-4 py-2 rounded-lg font-semibold text-sm transition-colors",
+                  mainNav === 'trilhas' ? "bg-white/10 text-app-tertiary" : "text-app-on-primary-container hover:text-white"
+                )}
+              >
+                Trilhas
+              </button>
+              <button
+                onClick={() => setMainNav('treinamentos')}
+                className={cn(
+                  "px-4 py-2 rounded-lg font-semibold text-sm transition-colors",
+                  mainNav === 'treinamentos' ? "bg-white/10 text-app-tertiary" : "text-app-on-primary-container hover:text-white"
+                )}
+              >
+                Treinamentos
+              </button>
+              <button
+                onClick={() => setMainNav('trilha2')}
+                className={cn(
+                  "px-4 py-2 rounded-lg font-semibold text-sm transition-colors",
+                  mainNav === 'trilha2' ? "bg-white/10 text-app-tertiary" : "text-app-on-primary-container hover:text-white"
+                )}
+              >
+                Trilha 2
+              </button>
+            </nav>
           </div>
 
-          {/* Nav Items */}
-          <nav className="hidden md:flex items-center gap-1">
-            <button 
-              onClick={() => setMainNav('trilhas')}
-              className={cn(
-                "px-4 py-2 rounded-lg font-semibold text-sm transition-colors",
-                mainNav === 'trilhas' ? "bg-white/10 text-app-tertiary" : "text-app-on-primary-container hover:text-white"
-              )}
-            >
-              Trilhas
-            </button>
-            <button 
-              onClick={() => setMainNav('treinamentos')}
-              className={cn(
-                "px-4 py-2 rounded-lg font-semibold text-sm transition-colors",
-                mainNav === 'treinamentos' ? "bg-white/10 text-app-tertiary" : "text-app-on-primary-container hover:text-white"
-              )}
-            >
-              Treinamentos
-            </button>
-            <button 
-              onClick={() => setMainNav('trilha2')}
-              className={cn(
-                "px-4 py-2 rounded-lg font-semibold text-sm transition-colors",
-                mainNav === 'trilha2' ? "bg-white/10 text-app-tertiary" : "text-app-on-primary-container hover:text-white"
-              )}
-            >
-              Trilha 2
-            </button>
-          </nav>
-        </div>
+          {/* Search Bar */}
+          <div className="flex-1 max-w-md mx-4 md:mx-8 hidden lg:block">
+            <div className="relative group">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-app-on-primary-container group-focus-within:text-white transition-colors" />
+              <input
+                type="text"
+                placeholder="Pesquisar trilhas..."
+                className="w-full bg-white/10 border border-white/10 rounded-full py-2 pl-10 pr-4 text-sm text-white placeholder:text-app-on-primary-container focus:outline-none focus:ring-2 focus:ring-app-tertiary/50 focus:bg-white/20 transition-all"
+              />
+            </div>
+          </div>
 
-        {/* Search Bar */}
-        <div className="flex-1 max-w-md mx-4 md:mx-8 hidden lg:block">
-          <div className="relative group">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-app-on-primary-container group-focus-within:text-white transition-colors" />
-            <input 
-              type="text" 
-              placeholder="Pesquisar trilhas..." 
-              className="w-full bg-white/10 border border-white/10 rounded-full py-2 pl-10 pr-4 text-sm text-white placeholder:text-app-on-primary-container focus:outline-none focus:ring-2 focus:ring-app-tertiary/50 focus:bg-white/20 transition-all"
-            />
+          {/* Right Actions */}
+          <div className="flex items-center gap-2 md:gap-3">
+            <button className="p-2 text-app-on-primary-container hover:text-white hover:bg-white/10 rounded-lg transition-all relative">
+              <Bell className="w-5 h-5" />
+              <span className="absolute top-1.5 right-1.5 w-3.5 h-3.5 md:w-4 md:h-4 bg-app-tertiary text-white text-[9px] md:text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-[#00254e]">
+                3
+              </span>
+            </button>
+            <button className="p-2 text-app-on-primary-container hover:text-white hover:bg-white/10 rounded-lg transition-all">
+              <MessageSquare className="w-5 h-5" />
+            </button>
+            <div className="ml-1 md:ml-2 w-8 h-8 md:w-9 md:h-9 bg-app-tertiary rounded-lg flex items-center justify-center text-white font-bold text-xs md:text-sm shadow-lg shadow-app-tertiary/20">
+              CG
+            </div>
           </div>
         </div>
-
-        {/* Right Actions */}
-        <div className="flex items-center gap-2 md:gap-3">
-          <button className="p-2 text-app-on-primary-container hover:text-white hover:bg-white/10 rounded-lg transition-all relative">
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-1.5 right-1.5 w-3.5 h-3.5 md:w-4 md:h-4 bg-app-tertiary text-white text-[9px] md:text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-[#00254e]">
-              3
-            </span>
-          </button>
-          <button className="p-2 text-app-on-primary-container hover:text-white hover:bg-white/10 rounded-lg transition-all">
-            <MessageSquare className="w-5 h-5" />
-          </button>
-          <div className="ml-1 md:ml-2 w-8 h-8 md:w-9 md:h-9 bg-app-tertiary rounded-lg flex items-center justify-center text-white font-bold text-xs md:text-sm shadow-lg shadow-app-tertiary/20">
-            CG
-          </div>
-        </div>
-      </div>
       </header>
 
       {/* Breadcrumbs */}
@@ -289,8 +289,8 @@ export default function App() {
                   <ChevronRight className="w-4 h-4 text-app-outline-variant" />
                 </BreadcrumbSeparator>
                 <BreadcrumbItem>
-                  <BreadcrumbLink 
-                    href="#" 
+                  <BreadcrumbLink
+                    href="#"
                     onClick={(e) => { e.preventDefault(); closeLesson(); }}
                     className={cn(
                       "text-app-on-surface-variant hover:text-app-tertiary",
@@ -336,7 +336,7 @@ export default function App() {
                 <div className="fixed top-4 left-0 z-[60] flex items-center gap-3 px-6 pointer-events-none">
 
                   {/* Hamburger Button */}
-                  <button 
+                  <button
                     onClick={() => setIsTrainingSidebarOpen(!isTrainingSidebarOpen)}
                     className="pointer-events-auto p-2.5 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
                     title={isTrainingSidebarOpen ? "Fechar Menu" : "Abrir Menu"}
@@ -350,7 +350,7 @@ export default function App() {
                     transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                     className="pointer-events-none"
                   >
-                    <button 
+                    <button
                       onClick={closeLesson}
                       className="pointer-events-auto p-2.5 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
                     >
@@ -364,7 +364,7 @@ export default function App() {
 
                 <AnimatePresence initial={false}>
                   {isTrainingSidebarOpen && (
-                    <motion.aside 
+                    <motion.aside
                       initial={{ width: 0, opacity: 0 }}
                       animate={{ width: 320, opacity: 1 }}
                       exit={{ width: 0, opacity: 0 }}
@@ -374,292 +374,292 @@ export default function App() {
                       <div className="w-[320px] flex flex-col h-full">
                         <div className="px-6 pt-14 pb-5 bg-[#00254e] text-white space-y-4">
                           <h2 className="font-bold text-base leading-tight text-left font-heading tracking-tight">{course.title}</h2>
-                    <div className="space-y-3">
-                      {/* Progresso Bar */}
-                      <div className="space-y-1.5">
-                        <div className="flex justify-between text-[10px] font-bold uppercase tracking-[0.1em] font-heading">
-                          <span className="text-white/50">Progresso</span>
-                          <span className="text-white font-black">{course.progress}%</span>
-                        </div>
-                        <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-[#eb6200] transition-all duration-1000" 
-                            style={{ width: `${course.progress}%` }} 
-                          />
-                        </div>
-                      </div>
+                          <div className="space-y-3">
+                            {/* Progresso Bar */}
+                            <div className="space-y-1.5">
+                              <div className="flex justify-between text-[10px] font-bold uppercase tracking-[0.1em] font-heading">
+                                <span className="text-white/50">Progresso</span>
+                                <span className="text-white font-black">{course.progress}%</span>
+                              </div>
+                              <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+                                <div
+                                  className="h-full bg-[#eb6200] transition-all duration-1000"
+                                  style={{ width: `${course.progress}%` }}
+                                />
+                              </div>
+                            </div>
 
-                      {/* Aproveitamento Bar */}
-                      <div className="space-y-1.5">
-                        <div className="flex justify-between text-[10px] font-bold uppercase tracking-[0.1em] font-heading">
-                          <span className="text-white/50">Aproveitamento</span>
-                          <span className="text-white font-black">{course.performance}%</span>
+                            {/* Aproveitamento Bar */}
+                            <div className="space-y-1.5">
+                              <div className="flex justify-between text-[10px] font-bold uppercase tracking-[0.1em] font-heading">
+                                <span className="text-white/50">Aproveitamento</span>
+                                <span className="text-white font-black">{course.performance}%</span>
+                              </div>
+                              <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+                                <div
+                                  className="h-full bg-[#eb6200] transition-all duration-1000"
+                                  style={{ width: `${course.performance}%` }}
+                                />
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-[#eb6200] transition-all duration-1000" 
-                            style={{ width: `${course.performance}%` }} 
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                                <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-app-outline-variant bg-white">
-                    {(() => {
-                      const getStatusLabel = (status?: string) => {
-                        switch(status) {
-                          case 'completed': return 'Concluído';
-                          case 'in-progress': return 'Em andamento';
-                          default: return 'Não visualizado';
-                        }
-                      };
-
-                      return mainNav === 'trilha2' ? (
-                        <Accordion type="multiple" defaultValue={course.modules.map(m => m.id)} className="w-full border-none">
-                          {course.modules.map((module, index) => {
-                            const isModuleCompleted = module.lessons.every(lesson => {
-                              if (lesson.type === 'training' && lesson.lessons) {
-                                return lesson.lessons.every(sub => sub.completed);
+                        <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-app-outline-variant bg-white">
+                          {(() => {
+                            const getStatusLabel = (status?: string) => {
+                              switch (status) {
+                                case 'completed': return 'Concluído';
+                                case 'in-progress': return 'Em andamento';
+                                default: return 'Não visualizado';
                               }
-                              return lesson.completed;
-                            });
+                            };
 
-                            return (
-                              <AccordionItem key={module.id} value={module.id} className="border-none relative">
-                                {/* Linha da Trilha */}
-                                {index < course.modules.length - 1 && (
-                                  <div className="absolute left-[39px] top-12 bottom-0 w-0.5 bg-app-outline-variant/30 z-0" />
-                                )}
-                                <AccordionTrigger className="px-6 py-4 bg-gray-50/50 hover:bg-gray-100/50 hover:no-underline border-b border-app-outline-variant/10 group relative z-10 w-full">
-                                  <div className="flex items-center justify-between w-full gap-4">
-                                    <div className="flex items-center gap-3 text-left">
-                                      <div className={cn(
-                                        "w-8 h-8 rounded-full bg-white border-2 flex items-center justify-center text-[10px] font-bold transition-all shadow-sm shrink-0",
-                                        isModuleCompleted 
-                                          ? "border-green-500 text-green-500 bg-green-50" 
-                                          : "border-app-outline-variant text-app-on-surface-variant group-data-[state=open]:border-app-tertiary group-data-[state=open]:text-app-tertiary"
-                                      )}>
-                                        {index + 1}
-                                      </div>
-                                      <span className={cn(
-                                        "text-xs font-bold uppercase tracking-widest font-heading line-clamp-2",
-                                        isModuleCompleted ? "text-green-600" : "text-app-on-surface"
-                                      )}>{module.title}</span>
-                                    </div>
-                                    
-                                    <div className="flex gap-2">
-                                      <div className="w-10 h-10 shrink-0 relative flex items-center justify-center group-hover:scale-105 transition-transform">
-                                        <ProgressPie 
-                                          value={PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0} 
-                                          size={32} innerRadius={12} outerRadius={16} 
-                                          activeColor="#eb6200" inactiveColor="#f1f5f9" fontSize={8} 
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </AccordionTrigger>
-                                <AccordionContent className="p-0 border-none bg-white">
-                                  {module.lessons.map((lesson) => (
-                                    <div key={lesson.id} className="relative">
-                                      {lesson.type === 'training' && lesson.lessons ? (
-                                        <Accordion type="single" collapsible className="w-full">
-                                          <AccordionItem value="training" className="border-none">
-                                            <AccordionTrigger className="px-8 py-5 hover:bg-gray-50/50 hover:no-underline border-b border-app-outline-variant/5">
-                                               <div className="flex items-center gap-3">
-                                                  <div className="w-5 h-5 rounded bg-app-tertiary/10 flex items-center justify-center text-app-tertiary">
-                                                    <PlayCircle className="w-3 h-3" />
-                                                  </div>
-                                                  <span className="text-[13px] font-bold text-app-on-surface">{lesson.title}</span>
-                                               </div>
-                                            </AccordionTrigger>
-                                            <AccordionContent className="p-0 bg-gray-50/30">
-                                              {lesson.lessons.map((sub) => {
-                                                const subPerc = sub.completed ? 100 : 0;
-                                                const subPerf = sub.completed ? 95 : 0;
-                                                return (
-                                                  <button 
-                                                    key={sub.id}
-                                                    onClick={() => setSelectedLesson(sub)}
-                                                    className={cn(
-                                                      "w-full px-8 py-4 text-left transition-all flex flex-col gap-2 border-b border-app-outline-variant/5",
-                                                      selectedLesson?.id === sub.id ? "bg-[#fff5eb]" : "hover:bg-gray-50"
-                                                    )}
-                                                  >
-                                                    <div className="flex items-center gap-3">
-                                                       {sub.completed ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <div className="w-4 h-4 rounded-full border-2 border-app-outline-variant/30" />}
-                                                       <span className={cn(
-                                                        "text-[13px] font-bold tracking-tight",
-                                                        selectedLesson?.id === sub.id ? "text-app-tertiary" : "text-app-on-surface"
-                                                       )}>{sub.title}</span>
-                                                    </div>
+                            return mainNav === 'trilha2' ? (
+                              <Accordion type="multiple" defaultValue={course.modules.map(m => m.id)} className="w-full border-none">
+                                {course.modules.map((module, index) => {
+                                  const isModuleCompleted = module.lessons.every(lesson => {
+                                    if (lesson.type === 'training' && lesson.lessons) {
+                                      return lesson.lessons.every(sub => sub.completed);
+                                    }
+                                    return lesson.completed;
+                                  });
 
-                                                    {selectedLesson?.id === sub.id && (
-                                                      <div className="flex items-center gap-1.5 pl-7">
-                                                        <span className="inline-flex items-center gap-1.5 px-2 rounded bg-green-50 text-green-700 text-[8px] font-black uppercase border border-green-100">
-                                                          PROGRESSO
-                                                          <ProgressPie value={subPerc} size={20} innerRadius={6} outerRadius={8} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={5} />
-                                                        </span>
-                                                        <span className="inline-flex items-center gap-1.5 px-2 rounded bg-[#fff5eb] text-[#eb6200] text-[8px] font-black uppercase border border-[#ffead6]">
-                                                          APROVEITAMENTO
-                                                          <ProgressPie value={subPerf} size={20} innerRadius={6} outerRadius={8} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={5} />
-                                                        </span>
-                                                      </div>
-                                                    )}
-                                                  </button>
-                                                );
-                                              })}
-                                            </AccordionContent>
-                                          </AccordionItem>
-                                        </Accordion>
-                                      ) : (
-                                        <button 
-                                          onClick={() => setSelectedLesson(lesson)}
-                                          className={cn(
-                                            "w-full px-4 py-3 text-left transition-all relative group flex items-center gap-3 border-l-4",
-                                            lesson.id === selectedLesson?.id ? "bg-[#fff5eb] border-l-[#eb6200]" : "hover:bg-gray-50/60 border-l-transparent"
-                                          )}
-                                        >
-                                          {(() => {
-                                            const lPerc = lesson.completed ? 100 : 0;
-                                            const lPerf = lesson.completed ? 95 : 0;
-                                            return (
-                                              <>
-                                                <div 
-                                                  onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    toggleLessonComplete(lesson.id);
-                                                  }}
-                                                  className={cn(
-                                                    "shrink-0 cursor-pointer hover:scale-110 transition-transform",
-                                                    lesson.id === selectedLesson?.id ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
-                                                  )}
-                                                >
-                                                  {lesson.completed ? <CheckCircle2 className="w-4 h-4" /> : <div className="w-4 h-4 rounded-full border-2 border-current opacity-30" />}
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                  <div className="flex items-center gap-1.5 mb-0.5">
-                                                    <span className={cn(
-                                                      "px-1.5 py-0 rounded text-[7px] font-black uppercase tracking-wider border leading-4",
-                                                      lesson.status === 'completed' ? "bg-green-50 text-green-600 border-green-100" :
-                                                      lesson.status === 'in-progress' ? "bg-blue-50 text-blue-600 border-blue-100" :
-                                                      "bg-gray-50 text-gray-400 border-gray-100"
-                                                    )}>
-                                                      {getStatusLabel(lesson.status)}
-                                                    </span>
-                                                  </div>
-                                                  <p className={cn(
-                                                    "text-[13px] font-bold leading-snug tracking-tight font-heading mb-1.5",
-                                                    lesson.id === selectedLesson?.id ? "text-[#eb6200]" : "text-[#1a1a1a]"
-                                                  )}>{lesson.title}</p>
-                                                  {lesson.id === selectedLesson?.id && (
-                                                    <div className="flex items-center gap-1.5">
-                                                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
-                                                        PROGRESSO
-                                                        <ProgressPie value={lPerc} size={22} innerRadius={7} outerRadius={9} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={6} />
-                                                      </span>
-                                                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
-                                                        APROVEITAMENTO
-                                                        <ProgressPie value={lPerf} size={22} innerRadius={7} outerRadius={9} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={6} />
-                                                      </span>
-                                                    </div>
-                                                  )}
-                                                </div>
-                                              </>
-                                            );
-                                          })()}
-                                        </button>
+                                  return (
+                                    <AccordionItem key={module.id} value={module.id} className="border-none relative">
+                                      {/* Linha da Trilha */}
+                                      {index < course.modules.length - 1 && (
+                                        <div className="absolute left-[39px] top-12 bottom-0 w-0.5 bg-app-outline-variant/30 z-0" />
                                       )}
-                                    </div>
-                                  ))}
-                                </AccordionContent>
-                              </AccordionItem>
-                            );
-                          })}
-                        </Accordion>
-                      ) : (
-                        <div className="flex flex-col">
-                          {course.modules.flatMap(m => m.lessons).map((lesson) => {
-                            const isActive = lesson.id === selectedLesson?.id;
-                            const percentage = lesson.completed ? 100 : 0;
-                            const performance = lesson.completed ? 95 : 0;
+                                      <AccordionTrigger className="px-6 py-4 bg-gray-50/50 hover:bg-gray-100/50 hover:no-underline border-b border-app-outline-variant/10 group relative z-10 w-full">
+                                        <div className="flex items-center justify-between w-full gap-4">
+                                          <div className="flex items-center gap-3 text-left">
+                                            <div className={cn(
+                                              "w-8 h-8 rounded-full bg-white border-2 flex items-center justify-center text-[10px] font-bold transition-all shadow-sm shrink-0",
+                                              isModuleCompleted
+                                                ? "border-green-500 text-green-500 bg-green-50"
+                                                : "border-app-outline-variant text-app-on-surface-variant group-data-[state=open]:border-app-tertiary group-data-[state=open]:text-app-tertiary"
+                                            )}>
+                                              {index + 1}
+                                            </div>
+                                            <span className={cn(
+                                              "text-xs font-bold uppercase tracking-widest font-heading line-clamp-2",
+                                              isModuleCompleted ? "text-green-600" : "text-app-on-surface"
+                                            )}>{module.title}</span>
+                                          </div>
 
-                            return (
-                              <button 
-                                key={lesson.id}
-                                onClick={() => setSelectedLesson(lesson)}
-                                className={cn(
-                                  "w-full px-4 py-3 text-left border-b border-app-outline-variant/10 transition-all relative group",
-                                  isActive ? "bg-[#fff5eb] border-l-4 border-l-[#eb6200]" : "hover:bg-gray-50/60 border-l-4 border-l-transparent"
-                                )}
-                              >
-                                <div className="flex items-center gap-3">
-                                  <div 
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      toggleLessonComplete(lesson.id);
-                                    }}
-                                    className={cn(
-                                      "shrink-0 cursor-pointer hover:scale-110 transition-transform",
-                                      isActive ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
-                                    )}>
-                                    {lesson.completed ? (
-                                      <CheckCircle2 className="w-4 h-4" />
-                                    ) : (
-                                      <div className="w-4 h-4 rounded-full border-2 border-current opacity-30" />
-                                    )}
-                                  </div>
-                                  <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-1.5 mb-0.5">
-                                      <span className={cn(
-                                        "px-1.5 py-0 rounded text-[7px] font-black uppercase tracking-wider border leading-4",
-                                        lesson.status === 'completed' ? "bg-green-50 text-green-600 border-green-100" :
-                                        lesson.status === 'in-progress' ? "bg-blue-50 text-blue-600 border-blue-100" :
-                                        "bg-gray-50 text-gray-400 border-gray-100"
-                                      )}>
-                                        {getStatusLabel(lesson.status)}
-                                      </span>
-                                    </div>
+                                          <div className="flex gap-2">
+                                            <div className="w-10 h-10 shrink-0 relative flex items-center justify-center group-hover:scale-105 transition-transform">
+                                              <ProgressPie
+                                                value={PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0}
+                                                size={32} innerRadius={12} outerRadius={16}
+                                                activeColor="#eb6200" inactiveColor="#f1f5f9" fontSize={8}
+                                              />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </AccordionTrigger>
+                                      <AccordionContent className="p-0 border-none bg-white">
+                                        {module.lessons.map((lesson) => (
+                                          <div key={lesson.id} className="relative">
+                                            {lesson.type === 'training' && lesson.lessons ? (
+                                              <Accordion type="single" collapsible className="w-full">
+                                                <AccordionItem value="training" className="border-none">
+                                                  <AccordionTrigger className="px-8 py-5 hover:bg-gray-50/50 hover:no-underline border-b border-app-outline-variant/5">
+                                                    <div className="flex items-center gap-3">
+                                                      <div className="w-5 h-5 rounded bg-app-tertiary/10 flex items-center justify-center text-app-tertiary">
+                                                        <PlayCircle className="w-3 h-3" />
+                                                      </div>
+                                                      <span className="text-[13px] font-bold text-app-on-surface">{lesson.title}</span>
+                                                    </div>
+                                                  </AccordionTrigger>
+                                                  <AccordionContent className="p-0 bg-gray-50/30">
+                                                    {lesson.lessons.map((sub) => {
+                                                      const subPerc = sub.completed ? 100 : 0;
+                                                      const subPerf = sub.completed ? 95 : 0;
+                                                      return (
+                                                        <button
+                                                          key={sub.id}
+                                                          onClick={() => setSelectedLesson(sub)}
+                                                          className={cn(
+                                                            "w-full px-8 py-4 text-left transition-all flex flex-col gap-2 border-b border-app-outline-variant/5",
+                                                            selectedLesson?.id === sub.id ? "bg-[#fff5eb]" : "hover:bg-gray-50"
+                                                          )}
+                                                        >
+                                                          <div className="flex items-center gap-3">
+                                                            {sub.completed ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <div className="w-4 h-4 rounded-full border-2 border-app-outline-variant/30" />}
+                                                            <span className={cn(
+                                                              "text-[13px] font-bold tracking-tight",
+                                                              selectedLesson?.id === sub.id ? "text-app-tertiary" : "text-app-on-surface"
+                                                            )}>{sub.title}</span>
+                                                          </div>
 
-                                    <p className={cn(
-                                      "text-[13px] font-bold leading-snug tracking-tight font-heading mb-1.5",
-                                      isActive ? "text-[#eb6200]" : "text-[#1a1a1a]"
-                                    )}>
-                                      {lesson.title}
-                                    </p>
-                                    
-                                    {isActive && (
-                                      <div className="flex items-center gap-1.5">
-                                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
-                                          PROGRESSO
-                                          <ProgressPie value={percentage} size={22} innerRadius={7} outerRadius={9} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={6} />
-                                        </span>
-                                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
-                                          APROVEITAMENTO
-                                          <ProgressPie value={performance} size={22} innerRadius={7} outerRadius={9} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={6} />
-                                        </span>
+                                                          {selectedLesson?.id === sub.id && (
+                                                            <div className="flex items-center gap-1.5 pl-7">
+                                                              <span className="inline-flex items-center gap-1.5 px-2 rounded bg-green-50 text-green-700 text-[8px] font-black uppercase border border-green-100">
+                                                                PROGRESSO
+                                                                <ProgressPie value={subPerc} size={20} innerRadius={6} outerRadius={8} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={5} />
+                                                              </span>
+                                                              <span className="inline-flex items-center gap-1.5 px-2 rounded bg-[#fff5eb] text-[#eb6200] text-[8px] font-black uppercase border border-[#ffead6]">
+                                                                APROVEITAMENTO
+                                                                <ProgressPie value={subPerf} size={20} innerRadius={6} outerRadius={8} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={5} />
+                                                              </span>
+                                                            </div>
+                                                          )}
+                                                        </button>
+                                                      );
+                                                    })}
+                                                  </AccordionContent>
+                                                </AccordionItem>
+                                              </Accordion>
+                                            ) : (
+                                              <button
+                                                onClick={() => setSelectedLesson(lesson)}
+                                                className={cn(
+                                                  "w-full px-4 py-3 text-left transition-all relative group flex items-center gap-3 border-l-4",
+                                                  lesson.id === selectedLesson?.id ? "bg-[#fff5eb] border-l-[#eb6200]" : "hover:bg-gray-50/60 border-l-transparent"
+                                                )}
+                                              >
+                                                {(() => {
+                                                  const lPerc = lesson.completed ? 100 : 0;
+                                                  const lPerf = lesson.completed ? 95 : 0;
+                                                  return (
+                                                    <>
+                                                      <div
+                                                        onClick={(e) => {
+                                                          e.stopPropagation();
+                                                          toggleLessonComplete(lesson.id);
+                                                        }}
+                                                        className={cn(
+                                                          "shrink-0 cursor-pointer hover:scale-110 transition-transform",
+                                                          lesson.id === selectedLesson?.id ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
+                                                        )}
+                                                      >
+                                                        {lesson.completed ? <CheckCircle2 className="w-4 h-4" /> : <div className="w-4 h-4 rounded-full border-2 border-current opacity-30" />}
+                                                      </div>
+                                                      <div className="flex-1 min-w-0">
+                                                        <div className="flex items-center gap-1.5 mb-0.5">
+                                                          <span className={cn(
+                                                            "px-1.5 py-0 rounded text-[7px] font-black uppercase tracking-wider border leading-4",
+                                                            lesson.status === 'completed' ? "bg-green-50 text-green-600 border-green-100" :
+                                                              lesson.status === 'in-progress' ? "bg-blue-50 text-blue-600 border-blue-100" :
+                                                                "bg-gray-50 text-gray-400 border-gray-100"
+                                                          )}>
+                                                            {getStatusLabel(lesson.status)}
+                                                          </span>
+                                                        </div>
+                                                        <p className={cn(
+                                                          "text-[13px] font-bold leading-snug tracking-tight font-heading mb-1.5",
+                                                          lesson.id === selectedLesson?.id ? "text-[#eb6200]" : "text-[#1a1a1a]"
+                                                        )}>{lesson.title}</p>
+                                                        {lesson.id === selectedLesson?.id && (
+                                                          <div className="flex items-center gap-1.5">
+                                                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
+                                                              PROGRESSO
+                                                              <ProgressPie value={lPerc} size={22} innerRadius={7} outerRadius={9} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={6} />
+                                                            </span>
+                                                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
+                                                              APROVEITAMENTO
+                                                              <ProgressPie value={lPerf} size={22} innerRadius={7} outerRadius={9} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={6} />
+                                                            </span>
+                                                          </div>
+                                                        )}
+                                                      </div>
+                                                    </>
+                                                  );
+                                                })()}
+                                              </button>
+                                            )}
+                                          </div>
+                                        ))}
+                                      </AccordionContent>
+                                    </AccordionItem>
+                                  );
+                                })}
+                              </Accordion>
+                            ) : (
+                              <div className="flex flex-col">
+                                {course.modules.flatMap(m => m.lessons).map((lesson) => {
+                                  const isActive = lesson.id === selectedLesson?.id;
+                                  const percentage = lesson.completed ? 100 : 0;
+                                  const performance = lesson.completed ? 95 : 0;
+
+                                  return (
+                                    <button
+                                      key={lesson.id}
+                                      onClick={() => setSelectedLesson(lesson)}
+                                      className={cn(
+                                        "w-full px-4 py-3 text-left border-b border-app-outline-variant/10 transition-all relative group",
+                                        isActive ? "bg-[#fff5eb] border-l-4 border-l-[#eb6200]" : "hover:bg-gray-50/60 border-l-4 border-l-transparent"
+                                      )}
+                                    >
+                                      <div className="flex items-center gap-3">
+                                        <div
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            toggleLessonComplete(lesson.id);
+                                          }}
+                                          className={cn(
+                                            "shrink-0 cursor-pointer hover:scale-110 transition-transform",
+                                            isActive ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
+                                          )}>
+                                          {lesson.completed ? (
+                                            <CheckCircle2 className="w-4 h-4" />
+                                          ) : (
+                                            <div className="w-4 h-4 rounded-full border-2 border-current opacity-30" />
+                                          )}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                          <div className="flex items-center gap-1.5 mb-0.5">
+                                            <span className={cn(
+                                              "px-1.5 py-0 rounded text-[7px] font-black uppercase tracking-wider border leading-4",
+                                              lesson.status === 'completed' ? "bg-green-50 text-green-600 border-green-100" :
+                                                lesson.status === 'in-progress' ? "bg-blue-50 text-blue-600 border-blue-100" :
+                                                  "bg-gray-50 text-gray-400 border-gray-100"
+                                            )}>
+                                              {getStatusLabel(lesson.status)}
+                                            </span>
+                                          </div>
+
+                                          <p className={cn(
+                                            "text-[13px] font-bold leading-snug tracking-tight font-heading mb-1.5",
+                                            isActive ? "text-[#eb6200]" : "text-[#1a1a1a]"
+                                          )}>
+                                            {lesson.title}
+                                          </p>
+
+                                          {isActive && (
+                                            <div className="flex items-center gap-1.5">
+                                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
+                                                PROGRESSO
+                                                <ProgressPie value={percentage} size={25} innerRadius={8} outerRadius={9} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={6} />
+                                              </span>
+                                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
+                                                APROVEITAMENTO
+                                                <ProgressPie value={performance} size={25} innerRadius={8} outerRadius={9} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={6} />
+                                              </span>
+                                            </div>
+                                          )}
+                                        </div>
                                       </div>
-                                    )}
-                                  </div>
-                                </div>
-                              </button>
+                                    </button>
+                                  );
+                                })}
+                              </div>
                             );
-                          })}
+                          })()}
                         </div>
-                      );
-                    })()}
-                    </div>
-                  </div>
-                </motion.aside>
-              )}
-            </AnimatePresence>
+                      </div>
+                    </motion.aside>
+                  )}
+                </AnimatePresence>
 
-            {/* Main Content Area */}
-            <main className="flex-1 overflow-y-auto bg-[#f8f9fa] scrollbar-thin scrollbar-thumb-app-outline-variant relative min-w-0">
-                    <div className={cn(
-                      "mx-auto transition-all duration-500 ease-in-out",
-                      isTrainingSidebarOpen ? "max-w-7xl" : "max-w-7xl",
-                      "pt-16 md:pt-18 px-4 md:px-10 pb-12 space-y-4 md:space-y-6"
-                    )}>
+                {/* Main Content Area */}
+                <main className="flex-1 overflow-y-auto bg-[#f8f9fa] scrollbar-thin scrollbar-thumb-app-outline-variant relative min-w-0">
+                  <div className={cn(
+                    "mx-auto transition-all duration-500 ease-in-out",
+                    isTrainingSidebarOpen ? "max-w-7xl" : "max-w-7xl",
+                    "pt-16 md:pt-18 px-4 md:px-10 pb-12 space-y-4 md:space-y-6"
+                  )}>
 
                     {/* Breadcrumb & Navigation (Desktop Only) */}
                     <div className="hidden md:flex items-center justify-between mb-4">
@@ -667,7 +667,7 @@ export default function App() {
                         <Breadcrumb className="bg-transparent shadow-none border-none p-0">
                           <BreadcrumbList className="gap-1 md:gap-1">
                             <BreadcrumbItem>
-                              <BreadcrumbLink 
+                              <BreadcrumbLink
                                 onClick={() => { setView('home'); setSelectedLesson(null); }}
                                 className="flex items-center gap-1.5 text-app-on-surface-variant/60 hover:text-app-tertiary transition-colors cursor-pointer"
                               >
@@ -679,7 +679,7 @@ export default function App() {
                               <ChevronRight className="h-3 w-3" />
                             </BreadcrumbSeparator>
                             <BreadcrumbItem>
-                              <BreadcrumbLink 
+                              <BreadcrumbLink
                                 onClick={closeLesson}
                                 className="text-app-on-surface-variant/60 hover:text-app-tertiary transition-colors cursor-pointer"
                               >
@@ -718,17 +718,17 @@ export default function App() {
                               title="Document Viewer"
                             />
                             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/5">
-                               <div className="bg-white/90 backdrop-blur-sm p-4 rounded-2xl shadow-xl pointer-events-auto flex items-center gap-4">
-                                 <p className="text-xs font-bold text-app-on-surface uppercase tracking-wider">Problemas ao visualizar?</p>
-                                 <a 
-                                   href={selectedLesson?.fileUrl} 
-                                   target="_blank" 
-                                   rel="noopener noreferrer"
-                                   className="px-4 py-2 bg-app-tertiary text-white text-[10px] font-bold uppercase tracking-widest rounded-xl hover:bg-app-tertiary-hover transition-colors"
-                                 >
-                                   Abrir em nova aba
-                                 </a>
-                               </div>
+                              <div className="bg-white/90 backdrop-blur-sm p-4 rounded-2xl shadow-xl pointer-events-auto flex items-center gap-4">
+                                <p className="text-xs font-bold text-app-on-surface uppercase tracking-wider">Problemas ao visualizar?</p>
+                                <a
+                                  href={selectedLesson?.fileUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="px-4 py-2 bg-app-tertiary text-white text-[10px] font-bold uppercase tracking-widest rounded-xl hover:bg-app-tertiary-hover transition-colors"
+                                >
+                                  Abrir em nova aba
+                                </a>
+                              </div>
                             </div>
                           </div>
                         ) : selectedLesson?.videoUrl ? (
@@ -740,9 +740,9 @@ export default function App() {
                               allowFullScreen
                             />
                           ) : (
-                            <video 
-                              src={selectedLesson?.videoUrl} 
-                              controls 
+                            <video
+                              src={selectedLesson?.videoUrl}
+                              controls
                               className="w-full h-full object-contain"
                             />
                           )
@@ -755,14 +755,14 @@ export default function App() {
                             )}
                           </div>
                         )}
-                        
+
                         {/* Interaction Layer */}
                         <div className="hidden md:flex absolute inset-0 pointer-events-none group-hover:bg-black/5 transition-colors duration-500" />
                       </div>
 
                       {/* External Navigation Controls - Truly Outside the Player */}
                       <div className="hidden md:block absolute top-1/2 -translate-y-1/2 -left-20 pointer-events-none z-30">
-                        <motion.button 
+                        <motion.button
                           whileHover={{ scale: 1.1, x: -8 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={(e) => {
@@ -780,7 +780,7 @@ export default function App() {
                       </div>
 
                       <div className="hidden md:block absolute top-1/2 -translate-y-1/2 -right-20 pointer-events-none z-30">
-                        <motion.button 
+                        <motion.button
                           whileHover={{ scale: 1.1, x: 8 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={(e) => {
@@ -818,7 +818,7 @@ export default function App() {
                           {selectedLesson?.title}
                         </h1>
                       </div>
-                      
+
                       <div className="space-y-6 md:space-y-8">
                         {/* Sticky Tabs Bar */}
                         <div className="sticky top-0 z-30 -mx-4 px-4 py-2 bg-[#f8f9fa] md:bg-[#f8f9fa]/80 md:backdrop-blur-md">
@@ -831,7 +831,7 @@ export default function App() {
                                 { id: 'material', label: 'Material Complementar', icon: FileDown },
                                 { id: 'autor', label: 'Autor', icon: Users }
                               ].map((tab) => (
-                                <button 
+                                <button
                                   key={tab.id}
                                   onClick={() => setLessonInfoTab(tab.id as any)}
                                   className={cn(
@@ -839,15 +839,15 @@ export default function App() {
                                     "md:px-8 md:py-5",
                                     "px-5 py-2.5 rounded-full border md:rounded-none md:border-none",
                                     tab.mobileOnly && "md:hidden",
-                                    lessonInfoTab === tab.id 
-                                      ? "bg-[#eb6200] text-white border-[#eb6200] md:bg-transparent md:text-[#eb6200]" 
+                                    lessonInfoTab === tab.id
+                                      ? "bg-[#eb6200] text-white border-[#eb6200] md:bg-transparent md:text-[#eb6200]"
                                       : "bg-white text-app-on-surface-variant/60 border-app-outline-variant md:bg-transparent md:hover:text-app-on-surface"
                                   )}
                                 >
                                   <tab.icon className="w-3.5 h-3.5" />
                                   {tab.label}
                                   {lessonInfoTab === tab.id && (
-                                    <motion.div 
+                                    <motion.div
                                       layoutId="activeTabIndicator"
                                       className="hidden md:block absolute bottom-0 left-8 right-8 h-1 bg-[#eb6200] rounded-t-full"
                                       transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
@@ -858,7 +858,7 @@ export default function App() {
                             </div>
                           </div>
                         </div>
-                        
+
                         <div className="min-h-[200px] py-4 md:py-8">
                           <AnimatePresence mode="wait">
                             {lessonInfoTab === 'conteudo' && (
@@ -875,7 +875,7 @@ export default function App() {
                                     <h3 className="text-xl font-black text-app-on-surface font-heading tracking-tight italic">Configurando o seu Movidesk</h3>
                                     <p className="text-[10px] font-bold text-app-on-surface-variant/40 uppercase tracking-widest font-heading">Visão Geral do Desempenho</p>
                                   </div>
-                                  
+
                                   <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-1.5">
                                       <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest font-heading">
@@ -883,24 +883,24 @@ export default function App() {
                                       </div>
                                       <div className="flex items-center gap-3">
                                         <div className="flex-1 h-1.5 bg-app-outline-variant/10 rounded-full overflow-hidden">
-                                          <div 
-                                            className="h-full bg-app-tertiary" 
-                                            style={{ width: `${course.progress}%` }} 
+                                          <div
+                                            className="h-full bg-app-tertiary"
+                                            style={{ width: `${course.progress}%` }}
                                           />
                                         </div>
                                         <span className="text-[10px] font-black text-app-tertiary font-heading">{course.progress}%</span>
                                       </div>
                                     </div>
-                                    
+
                                     <div className="space-y-1.5">
                                       <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest font-heading">
                                         <span className="text-app-on-surface-variant/60">Aproveitamento</span>
                                       </div>
                                       <div className="flex items-center gap-3">
                                         <div className="flex-1 h-1.5 bg-[#eb6200]/10 rounded-full overflow-hidden">
-                                          <div 
-                                            className="h-full bg-gradient-to-r from-[#eb6200] to-[#ff914d]" 
-                                            style={{ width: `${course.performance}%` }} 
+                                          <div
+                                            className="h-full bg-gradient-to-r from-[#eb6200] to-[#ff914d]"
+                                            style={{ width: `${course.performance}%` }}
                                           />
                                         </div>
                                         <span className="text-[10px] font-black text-[#eb6200] font-heading">{course.performance}%</span>
@@ -995,7 +995,7 @@ export default function App() {
                                 </div>
                               </motion.div>
                             )}
-                            
+
                             {lessonInfoTab === 'material' && (
                               <motion.div
                                 key="material"
@@ -1021,7 +1021,7 @@ export default function App() {
                                       <p className="text-[10px] font-black text-app-on-surface-variant/40 uppercase tracking-widest font-heading">2.4 MB • Suporte ao Módulo</p>
                                     </div>
                                   </button>
-                                  
+
                                   <button className="flex flex-col gap-4 p-6 rounded-3xl bg-white border border-app-outline-variant/20 hover:border-app-tertiary/40 hover:shadow-2xl hover:shadow-app-tertiary/10 transition-all group text-left relative overflow-hidden">
                                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                                       <ExternalLink className="w-20 h-20 -mr-6 -mt-6 rotate-12" />
@@ -1037,7 +1037,7 @@ export default function App() {
                                 </div>
                               </motion.div>
                             )}
-                            
+
                             {lessonInfoTab === 'autor' && (
                               <motion.div
                                 key="autor"
@@ -1047,9 +1047,9 @@ export default function App() {
                                 className="flex flex-col md:flex-row items-center md:items-start gap-10 bg-white p-10 rounded-[2.5rem] border border-app-outline-variant/10 shadow-sm"
                               >
                                 <div className="w-32 h-32 rounded-3xl overflow-hidden bg-app-outline-variant/10 shrink-0 shadow-2xl rotate-3">
-                                  <img 
-                                    src="https://picsum.photos/seed/author/400/400" 
-                                    alt="Autor" 
+                                  <img
+                                    src="https://picsum.photos/seed/author/400/400"
+                                    alt="Autor"
                                     className="w-full h-full object-cover"
                                     referrerPolicy="no-referrer"
                                   />
@@ -1084,147 +1084,147 @@ export default function App() {
                 exit={{ opacity: 0, y: -20 }}
                 className="space-y-6"
               >
-              <div className="flex items-center justify-between">
-                <Button variant="ghost" onClick={closeLesson} className="flex items-center gap-2 text-app-on-surface-variant hover:text-app-tertiary">
-                  <ArrowLeft className="w-4 h-4" />
-                  Voltar para a trilha
-                </Button>
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="bg-app-surface border-app-outline-variant">
-                    {selectedLesson?.type?.toUpperCase()}
-                  </Badge>
-                  {selectedLesson?.duration && (
-                    <div className="flex items-center gap-1 text-xs text-app-on-surface-variant">
-                      <Clock className="w-3 h-3" />
-                      {selectedLesson?.duration}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-8">
-                <div className="space-y-6">
-                  <Card className="overflow-hidden border-app-outline-variant bg-black aspect-video flex items-center justify-center relative group">
-                    {selectedLesson?.type === 'video' ? (
-                      <div className="w-full h-full flex items-center justify-center bg-zinc-900">
-                        <PlayCircle className="w-16 h-16 text-white/50 group-hover:text-app-tertiary transition-colors cursor-pointer" />
-                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                          <p className="text-white text-sm font-medium">{selectedLesson?.title}</p>
-                        </div>
-                      </div>
-                    ) : selectedLesson?.type === 'evaluation' ? (
-                      <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-100 p-8 text-center space-y-4">
-                        <FileText className="w-16 h-16 text-app-tertiary" />
-                        <h3 className="text-xl font-bold text-app-on-surface">Avaliação de Reação</h3>
-                        <p className="text-app-on-surface-variant max-w-md">
-                          Esta é uma avaliação para sabermos sua opinião sobre o curso até agora.
-                        </p>
-                        <Button className="bg-app-tertiary hover:bg-app-tertiary-hover text-white">
-                          Iniciar Avaliação
-                        </Button>
-                      </div>
-                    ) : (
-                      <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-100 p-8 text-center space-y-4">
-                        <Folder className="w-16 h-16 text-app-primary" />
-                        <h3 className="text-xl font-bold text-app-on-surface">Documento de Apoio</h3>
-                        <p className="text-app-on-surface-variant max-w-md">
-                          Clique no botão abaixo para baixar ou visualizar o documento.
-                        </p>
-                        <div className="flex gap-3">
-                          <Button variant="outline" className="flex items-center gap-2">
-                            <Download className="w-4 h-4" />
-                            Baixar PDF
-                          </Button>
-                          <Button className="bg-app-primary hover:bg-app-primary-container text-white flex items-center gap-2">
-                            <ExternalLink className="w-4 h-4" />
-                            Visualizar
-                          </Button>
-                        </div>
+                <div className="flex items-center justify-between">
+                  <Button variant="ghost" onClick={closeLesson} className="flex items-center gap-2 text-app-on-surface-variant hover:text-app-tertiary">
+                    <ArrowLeft className="w-4 h-4" />
+                    Voltar para a trilha
+                  </Button>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="bg-app-surface border-app-outline-variant">
+                      {selectedLesson?.type?.toUpperCase()}
+                    </Badge>
+                    {selectedLesson?.duration && (
+                      <div className="flex items-center gap-1 text-xs text-app-on-surface-variant">
+                        <Clock className="w-3 h-3" />
+                        {selectedLesson?.duration}
                       </div>
                     )}
-                  </Card>
+                  </div>
+                </div>
 
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div className="space-y-1">
-                      <h1 className="text-2xl font-bold text-app-on-surface">{selectedLesson?.title}</h1>
-                      <p className="text-sm text-app-on-surface-variant">
-                        Módulo: {course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id))?.title}
-                      </p>
-                    </div>
-                    <Button 
-                      className="bg-app-tertiary hover:bg-app-tertiary-hover text-white flex items-center gap-2"
-                      onClick={() => {
-                        const currentModule = course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id));
-                        if (currentModule) {
-                          const currentIndex = currentModule.lessons.findIndex(l => l.id === selectedLesson?.id);
-                          if (currentIndex < currentModule.lessons.length - 1) {
-                            setSelectedLesson(currentModule.lessons[currentIndex + 1]);
-                          } else {
-                            // Try next module
-                            const moduleIndex = course.modules.findIndex(m => m.id === currentModule.id);
-                            if (moduleIndex < course.modules.length - 1) {
-                              const nextModule = course.modules[moduleIndex + 1];
-                              if (nextModule.lessons.length > 0) {
-                                setSelectedLesson(nextModule.lessons[0]);
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-8">
+                  <div className="space-y-6">
+                    <Card className="overflow-hidden border-app-outline-variant bg-black aspect-video flex items-center justify-center relative group">
+                      {selectedLesson?.type === 'video' ? (
+                        <div className="w-full h-full flex items-center justify-center bg-zinc-900">
+                          <PlayCircle className="w-16 h-16 text-white/50 group-hover:text-app-tertiary transition-colors cursor-pointer" />
+                          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                            <p className="text-white text-sm font-medium">{selectedLesson?.title}</p>
+                          </div>
+                        </div>
+                      ) : selectedLesson?.type === 'evaluation' ? (
+                        <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-100 p-8 text-center space-y-4">
+                          <FileText className="w-16 h-16 text-app-tertiary" />
+                          <h3 className="text-xl font-bold text-app-on-surface">Avaliação de Reação</h3>
+                          <p className="text-app-on-surface-variant max-w-md">
+                            Esta é uma avaliação para sabermos sua opinião sobre o curso até agora.
+                          </p>
+                          <Button className="bg-app-tertiary hover:bg-app-tertiary-hover text-white">
+                            Iniciar Avaliação
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-100 p-8 text-center space-y-4">
+                          <Folder className="w-16 h-16 text-app-primary" />
+                          <h3 className="text-xl font-bold text-app-on-surface">Documento de Apoio</h3>
+                          <p className="text-app-on-surface-variant max-w-md">
+                            Clique no botão abaixo para baixar ou visualizar o documento.
+                          </p>
+                          <div className="flex gap-3">
+                            <Button variant="outline" className="flex items-center gap-2">
+                              <Download className="w-4 h-4" />
+                              Baixar PDF
+                            </Button>
+                            <Button className="bg-app-primary hover:bg-app-primary-container text-white flex items-center gap-2">
+                              <ExternalLink className="w-4 h-4" />
+                              Visualizar
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+                    </Card>
+
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div className="space-y-1">
+                        <h1 className="text-2xl font-bold text-app-on-surface">{selectedLesson?.title}</h1>
+                        <p className="text-sm text-app-on-surface-variant">
+                          Módulo: {course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id))?.title}
+                        </p>
+                      </div>
+                      <Button
+                        className="bg-app-tertiary hover:bg-app-tertiary-hover text-white flex items-center gap-2"
+                        onClick={() => {
+                          const currentModule = course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id));
+                          if (currentModule) {
+                            const currentIndex = currentModule.lessons.findIndex(l => l.id === selectedLesson?.id);
+                            if (currentIndex < currentModule.lessons.length - 1) {
+                              setSelectedLesson(currentModule.lessons[currentIndex + 1]);
+                            } else {
+                              // Try next module
+                              const moduleIndex = course.modules.findIndex(m => m.id === currentModule.id);
+                              if (moduleIndex < course.modules.length - 1) {
+                                const nextModule = course.modules[moduleIndex + 1];
+                                if (nextModule.lessons.length > 0) {
+                                  setSelectedLesson(nextModule.lessons[0]);
+                                }
                               }
                             }
                           }
-                        }
-                      }}
-                    >
-                      Próxima Aula
-                      <ChevronRight className="w-4 h-4" />
-                    </Button>
+                        }}
+                      >
+                        Próxima Aula
+                        <ChevronRight className="w-4 h-4" />
+                      </Button>
+                    </div>
+
+                    <div className="prose prose-sm max-w-none text-app-on-surface-variant pt-4 border-t border-app-outline-variant">
+                      <p className="whitespace-pre-line">{selectedLesson?.description || 'Sem descrição disponível para esta aula.'}</p>
+                    </div>
                   </div>
 
-                  <div className="prose prose-sm max-w-none text-app-on-surface-variant pt-4 border-t border-app-outline-variant">
-                    <p className="whitespace-pre-line">{selectedLesson?.description || 'Sem descrição disponível para esta aula.'}</p>
-                  </div>
-                </div>
-
-                <aside className="space-y-6">
-                  <Card className="border-app-outline-variant bg-app-surface">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-sm font-bold uppercase tracking-wider text-app-on-surface-variant">Conteúdo do Módulo</CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-0">
-                      <div className="divide-y divide-app-outline-variant">
-                        {course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id))?.lessons.map((lesson) => (
-                          <button
-                            key={lesson.id}
-                            onClick={() => handleLessonClick(lesson)}
-                            className={cn(
-                              "w-full p-4 flex items-start gap-3 text-left transition-colors hover:bg-app-background",
-                              lesson.id === selectedLesson?.id ? "bg-app-tertiary/5 border-l-4 border-app-tertiary" : "pl-5"
-                            )}
-                          >
-                            <div className={cn(
-                              "mt-0.5",
-                              lesson.completed ? "text-green-500" : "text-app-on-surface-variant"
-                            )}>
-                              {lesson.type === 'video' ? <PlayCircle className="w-4 h-4" /> : <FileText className="w-4 h-4" />}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <p className={cn(
-                                "text-sm font-medium truncate",
-                                lesson.id === selectedLesson?.id ? "text-app-tertiary" : "text-app-on-surface"
+                  <aside className="space-y-6">
+                    <Card className="border-app-outline-variant bg-app-surface">
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-sm font-bold uppercase tracking-wider text-app-on-surface-variant">Conteúdo do Módulo</CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-0">
+                        <div className="divide-y divide-app-outline-variant">
+                          {course.modules.find(m => m.lessons.some(l => l.id === selectedLesson?.id))?.lessons.map((lesson) => (
+                            <button
+                              key={lesson.id}
+                              onClick={() => handleLessonClick(lesson)}
+                              className={cn(
+                                "w-full p-4 flex items-start gap-3 text-left transition-colors hover:bg-app-background",
+                                lesson.id === selectedLesson?.id ? "bg-app-tertiary/5 border-l-4 border-app-tertiary" : "pl-5"
+                              )}
+                            >
+                              <div className={cn(
+                                "mt-0.5",
+                                lesson.completed ? "text-green-500" : "text-app-on-surface-variant"
                               )}>
-                                {lesson.title}
-                              </p>
-                              <p className="text-xs text-app-on-surface-variant">{lesson.duration || 'Sem duração'}</p>
-                            </div>
-                            {lesson.completed && <CheckCircle2 className="w-4 h-4 text-green-500" />}
-                          </button>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </aside>
-              </div>
-            </motion.div>
-          )
-        ) : (
-          <motion.div
+                                {lesson.type === 'video' ? <PlayCircle className="w-4 h-4" /> : <FileText className="w-4 h-4" />}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className={cn(
+                                  "text-sm font-medium truncate",
+                                  lesson.id === selectedLesson?.id ? "text-app-tertiary" : "text-app-on-surface"
+                                )}>
+                                  {lesson.title}
+                                </p>
+                                <p className="text-xs text-app-on-surface-variant">{lesson.duration || 'Sem duração'}</p>
+                              </div>
+                              {lesson.completed && <CheckCircle2 className="w-4 h-4 text-green-500" />}
+                            </button>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </aside>
+                </div>
+              </motion.div>
+            )
+          ) : (
+            <motion.div
               key="course-overview"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -1235,9 +1235,9 @@ export default function App() {
               <aside className="space-y-6">
                 <Card className="overflow-hidden border-none shadow-sm bg-app-surface">
                   <div className="aspect-video w-full relative overflow-hidden">
-                    <img 
-                      src={course.image || "https://picsum.photos/seed/movidesk/600/400"} 
-                      alt="Course Thumbnail" 
+                    <img
+                      src={course.image || "https://picsum.photos/seed/movidesk/600/400"}
+                      alt="Course Thumbnail"
                       className="w-full h-full object-cover"
                       referrerPolicy="no-referrer"
                     />
@@ -1247,7 +1247,7 @@ export default function App() {
                     <h2 className="text-center font-semibold text-white text-lg">
                       {course.title}
                     </h2>
-                    
+
                     <div className="space-y-2">
                       <p className="text-xs text-center text-app-on-primary-container font-medium uppercase tracking-wider">
                         Andamento:
@@ -1284,7 +1284,7 @@ export default function App() {
                       </div>
                     </div>
 
-                    <button 
+                    <button
                       className="w-full flex items-center justify-between p-3 bg-white/10 rounded-md border border-white/20 text-white hover:bg-white/20 transition-colors group"
                       onClick={() => {
                         setSelectedLesson(null);
@@ -1306,29 +1306,29 @@ export default function App() {
                 <Tabs defaultValue="conteudos" className="w-full" onValueChange={setActiveTab}>
                   <div className="border-b border-app-outline-variant overflow-x-auto scrollbar-none">
                     <TabsList className="w-full justify-start bg-transparent rounded-none h-auto p-0 gap-6 md:gap-8 min-w-max">
-                      <TabsTrigger 
-                        value="conteudos" 
+                      <TabsTrigger
+                        value="conteudos"
                         className="rounded-none border-b-2 border-transparent data-[state=active]:border-app-tertiary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 py-3 text-sm font-medium text-app-on-surface-variant data-[state=active]:text-app-tertiary flex items-center gap-2"
                       >
                         <Folder className="w-4 h-4" />
                         Conteúdos
                       </TabsTrigger>
-                      <TabsTrigger 
-                        value="desempenho" 
+                      <TabsTrigger
+                        value="desempenho"
                         className="rounded-none border-b-2 border-transparent data-[state=active]:border-app-tertiary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 py-3 text-sm font-medium text-app-on-surface-variant data-[state=active]:text-app-tertiary flex items-center gap-2"
                       >
                         <BarChart3 className="w-4 h-4" />
                         Desempenho
                       </TabsTrigger>
-                      <TabsTrigger 
-                        value="informacoes" 
+                      <TabsTrigger
+                        value="informacoes"
                         className="rounded-none border-b-2 border-transparent data-[state=active]:border-app-tertiary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 py-3 text-sm font-medium text-app-on-surface-variant data-[state=active]:text-app-tertiary flex items-center gap-2"
                       >
                         <Info className="w-4 h-4" />
                         Informações
                       </TabsTrigger>
-                      <TabsTrigger 
-                        value="certificado" 
+                      <TabsTrigger
+                        value="certificado"
                         className="rounded-none border-b-2 border-transparent data-[state=active]:border-app-tertiary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 py-3 text-sm font-medium text-app-on-surface-variant data-[state=active]:text-app-tertiary flex items-center gap-2"
                       >
                         <Award className="w-4 h-4" />
@@ -1341,8 +1341,8 @@ export default function App() {
                     {mainNav === 'trilhas' ? (
                       <Accordion type="single" collapsible defaultValue={"m4" as any} className="space-y-3">
                         {course.modules.map((module) => (
-                          <AccordionItem 
-                            key={module.id} 
+                          <AccordionItem
+                            key={module.id}
                             value={module.id}
                             className="border border-app-outline-variant rounded-lg bg-app-surface overflow-hidden shadow-sm"
                           >
@@ -1361,7 +1361,7 @@ export default function App() {
                                 {module.lessons.length > 0 ? (
                                   <div className="divide-y divide-app-outline-variant">
                                     {module.lessons.map((lesson) => (
-                                      <button 
+                                      <button
                                         key={lesson.id}
                                         onClick={() => handleLessonClick(lesson)}
                                         className={cn(
@@ -1405,14 +1405,14 @@ export default function App() {
                                               )}
                                             </div>
                                           </div>
-                                          
+
                                           <div className="flex items-center gap-4 pl-9 sm:pl-0">
                                             <div className="w-32 sm:w-24 h-1.5 bg-app-outline-variant rounded-full overflow-hidden">
-                                              <div 
+                                              <div
                                                 className={cn(
                                                   "h-full rounded-full",
                                                   lesson.completed ? "bg-green-500 w-full" : "bg-app-on-surface-variant/20 w-0"
-                                                )} 
+                                                )}
                                               />
                                             </div>
                                           </div>
@@ -1434,7 +1434,7 @@ export default function App() {
                       <div className="border border-app-outline-variant rounded-lg bg-app-surface overflow-hidden shadow-sm">
                         <div className="divide-y divide-app-outline-variant">
                           {course.modules.flatMap(m => m.lessons).map((lesson) => (
-                            <button 
+                            <button
                               key={lesson.id}
                               onClick={() => handleLessonClick(lesson)}
                               className={cn(
@@ -1478,14 +1478,14 @@ export default function App() {
                                     )}
                                   </div>
                                 </div>
-                                
+
                                 <div className="flex items-center gap-4 pl-9 sm:pl-0">
                                   <div className="w-32 sm:w-24 h-1.5 bg-app-outline-variant rounded-full overflow-hidden">
-                                    <div 
+                                    <div
                                       className={cn(
                                         "h-full rounded-full",
                                         lesson.completed ? "bg-green-500 w-full" : "bg-app-on-surface-variant/20 w-0"
-                                      )} 
+                                      )}
                                     />
                                   </div>
                                 </div>
@@ -1543,20 +1543,20 @@ export default function App() {
                           <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={PERFORMANCE_DATA}>
                               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
-                              <XAxis 
-                                dataKey="name" 
-                                axisLine={false} 
-                                tickLine={false} 
+                              <XAxis
+                                dataKey="name"
+                                axisLine={false}
+                                tickLine={false}
                                 tick={{ fill: '#434750', fontSize: 10 }}
                                 dy={10}
                               />
-                              <YAxis 
-                                axisLine={false} 
-                                tickLine={false} 
+                              <YAxis
+                                axisLine={false}
+                                tickLine={false}
                                 tick={{ fill: '#434750', fontSize: 10 }}
                                 domain={[0, 100]}
                               />
-                              <Tooltip 
+                              <Tooltip
                                 cursor={{ fill: '#f7f9fc' }}
                                 contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                               />
@@ -1608,7 +1608,7 @@ export default function App() {
                           <CardContent className="p-8 space-y-4">
                             <h3 className="text-lg font-bold text-app-on-surface">Sobre este curso</h3>
                             <p className="text-app-on-surface-variant leading-relaxed">
-                              Este curso foi desenvolvido para ajudar você a configurar e otimizar o uso do Movidesk em sua organização. 
+                              Este curso foi desenvolvido para ajudar você a configurar e otimizar o uso do Movidesk em sua organização.
                               Aprenda desde os conceitos básicos até as configurações avançadas de fluxo de trabalho e atendimento.
                             </p>
                             <div className="pt-4 flex gap-4">
