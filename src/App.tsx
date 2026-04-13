@@ -669,12 +669,12 @@ export default function App() {
                 <main className="flex-1 overflow-y-auto bg-[#f8f9fa] scrollbar-thin scrollbar-thumb-app-outline-variant relative min-w-0">
                   <div className={cn(
                     "mx-auto transition-all duration-500 ease-in-out",
-                    isTrainingSidebarOpen ? "max-w-7xl" : "max-w-7xl",
-                    "pt-16 md:pt-18 px-4 md:px-10 pb-12 space-y-4 md:space-y-6"
+                    isTrainingSidebarOpen ? "max-w-[1400px]" : "max-w-7xl",
+                    "pt-4 md:pt-5 px-4 md:px-10 pb-12 space-y-4 md:space-y-6"
                   )}>
 
                     {/* Breadcrumb & Navigation (Desktop Only) */}
-                    <div className="hidden md:flex items-center justify-between mb-4">
+                    <div className="hidden md:flex items-center justify-between mb-2">
                       <div className="flex items-center gap-4">
                         <Breadcrumb className="bg-transparent shadow-none border-none p-0">
                           <BreadcrumbList className="gap-1 md:gap-1">
