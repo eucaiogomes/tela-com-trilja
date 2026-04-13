@@ -284,9 +284,37 @@ export default function App() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="flex h-screen overflow-hidden bg-[#f8f9fa]"
+                className="flex h-screen overflow-hidden bg-[#f8f9fa] relative"
               >
+                {/* Global Floating Controls */}
+                <div className="fixed top-8 left-0 z-[60] flex items-center gap-3 px-6 pointer-events-none w-full">
+                  <button 
+                    onClick={() => setIsTrainingSidebarOpen(!isTrainingSidebarOpen)}
+                    className="pointer-events-auto p-2 bg-white/90 backdrop-blur-sm border border-app-outline-variant/20 rounded-xl shadow-xl text-[#00254e] hover:text-[#eb6200] transition-all hover:scale-105 active:scale-95 group"
+                    title={isTrainingSidebarOpen ? "Fechar Menu" : "Abrir Menu"}
+                  >
+                    <Menu className="w-5 h-5 flex-shrink-0" />
+                  </button>
+
+                  <motion.div
+                    animate={{ x: isTrainingSidebarOpen ? 276 : 0 }}
+                    transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                    className="pointer-events-none"
+                  >
+                    <button 
+                      onClick={closeLesson}
+                      className="pointer-events-auto p-2.5 bg-[#eb6200] text-white rounded-xl shadow-[0_8px_16px_-4px_rgba(235,98,0,0.4)] hover:bg-[#ff751a] hover:scale-105 active:scale-95 transition-all flex items-center gap-2 group pr-5"
+                      title="Sair da aula"
+                    >
+                      <ArrowLeft className="w-5 h-5" />
+                      <span className="text-[10px] font-bold uppercase tracking-[0.15em] overflow-hidden whitespace-nowrap max-w-0 group-hover:max-w-[100px] transition-all duration-500">Voltar para o curso</span>
+                    </button>
+                  </motion.div>
+
+                </div>
+
                 {/* Sidebar */}
+
                 <AnimatePresence initial={false}>
                   {isTrainingSidebarOpen && (
                     <motion.aside 
@@ -299,22 +327,11 @@ export default function App() {
                       <div className="w-[320px] flex flex-col h-full">
                         <div className="p-6 bg-[#00254e] text-white space-y-6">
                           <div className="space-y-4">
-                            <div className="flex items-center justify-between">
-                              <button 
-                                onClick={() => setIsTrainingSidebarOpen(false)}
-                                className="p-1.5 bg-white/10 rounded transition-colors hover:bg-white/20"
-                              >
-                                <Menu className="w-5 h-5 text-white" />
-                              </button>
-                              <button 
-                                onClick={closeLesson}
-                                className="p-1.5 bg-[#eb6200] text-white rounded transition-all hover:bg-[#ff751a] hover:scale-105 active:scale-95 shadow-lg"
-                                title="Voltar para o curso"
-                              >
-                                <ArrowLeft className="w-5 h-5" />
-                              </button>
+                            <div className="flex items-center justify-between h-9">
+                              {/* Empty space where buttons used to be */}
                             </div>
                             <h2 className="font-bold text-lg leading-tight text-left font-heading tracking-tight">{course.title}</h2>
+
                           </div>
                     <div className="space-y-4">
                       {/* Progresso Bar */}
@@ -392,30 +409,33 @@ export default function App() {
                                       )}>{module.title}</span>
                                     </div>
                                     
-                                    {/* Pie Chart Desempenho */}
-                                    <div className="w-10 h-10 shrink-0 relative flex items-center justify-center group-hover:scale-105 transition-transform">
-                                      <ResponsiveContainer width="100%" height="100%">
-                                        <PieChart>
-                                          <Pie
-                                            data={[
-                                              { value: PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0, fill: '#eb6200' },
-                                              { value: 100 - (PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0), fill: '#f1f5f9' }
-                                            ]}
-                                            cx="50%"
-                                            cy="50%"
-                                            innerRadius={12}
-                                            outerRadius={16}
-                                            dataKey="value"
-                                            stroke="none"
-                                            startAngle={90}
-                                            endAngle={-270}
-                                          />
-                                        </PieChart>
-                                      </ResponsiveContainer>
-                                      <span className="absolute text-[8px] font-bold text-app-on-surface-variant font-heading mt-0.5">
-                                        {PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0}%
-                                      </span>
+                                    {/* Pie Chart Desempenho Módulo */}
+                                    <div className="flex gap-2">
+                                      <div className="w-10 h-10 shrink-0 relative flex items-center justify-center group-hover:scale-105 transition-transform">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                          <PieChart>
+                                            <Pie
+                                              data={[
+                                                { value: PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0, fill: '#eb6200' },
+                                                { value: 100 - (PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0), fill: '#f1f5f9' }
+                                              ]}
+                                              cx="50%"
+                                              cy="50%"
+                                              innerRadius={12}
+                                              outerRadius={16}
+                                              dataKey="value"
+                                              stroke="none"
+                                              startAngle={90}
+                                              endAngle={-270}
+                                            />
+                                          </PieChart>
+                                        </ResponsiveContainer>
+                                        <span className="absolute text-[8px] font-bold text-app-on-surface-variant font-heading mt-0.5">
+                                          {PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0}%
+                                        </span>
+                                      </div>
                                     </div>
+
                                   </div>
                                 </AccordionTrigger>
                               <AccordionContent className="p-0 border-b border-app-outline-variant/10">
@@ -441,26 +461,63 @@ export default function App() {
                                                 key={subLesson.id}
                                                 onClick={() => setSelectedLesson(subLesson)}
                                                 className={cn(
-                                                  "w-full py-3.5 pl-16 pr-6 text-left hover:bg-white transition-colors flex items-center gap-3 border-l-4 border-l-transparent",
+                                                  "w-full py-3.5 pl-16 pr-6 text-left hover:bg-white transition-colors flex items-center justify-between border-l-4 border-l-transparent",
                                                   selectedLesson?.id === subLesson.id ? "bg-white border-l-[#eb6200]" : ""
                                                 )}
                                               >
-                                                <div 
-                                                  onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    toggleLessonComplete(subLesson.id);
-                                                  }}
-                                                  className={cn(
-                                                    "shrink-0 cursor-pointer hover:scale-110 transition-transform",
-                                                    selectedLesson?.id === subLesson.id ? "text-[#eb6200]" : subLesson.completed ? "text-green-500" : "text-app-on-surface-variant/30"
-                                                  )}
-                                                >
-                                                  {subLesson.completed ? <CheckCircle2 className="w-4 h-4" /> : (subLesson.type === 'video' ? <PlayCircle className="w-4 h-4" /> : <FileText className="w-4 h-4" />)}
+                                                <div className="flex items-center gap-3 overflow-hidden">
+                                                  <div 
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      toggleLessonComplete(subLesson.id);
+                                                    }}
+                                                    className={cn(
+                                                      "shrink-0 cursor-pointer hover:scale-110 transition-transform",
+                                                      selectedLesson?.id === subLesson.id ? "text-[#eb6200]" : subLesson.completed ? "text-green-500" : "text-app-on-surface-variant/30"
+                                                    )}
+                                                  >
+                                                    {subLesson.completed ? <CheckCircle2 className="w-4 h-4" /> : (subLesson.type === 'video' ? <PlayCircle className="w-4 h-4" /> : <FileText className="w-4 h-4" />)}
+                                                  </div>
+                                                  <span className={cn(
+                                                    "text-xs font-medium truncate",
+                                                    selectedLesson?.id === subLesson.id ? "text-app-on-surface font-bold" : "text-app-on-surface-variant"
+                                                  )}>{subLesson.title}</span>
                                                 </div>
-                                                <span className={cn(
-                                                  "text-xs font-medium truncate",
-                                                  selectedLesson?.id === subLesson.id ? "text-app-on-surface font-bold" : "text-app-on-surface-variant"
-                                                )}>{subLesson.title}</span>
+
+                                                {/* Mini Pie Charts for Sub-Lesson */}
+                                                <div className="flex gap-1 shrink-0">
+                                                  <div className="w-8 h-8 relative flex items-center justify-center">
+                                                    <ResponsiveContainer width="100%" height="100%">
+                                                      <PieChart>
+                                                        <Pie
+                                                          data={[
+                                                            { value: subLesson.completed ? 100 : 0, fill: '#eb6200' },
+                                                            { value: subLesson.completed ? 0 : 100, fill: '#f1f5f9' }
+                                                          ]}
+                                                          cx="50%" cy="50%" innerRadius={8} outerRadius={11}
+                                                          dataKey="value" stroke="none" startAngle={90} endAngle={-270}
+                                                        />
+                                                      </PieChart>
+                                                    </ResponsiveContainer>
+                                                    <span className="absolute text-[6px] font-bold text-app-tertiary">P</span>
+                                                  </div>
+                                                  <div className="w-8 h-8 relative flex items-center justify-center">
+                                                    <ResponsiveContainer width="100%" height="100%">
+                                                      <PieChart>
+                                                        <Pie
+                                                          data={[
+                                                            { value: subLesson.completed ? 85 : 0, fill: '#22c55e' },
+                                                            { value: subLesson.completed ? 15 : 100, fill: '#f1f5f9' }
+                                                          ]}
+                                                          cx="50%" cy="50%" innerRadius={8} outerRadius={11}
+                                                          dataKey="value" stroke="none" startAngle={90} endAngle={-270}
+                                                        />
+                                                      </PieChart>
+                                                    </ResponsiveContainer>
+                                                    <span className="absolute text-[6px] font-bold text-green-600">A</span>
+                                                  </div>
+                                                </div>
+
                                               </button>
                                             ))}
                                           </AccordionContent>
@@ -580,12 +637,52 @@ export default function App() {
                                   )}
                                 </div>
                                 <div className="flex-1 min-w-0 space-y-2">
-                                  <p className={cn(
-                                    "text-[15px] font-semibold leading-tight tracking-tight font-heading",
-                                    isActive ? "text-[#eb6200]" : "text-[#1a1a1a]"
-                                  )}>
-                                    {lesson.title}
-                                  </p>
+                                  <div className="flex justify-between items-start gap-4">
+                                    <p className={cn(
+                                      "text-[15px] font-semibold leading-tight tracking-tight font-heading",
+                                      isActive ? "text-[#eb6200]" : "text-[#1a1a1a]"
+                                    )}>
+                                      {lesson.title}
+                                    </p>
+                                    
+                                    {/* Pie Charts representando Progresso e Aproveitamento */}
+                                    <div className="flex gap-2 shrink-0 group-hover:scale-105 transition-transform">
+                                      <div className="w-10 h-10 relative flex items-center justify-center bg-white rounded-xl shadow-sm border border-black/[0.03]">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                          <PieChart>
+                                            <Pie
+                                              data={[
+                                                { value: lesson.completed ? 100 : 0, fill: '#eb6200' },
+                                                { value: lesson.completed ? 0 : 100, fill: '#f1f5f9' }
+                                              ]}
+                                              cx="50%" cy="50%" innerRadius={10} outerRadius={14}
+                                              dataKey="value" stroke="none" startAngle={90} endAngle={-270}
+                                            />
+                                          </PieChart>
+                                        </ResponsiveContainer>
+                                        <div className="absolute flex flex-col items-center justify-center">
+                                          <span className="text-[7px] font-black leading-none text-app-tertiary">P</span>
+                                        </div>
+                                      </div>
+                                      <div className="w-10 h-10 relative flex items-center justify-center bg-white rounded-xl shadow-sm border border-black/[0.03]">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                          <PieChart>
+                                            <Pie
+                                              data={[
+                                                { value: lesson.completed ? 95 : 0, fill: '#22c55e' },
+                                                { value: lesson.completed ? 5 : 100, fill: '#f1f5f9' }
+                                              ]}
+                                              cx="50%" cy="50%" innerRadius={10} outerRadius={14}
+                                              dataKey="value" stroke="none" startAngle={90} endAngle={-270}
+                                            />
+                                          </PieChart>
+                                        </ResponsiveContainer>
+                                        <div className="absolute flex flex-col items-center justify-center">
+                                          <span className="text-[7px] font-black leading-none text-green-600">A</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
                                   <div className="flex flex-wrap gap-2 font-heading">
                                     <span className={cn(
                                       "inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-[0.05em] font-heading",
@@ -624,16 +721,9 @@ export default function App() {
                     {/* Breadcrumb & Navigation (Desktop Only) */}
                     <div className="hidden md:flex items-center justify-between mb-8">
                       <div className="flex items-center gap-4">
-                        {!isTrainingSidebarOpen && (
-                          <motion.button
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            onClick={() => setIsTrainingSidebarOpen(true)}
-                            className="p-2 bg-white border border-app-outline-variant/30 rounded-xl shadow-sm text-app-on-surface-variant hover:text-app-tertiary hover:border-app-tertiary/30 transition-all group"
-                          >
-                            <Menu className="w-5 h-5 flex-shrink-0" />
-                          </motion.button>
-                        )}
+                        {/* The floating buttons will handle the sidebar toggle */}
+                        <div className="w-10 h-10 flex-shrink-0" /> {/* Spacer for the floating button */}
+
                         <Breadcrumb className="bg-transparent shadow-none border-none p-0">
                           <BreadcrumbList className="gap-1 md:gap-1">
                             <BreadcrumbItem>
