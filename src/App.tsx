@@ -518,8 +518,8 @@ export default function App() {
                                       <button 
                                         onClick={() => setSelectedLesson(lesson)}
                                         className={cn(
-                                          "w-full px-8 py-5 text-left transition-all relative group flex items-start gap-4 border-l-4",
-                                          lesson.id === selectedLesson?.id ? "bg-[#fff5eb] border-l-[#eb6200]" : "hover:bg-gray-50 border-l-transparent"
+                                          "w-full px-4 py-3 text-left transition-all relative group flex items-center gap-3 border-l-4",
+                                          lesson.id === selectedLesson?.id ? "bg-[#fff5eb] border-l-[#eb6200]" : "hover:bg-gray-50/60 border-l-transparent"
                                         )}
                                       >
                                         {(() => {
@@ -527,47 +527,44 @@ export default function App() {
                                           const lPerf = lesson.completed ? 95 : 0;
                                           return (
                                             <>
-                                                <div 
-                                                  onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    toggleLessonComplete(lesson.id);
-                                                  }}
-                                                  className={cn(
-                                                    "mt-1 shrink-0 cursor-pointer hover:scale-110 transition-transform",
-                                                    lesson.id === selectedLesson?.id ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
-                                                  )}
-                                                >
-                                                  {lesson.completed ? <CheckCircle2 className="w-5 h-5" /> : <div className="w-5 h-5 rounded-full border-2 border-current opacity-30" />}
+                                              <div 
+                                                onClick={(e) => {
+                                                  e.stopPropagation();
+                                                  toggleLessonComplete(lesson.id);
+                                                }}
+                                                className={cn(
+                                                  "shrink-0 cursor-pointer hover:scale-110 transition-transform",
+                                                  lesson.id === selectedLesson?.id ? "text-[#eb6200]" : lesson.completed ? "text-green-500" : "text-gray-300"
+                                                )}
+                                              >
+                                                {lesson.completed ? <CheckCircle2 className="w-4 h-4" /> : <div className="w-4 h-4 rounded-full border-2 border-current opacity-30" />}
+                                              </div>
+                                              <div className="flex-1 min-w-0">
+                                                <div className="flex items-center gap-1.5 mb-0.5">
+                                                  <span className={cn(
+                                                    "px-1.5 py-0 rounded text-[7px] font-black uppercase tracking-wider border leading-4",
+                                                    lesson.status === 'completed' ? "bg-green-50 text-green-600 border-green-100" :
+                                                    lesson.status === 'in-progress' ? "bg-blue-50 text-blue-600 border-blue-100" :
+                                                    "bg-gray-50 text-gray-400 border-gray-100"
+                                                  )}>
+                                                    {lesson.status === 'completed' ? 'Concluído' : lesson.status === 'in-progress' ? 'Em andamento' : 'Não visualizado'}
+                                                  </span>
                                                 </div>
-                                                <div className="flex-1 min-w-0 space-y-1.5">
-                                                  {/* Status Tag on Top */}
-                                                  <div className="flex">
-                                                    <span className={cn(
-                                                      "px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider border",
-                                                      lesson.status === 'completed' ? "bg-green-50/50 text-green-600 border-green-100" : 
-                                                      lesson.status === 'in-progress' ? "bg-blue-50/50 text-blue-600 border-blue-100" : 
-                                                      "bg-gray-50/50 text-gray-400 border-gray-100"
-                                                    )}>
-                                                      {lesson.status === 'completed' ? 'Concluído' : lesson.status === 'in-progress' ? 'Em andamento' : 'Não visualizado'}
-                                                    </span>
-                                                  </div>
-
-                                                  <p className={cn(
-                                                    "text-sm font-bold tracking-tight font-heading leading-tight",
-                                                    lesson.id === selectedLesson?.id ? "text-[#eb6200]" : "text-[#1a1a1a]"
-                                                  )}>{lesson.title}</p>
-                                                  
-                                                  <div className="flex items-center gap-2 pt-1">
-                                                    <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-xl bg-green-50 text-green-700 text-[10px] font-black uppercase border border-green-100 shadow-sm">
-                                                      <ProgressPie value={lPerc} size={28} innerRadius={8} outerRadius={12} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={7} />
-                                                      PROG: {lPerc}%
-                                                    </span>
-                                                    <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-xl bg-[#fff5eb] text-[#eb6200] text-[10px] font-black uppercase border border-[#ffead6] shadow-sm">
-                                                      <ProgressPie value={lPerf} size={28} innerRadius={8} outerRadius={12} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={7} />
-                                                      APROV: {lPerf}%
-                                                    </span>
-                                                  </div>
+                                                <p className={cn(
+                                                  "text-[13px] font-bold leading-snug tracking-tight font-heading mb-1.5",
+                                                  lesson.id === selectedLesson?.id ? "text-[#eb6200]" : "text-[#1a1a1a]"
+                                                )}>{lesson.title}</p>
+                                                <div className="flex items-center gap-1.5">
+                                                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
+                                                    <ProgressPie value={lPerc} size={16} innerRadius={5} outerRadius={8} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={5} />
+                                                    {lPerc}%
+                                                  </span>
+                                                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
+                                                    <ProgressPie value={lPerf} size={16} innerRadius={5} outerRadius={8} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={5} />
+                                                    {lPerf}%
+                                                  </span>
                                                 </div>
+                                              </div>
                                             </>
                                           );
                                         })()}
@@ -586,32 +583,16 @@ export default function App() {
                           const percentage = lesson.completed ? 100 : 0;
                           const performance = lesson.completed ? 95 : 0;
 
-                          const getStatusLabel = (status?: string) => {
-                            switch(status) {
-                              case 'completed': return 'Concluído';
-                              case 'in-progress': return 'Em andamento';
-                              default: return 'Não visualizado';
-                            }
-                          };
-
-                          const getStatusColor = (status?: string) => {
-                            switch(status) {
-                              case 'completed': return 'bg-green-100 text-green-700';
-                              case 'in-progress': return 'bg-blue-100 text-blue-700';
-                              default: return 'bg-gray-100 text-gray-600';
-                            }
-                          };
-
                           return (
                             <button 
                               key={lesson.id}
                               onClick={() => setSelectedLesson(lesson)}
                               className={cn(
-                                "w-full p-5 text-left border-b border-app-outline-variant/20 transition-all relative group",
-                                isActive ? "bg-[#fff5eb] border-l-4 border-l-[#eb6200]" : "hover:bg-gray-50 border-l-4 border-l-transparent"
+                                "w-full px-4 py-3 text-left border-b border-app-outline-variant/10 transition-all relative group",
+                                isActive ? "bg-[#fff5eb] border-l-4 border-l-[#eb6200]" : "hover:bg-gray-50/60 border-l-4 border-l-transparent"
                               )}
                             >
-                              <div className="flex items-start gap-3">
+                              <div className="flex items-center gap-3">
                                 <div 
                                   onClick={(e) => {
                                     e.stopPropagation();
