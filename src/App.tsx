@@ -815,7 +815,7 @@ export default function App() {
 
 
                     {/* Lesson Info Section */}
-                    <div className="space-y-5 md:space-y-8 px-4 md:px-0 pt-5 md:pt-6 border-t border-app-outline-variant/20">
+                    <div className="space-y-3 md:space-y-4 px-4 md:px-0 pt-3 md:pt-4 border-t border-app-outline-variant/20">
                       <div className="flex flex-col gap-1 md:gap-2">
                         <div className="md:hidden flex items-center justify-between mb-1">
                           <span className="text-[10px] font-bold text-app-tertiary uppercase tracking-widest">
@@ -833,7 +833,7 @@ export default function App() {
                         </h1>
                       </div>
 
-                      <div className="space-y-6 md:space-y-8">
+                      <div className="space-y-3 md:space-y-4">
                         {/* Sticky Tabs Bar */}
                         <div className="sticky top-0 z-30 -mx-4 px-4 py-2 bg-[#f8f9fa] md:bg-[#f8f9fa]/80 md:backdrop-blur-md">
                           <div className="md:bg-white md:rounded-2xl md:border md:border-app-outline-variant/30 md:shadow-lg md:shadow-black/[0.03] overflow-hidden">
@@ -873,7 +873,7 @@ export default function App() {
                           </div>
                         </div>
 
-                        <div className="min-h-[200px] py-4 md:py-8">
+                        <div className="min-h-[200px] py-3 md:py-4">
                           <AnimatePresence mode="wait">
                             {lessonInfoTab === 'conteudo' && (
                               <motion.div
