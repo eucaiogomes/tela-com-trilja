@@ -835,12 +835,12 @@ export default function App() {
                         <div className="hidden md:flex absolute inset-0 pointer-events-none group-hover:bg-black/5 transition-colors duration-500" />
                       </div>
 
-                      {/* External Navigation Controls - Vertically Centered */}
+                      {/* External Navigation Controls - Square & Further Out */}
                       <div className="hidden md:block absolute top-1/2 -translate-y-1/2 left-0 right-0 pointer-events-none z-30">
-                        <div className="mx-auto max-w-[1340px] px-2 flex justify-between">
+                        <div className="mx-auto max-w-[1480px] px-4 flex justify-between">
                           {/* Anterior Button */}
                           <motion.button 
-                            whileHover={{ scale: 1.1, x: -5 }}
+                            whileHover={{ scale: 1.1, x: -8 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={(e) => {
                               e.stopPropagation();
@@ -848,16 +848,16 @@ export default function App() {
                               const idx = all.findIndex(l => l.id === selectedLesson?.id);
                               if (idx > 0) setSelectedLesson(all[idx - 1]);
                             }}
-                            className="pointer-events-auto w-14 h-14 bg-white/90 backdrop-blur-md text-[#eb6200] rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-app-outline-variant/10 hover:bg-[#eb6200] hover:text-white transition-all duration-300 group/nav"
+                            className="pointer-events-auto w-14 h-14 bg-[#eb6200] text-white rounded-2xl flex items-center justify-center shadow-[0_12px_24px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
                             title="Aula Anterior"
                           >
                             <ChevronLeft className="w-8 h-8" />
-                            <span className="absolute -bottom-8 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Anterior</span>
+                            <span className="absolute -bottom-10 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Anterior</span>
                           </motion.button>
                           
                           {/* Próximo Button */}
                           <motion.button 
-                            whileHover={{ scale: 1.1, x: 5 }}
+                            whileHover={{ scale: 1.1, x: 8 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={(e) => {
                               e.stopPropagation();
@@ -865,11 +865,11 @@ export default function App() {
                               const idx = all.findIndex(l => l.id === selectedLesson?.id);
                               if (idx < all.length - 1) setSelectedLesson(all[idx + 1]);
                             }}
-                            className="pointer-events-auto w-14 h-14 bg-[#eb6200] text-white rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
+                            className="pointer-events-auto w-14 h-14 bg-[#eb6200] text-white rounded-2xl flex items-center justify-center shadow-[0_12px_24px_rgba(235,98,0,0.3)] hover:bg-[#ff751a] transition-all duration-300 group/nav"
                             title="Próxima Aula"
                           >
                             <ChevronRight className="w-8 h-8" />
-                            <span className="absolute -bottom-8 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Próxima Aula</span>
+                            <span className="absolute -bottom-10 bg-black/80 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover/nav:opacity-100 transition-opacity whitespace-nowrap">Próxima Aula</span>
                           </motion.button>
                         </div>
                       </div>
