@@ -298,14 +298,20 @@ export default function App() {
                     <Menu className="w-5 h-5 flex-shrink-0" />
                   </button>
 
-                  {/* Back Button */}
-                  <button 
-                    onClick={closeLesson}
-                    className="pointer-events-auto p-2.5 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
-                    title="Voltar para o curso"
+                  {/* Back Button - follows sidebar */}
+                  <motion.div
+                    animate={{ x: isTrainingSidebarOpen ? 276 : 0 }}
+                    transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                    className="pointer-events-none"
                   >
-                    <ArrowLeft className="w-5 h-5" />
-                  </button>
+                    <button 
+                      onClick={closeLesson}
+                      className="pointer-events-auto p-2.5 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
+                      title="Voltar para o curso"
+                    >
+                      <ArrowLeft className="w-5 h-5" />
+                    </button>
+                  </motion.div>
 
                 </div>
 
