@@ -102,33 +102,45 @@ const ProgressPie = ({
   inactiveColor?: string,
   showText?: boolean,
   fontSize?: number
-}) => (
-  <div className="shrink-0 relative flex items-center justify-center transition-transform" style={{ width: size, height: size }}>
-    <ResponsiveContainer width="100%" height="100%">
-      <PieChart>
-        <Pie
-          data={[
-            { value: value, fill: activeColor },
-            { value: 100 - value, fill: inactiveColor }
-          ]}
-          cx="50%"
-          cy="50%"
-          innerRadius={innerRadius}
-          outerRadius={outerRadius}
-          dataKey="value"
-          stroke="none"
-          startAngle={90}
-          endAngle={-270}
-        />
-      </PieChart>
-    </ResponsiveContainer>
-    {showText && (
-      <span className="absolute font-bold text-app-on-surface-variant font-heading" style={{ fontSize, marginTop: '2px' }}>
-        {value}%
-      </span>
-    )}
-  </div>
-);
+}) => {
+  const isThreeDigits = value >= 100;
+  // Reduce font size slightly for 100% to ensure it fits the inner circle
+  const displayFontSize = isThreeDigits ? fontSize * 0.75 : fontSize;
+
+  return (
+    <div className="shrink-0 relative flex items-center justify-center transition-all" style={{ width: size, height: size }}>
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <Pie
+            data={[
+              { value: value, fill: activeColor },
+              { value: 100 - value, fill: inactiveColor }
+            ]}
+            cx="50%"
+            cy="50%"
+            innerRadius={innerRadius}
+            outerRadius={outerRadius}
+            dataKey="value"
+            stroke="none"
+            startAngle={90}
+            endAngle={-270}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+      {showText && (
+        <span 
+          className={cn(
+            "absolute font-bold text-app-on-surface-variant font-heading flex items-center justify-center leading-none",
+            isThreeDigits ? "tracking-tighter" : "tracking-tight"
+          )} 
+          style={{ fontSize: displayFontSize, marginTop: '1px' }}
+        >
+          {value}%
+        </span>
+      )}
+    </div>
+  );
+};
 
 export default function App() {
   const [course, setCourse] = useState<Course>(MOCK_COURSE);
@@ -451,7 +463,7 @@ export default function App() {
                                             <div className="w-10 h-10 shrink-0 relative flex items-center justify-center group-hover:scale-105 transition-transform">
                                               <ProgressPie
                                                 value={PERFORMANCE_DATA[index % PERFORMANCE_DATA.length]?.score || 0}
-                                                size={38} innerRadius={14} outerRadius={18}
+                                                size={38} innerRadius={15} outerRadius={18}
                                                 activeColor="#eb6200" inactiveColor="#f1f5f9" fontSize={9}
                                               />
                                             </div>
@@ -497,11 +509,11 @@ export default function App() {
                                                             <div className="flex items-center gap-1.5 pl-7">
                                                               <span className="inline-flex items-center gap-1.5 px-2 rounded bg-green-50 text-green-700 text-[8px] font-black uppercase border border-green-100">
                                                                 PROGRESSO
-                                                                <ProgressPie value={subPerc} size={24} innerRadius={8} outerRadius={11} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={7} />
+                                                                <ProgressPie value={subPerc} size={24} innerRadius={9.5} outerRadius={11.5} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={7} />
                                                               </span>
                                                               <span className="inline-flex items-center gap-1.5 px-2 rounded bg-[#fff5eb] text-[#eb6200] text-[8px] font-black uppercase border border-[#ffead6]">
                                                                 APROVEITAMENTO
-                                                                <ProgressPie value={subPerf} size={24} innerRadius={8} outerRadius={11} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={7} />
+                                                                <ProgressPie value={subPerf} size={24} innerRadius={9.5} outerRadius={11.5} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={7} />
                                                               </span>
                                                             </div>
                                                           )}
@@ -555,11 +567,11 @@ export default function App() {
                                                           <div className="flex items-center gap-1.5">
                                                             <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
                                                               PROGRESSO
-                                                              <ProgressPie value={lPerc} size={26} innerRadius={9} outerRadius={12} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={8} />
+                                                              <ProgressPie value={lPerc} size={26} innerRadius={10.5} outerRadius={12.5} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={8} />
                                                             </span>
                                                             <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
                                                               APROVEITAMENTO
-                                                              <ProgressPie value={lPerf} size={26} innerRadius={9} outerRadius={12} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={8} />
+                                                              <ProgressPie value={lPerf} size={26} innerRadius={10.5} outerRadius={12.5} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={8} />
                                                             </span>
                                                           </div>
                                                         )}
@@ -631,11 +643,11 @@ export default function App() {
                                             <div className="flex items-center gap-1.5">
                                               <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-green-50 text-green-700 text-[9px] font-black uppercase border border-green-100">
                                                 PROGRESSO
-                                                <ProgressPie value={percentage} size={26} innerRadius={9} outerRadius={12} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={8} />
+                                                <ProgressPie value={percentage} size={26} innerRadius={10.5} outerRadius={12.5} activeColor="#22c55e" inactiveColor="#e2e8f0" fontSize={8} />
                                               </span>
                                               <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#fff5eb] text-[#eb6200] text-[9px] font-black uppercase border border-[#ffead6]">
                                                 APROVEITAMENTO
-                                                <ProgressPie value={performance} size={26} innerRadius={9} outerRadius={12} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={8} />
+                                                <ProgressPie value={performance} size={26} innerRadius={10.5} outerRadius={12.5} activeColor="#eb6200" inactiveColor="#e2e8f0" fontSize={8} />
                                               </span>
                                             </div>
                                           )}
