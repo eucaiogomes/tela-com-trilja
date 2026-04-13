@@ -287,10 +287,11 @@ export default function App() {
                 className="flex h-screen overflow-hidden bg-[#f8f9fa] relative"
               >
                 {/* Global Floating Controls */}
-                <div className="fixed top-8 left-0 z-[60] flex items-center gap-3 px-6 pointer-events-none w-full">
+                <div className="fixed top-4 left-0 z-[60] flex items-center gap-3 px-6 pointer-events-none w-full">
+
                   <button 
                     onClick={() => setIsTrainingSidebarOpen(!isTrainingSidebarOpen)}
-                    className="pointer-events-auto p-2 bg-white/90 backdrop-blur-sm border border-app-outline-variant/20 rounded-xl shadow-xl text-[#00254e] hover:text-[#eb6200] transition-all hover:scale-105 active:scale-95 group"
+                    className="pointer-events-auto p-2 bg-white/40 hover:bg-white/90 backdrop-blur-sm border border-app-outline-variant/20 rounded-xl shadow-lg text-[#00254e] hover:text-[#eb6200] transition-all hover:scale-105 active:scale-95 group opacity-60 hover:opacity-100"
                     title={isTrainingSidebarOpen ? "Fechar Menu" : "Abrir Menu"}
                   >
                     <Menu className="w-5 h-5 flex-shrink-0" />
@@ -303,9 +304,10 @@ export default function App() {
                   >
                     <button 
                       onClick={closeLesson}
-                      className="pointer-events-auto p-2.5 bg-[#eb6200] text-white rounded-xl shadow-[0_8px_16px_-4px_rgba(235,98,0,0.4)] hover:bg-[#ff751a] hover:scale-105 active:scale-95 transition-all flex items-center gap-2 group pr-5"
+                      className="pointer-events-auto p-2.5 bg-[#eb6200]/40 hover:bg-[#eb6200] text-white rounded-xl shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center gap-2 group pr-5 opacity-60 hover:opacity-100 backdrop-blur-sm"
                       title="Sair da aula"
                     >
+
                       <ArrowLeft className="w-5 h-5" />
                       <span className="text-[10px] font-bold uppercase tracking-[0.15em] overflow-hidden whitespace-nowrap max-w-0 group-hover:max-w-[100px] transition-all duration-500">Voltar para o curso</span>
                     </button>
@@ -683,7 +685,7 @@ export default function App() {
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="flex flex-wrap gap-2 font-heading">
+                                  <div className="flex flex-wrap gap-2 font-heading mt-1">
                                     <span className={cn(
                                       "inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-[0.05em] font-heading",
                                       isActive ? "bg-[#eb6200]/10 text-[#eb6200]" : "bg-gray-100 text-gray-500"
@@ -691,11 +693,61 @@ export default function App() {
                                       {getTypeIcon(lesson.type)}
                                       {getTypeLabel(lesson.type)}
                                     </span>
+                                    
+                                    {/* Tag de Progresso com Gráfico */}
                                     <span className={cn(
-                                      "inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-[0.05em] font-heading",
-                                      getStatusColor(lesson.status)
+                                      "inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-[0.05em] font-heading",
+                                      lesson.completed ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"
                                     )}>
-                                      {getStatusLabel(lesson.status)}
+                                      <div className="w-3 h-3 shrink-0 relative flex items-center justify-center">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                          <PieChart>
+                                            <Pie
+                                              data={[
+                                                { value: lesson.completed ? 100 : 0, fill: lesson.completed ? '#15803d' : '#9ca3af' },
+                                                { value: lesson.completed ? 0 : 100, fill: lesson.completed ? '#dcfce7' : '#f3f4f6' }
+                                              ]}
+                                              cx="50%"
+                                              cy="50%"
+                                              innerRadius={0}
+                                              outerRadius={6}
+                                              dataKey="value"
+                                              stroke="none"
+                                              startAngle={90}
+                                              endAngle={-270}
+                                            />
+                                          </PieChart>
+                                        </ResponsiveContainer>
+                                      </div>
+                                      Prog: {lesson.completed ? '100%' : '0%'}
+                                    </span>
+
+                                    {/* Tag de Aproveitamento com Gráfico */}
+                                    <span className={cn(
+                                      "inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-[0.05em] font-heading",
+                                      isActive ? "bg-[#eb6200]/10 text-[#eb6200]" : "bg-gray-100 text-gray-500"
+                                    )}>
+                                      <div className="w-3 h-3 shrink-0 relative flex items-center justify-center">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                          <PieChart>
+                                            <Pie
+                                              data={[
+                                                { value: PERFORMANCE_DATA[idx % PERFORMANCE_DATA.length]?.score || 0, fill: isActive ? '#eb6200' : '#6b7280' },
+                                                { value: 100 - (PERFORMANCE_DATA[idx % PERFORMANCE_DATA.length]?.score || 0), fill: isActive ? 'rgba(235, 98, 0, 0.2)' : '#e5e7eb' }
+                                              ]}
+                                              cx="50%"
+                                              cy="50%"
+                                              innerRadius={0}
+                                              outerRadius={6}
+                                              dataKey="value"
+                                              stroke="none"
+                                              startAngle={90}
+                                              endAngle={-270}
+                                            />
+                                          </PieChart>
+                                        </ResponsiveContainer>
+                                      </div>
+                                      Aprov: {PERFORMANCE_DATA[idx % PERFORMANCE_DATA.length]?.score || 0}%
                                     </span>
                                   </div>
                                 </div>
@@ -716,8 +768,9 @@ export default function App() {
                     <div className={cn(
                       "mx-auto transition-all duration-500 ease-in-out",
                       isTrainingSidebarOpen ? "max-w-7xl" : "max-w-7xl",
-                      "pt-0 md:pt-6 px-0 md:px-10 pb-12 space-y-0 md:space-y-6"
+                      "pt-20 md:pt-24 px-4 md:px-10 pb-12 space-y-6 md:space-y-8"
                     )}>
+
                     {/* Breadcrumb & Navigation (Desktop Only) */}
                     <div className="hidden md:flex items-center justify-between mb-8">
                       <div className="flex items-center gap-4">
