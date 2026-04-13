@@ -348,13 +348,12 @@ export default function App() {
                 <div className="fixed top-4 left-0 z-[60] flex items-center gap-3 px-6 pointer-events-none">
 
                   {/* Hamburger Button */}
-                  {/* Hamburger Button - to change size manually, edit p-3 (padding) and w-6 h-6 (icon size) below */}
                   <button
                     onClick={() => setIsTrainingSidebarOpen(!isTrainingSidebarOpen)}
-                    className="pointer-events-auto p-3 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
+                    className="pointer-events-auto p-2.5 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
                     title={isTrainingSidebarOpen ? "Fechar Menu" : "Abrir Menu"}
                   >
-                    <Menu className="w-6 h-6 flex-shrink-0" />
+                    <Menu className="w-5 h-5 flex-shrink-0" />
                   </button>
 
                   {/* Back Button - follows sidebar */}
@@ -365,9 +364,9 @@ export default function App() {
                   >
                     <button
                       onClick={closeLesson}
-                      className="pointer-events-auto p-3 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
+                      className="pointer-events-auto p-2.5 bg-[#eb6200] hover:bg-[#ff751a] text-white rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95"
                     >
-                      <ArrowLeft className="w-6 h-6" />
+                      <ArrowLeft className="w-5 h-5" />
                     </button>
                   </motion.div>
 
